@@ -2,6 +2,6 @@
 </script>
 <template>
 <h1 class="text-3xl font-bold underline">
-  Hello world! nooooooo
+  Hello world!
 </h1>
 </template>
