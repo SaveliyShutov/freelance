@@ -1,87 +1,125 @@
+<script setup>
+const filters = ref({
+  town: '',
+  date: ''
+})
+
+const sortBy = ref('date')
+
+// Available towns
+const towns = ['Пермь']
+
+// Sample job data
+const jobs = ref([
+  {
+    id: 1,
+    title: 'Уборка снега',
+    organization: 'ООО Жек',
+    postedDate: '2024-04-05',
+    postedTime: '09:30 AM',
+    workingHours: '08.00-12.00',
+    duration: '6 часов',
+    town: 'Пермь, ул. петропавловская д 21',
+    description: '',
+    salaryRange: '500'
+  }
+])
+</script>
+
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h1 class="text-3xl font-bold text-gray-900 mb-8">Worker Dashboard</h1>
-    
-    <!-- Profile Section -->
-    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-      <h2 class="text-xl font-semibold mb-4">My Profile</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <h3 class="text-lg font-medium mb-2">Skills</h3>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full">Web Development</span>
-            <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full">React</span>
-            <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full">Node.js</span>
-          </div>
-        </div>
-        <div>
-          <h3 class="text-lg font-medium mb-2">Experience</h3>
-          <p class="text-gray-600">5 years of professional experience</p>
-        </div>
-      </div>
-    </div>
+  <v-container>
+    <v-row>
+      <v-col cols="12" class="flex flex-row align-center justify-between">
+        <h1 class="text-4xl font-bold text-gray-900 my-8">Вся работа</h1>
+        <button class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+          Разместить заказ
+        </button>
+      </v-col>
+    </v-row>
 
-    <!-- Available Work -->
-    <div class="bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Available Work</h2>
-      <div class="space-y-6">
-        <div class="border-b pb-4">
-          <div class="flex justify-between items-start">
-            <div>
-              <h3 class="text-lg font-medium">Frontend Developer Needed</h3>
-              <p class="text-gray-600 mb-2">Posted: April 5, 2024</p>
-              <p class="text-gray-700">Building a responsive e-commerce website using React and Tailwind CSS.</p>
-              <div class="flex flex-wrap gap-2 mt-3">
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">React</span>
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Tailwind CSS</span>
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">E-commerce</span>
+    <v-row>
+      <v-col cols="12">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <!-- Filters and Sorting -->
+          <v-row class="mb-6">
+            <v-col cols="12" md="4">
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Город</label>
+                <select v-model="filters.town"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                  <option value="">Все города</option>
+                  <option v-for="town in towns" :key="town" :value="town">{{ town }}</option>
+                </select>
               </div>
-              <p class="text-green-600 font-medium mt-2">$50-70/hour</p>
-            </div>
-            <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
-              Apply Now
-            </button>
-          </div>
-        </div>
+            </v-col>
+            <v-col cols="12" md="4">
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Дата</label>
+                <input type="date" v-model="filters.date"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+              </div>
+            </v-col>
+            <v-col cols="12" md="4">
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Сортировать по</label>
+                <select v-model="sortBy"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                  <option value="date">Дате</option>
+                  <option value="price-asc">Цене (по возрастанию)</option>
+                  <option value="price-desc">цене (по убыванию)</option>
+                </select>
+              </div>
+            </v-col>
+          </v-row>
 
-        <div class="border-b pb-4">
-          <div class="flex justify-between items-start">
-            <div>
-              <h3 class="text-lg font-medium">Full Stack Developer</h3>
-              <p class="text-gray-600 mb-2">Posted: April 4, 2024</p>
-              <p class="text-gray-700">Developing a social media platform using Node.js and Vue.js.</p>
-              <div class="flex flex-wrap gap-2 mt-3">
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Node.js</span>
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Vue.js</span>
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">MongoDB</span>
-              </div>
-              <p class="text-green-600 font-medium mt-2">$60-80/hour</p>
-            </div>
-            <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
-              Apply Now
-            </button>
-          </div>
-        </div>
+          <div class="space-y-6">
+            <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <v-row>
+                <v-col cols="12" md="8">
+                  <!-- Job Title and Organization -->
+                  <div class="mb-3">
+                    <h3 class="text-xl font-semibold text-gray-900">{{ job.title }}</h3>
+                    <p class="text-lg text-indigo-600">{{ job.organization }}</p>
+                  </div>
 
-        <div class="border-b pb-4">
-          <div class="flex justify-between items-start">
-            <div>
-              <h3 class="text-lg font-medium">UI/UX Designer</h3>
-              <p class="text-gray-600 mb-2">Posted: April 3, 2024</p>
-              <p class="text-gray-700">Designing user interfaces for a mobile fitness application.</p>
-              <div class="flex flex-wrap gap-2 mt-3">
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Figma</span>
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">UI Design</span>
-                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Mobile</span>
-              </div>
-              <p class="text-green-600 font-medium mt-2">$45-65/hour</p>
+                  <!-- Location -->
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-gray-600">📍</span>
+                    <span>{{ job.town }}</span>
+                  </div>
+
+                  <!-- Time and Duration -->
+                  <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
+                    <div class="flex items-center gap-2">
+                      <span class="text-gray-600">🕒</span>
+                      <span>{{ job.workingHours }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-gray-600">📅</span>
+                      <span> {{ job.postedDate }}</span>
+                    </div>
+                  </div>
+                </v-col>
+
+                <v-col cols="12" md="4" class="flex flex-col justify-between">
+                  <!-- Price -->
+                  <div class="text-right mb-4">
+                    <p class="text-2xl font-bold">{{ job.salaryRange }}₽</p>
+                  </div>
+
+                  <!-- Apply Button -->
+                  <div class="text-right">
+                    <button
+                      class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+                      Откликнуться
+                    </button>
+                  </div>
+                </v-col>
+              </v-row>
             </div>
-            <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
-              Apply Now
-            </button>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>

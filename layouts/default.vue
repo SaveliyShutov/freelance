@@ -5,20 +5,21 @@
       <nav class="h-16 flex items-center justify-between">
         <NuxtLink to="/" class="text-2xl font-bold text-indigo-600">Freelance</NuxtLink>
         <div class="flex gap-6">
-          <NuxtLink to="/worker" class="text-gray-600 hover:text-gray-900">Worker</NuxtLink>
-          <NuxtLink to="/employer" class="text-gray-600 hover:text-gray-900">Employer</NuxtLink>
-          <NuxtLink to="/requests" class="text-gray-600 hover:text-gray-900">Requests</NuxtLink>
-          <NuxtLink to="/sign" class="text-gray-600 hover:text-gray-900">Sign In</NuxtLink>
+          <NuxtLink to="/worker" class="text-gray-600 hover:text-gray-900">Работа</NuxtLink>
+          <NuxtLink to="/employer" class="text-gray-600 hover:text-gray-900">Разместить обявление</NuxtLink>
+          <NuxtLink to="/requests" class="text-gray-600 hover:text-gray-900">Заявки</NuxtLink>
+          <NuxtLink to="/sign" class="text-gray-600 hover:text-gray-900">Войти</NuxtLink>
         </div>
       </nav>
     </v-container>
   </header>
-  <div class="min-h-screen bg-gray-100">
+
+  <div class="bg-gray-100 pb-20">
     <slot />
   </div>
 
   <!-- Footer -->
-  <footer class="bg-gray-800 text-white mt-20">
+  <footer class="bg-gray-800 text-white pt-5">
     <v-container>
       <v-row class="py-12">
         <v-col cols="12" md="4">
