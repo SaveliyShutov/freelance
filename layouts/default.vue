@@ -5,10 +5,11 @@
       <nav class="h-16 flex items-center justify-between">
         <NuxtLink to="/" class="text-2xl font-bold text-indigo-600">Freelance</NuxtLink>
         <div class="flex gap-6">
-          <NuxtLink to="/worker" class="text-gray-600 hover:text-gray-900">Работа</NuxtLink>
+          <NuxtLink to="/work" class="text-gray-600 hover:text-gray-900">Работа</NuxtLink>
           <NuxtLink to="/employer" class="text-gray-600 hover:text-gray-900">Разместить обявление</NuxtLink>
           <NuxtLink to="/requests" class="text-gray-600 hover:text-gray-900">Заявки</NuxtLink>
           <NuxtLink to="/sign" class="text-gray-600 hover:text-gray-900">Войти</NuxtLink>
+          <NuxtLink to="/profile/id" class="text-gray-600 hover:text-gray-900">Профиль</NuxtLink>
         </div>
       </nav>
     </v-container>

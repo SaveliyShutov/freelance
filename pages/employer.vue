@@ -1,58 +1,75 @@
+<script setup>
+const profiles = [
+  {
+    id: 1,
+    name: 'James Taylor',
+    description: 'Automating and optimizing deployment pipelines for seamless delivery.',
+    email: 'james.t@example.com',
+    avatar: 'https://i.pravatar.cc/300?img=6',
+    rating: 4.9,
+    skills: ['Docker', 'Jenkins', 'Terraform', 'Azure']
+  }
+]
+</script>
 <template>
-  <v-container class="py-12">
-    <v-row>
-      <v-col cols="12">
-        <h1 class="text-3xl font-bold text-gray-900 mb-8">Employer Dashboard</h1>
-      </v-col>
-    </v-row>
-
-    <!-- Active Projects -->
-    <v-row class="mb-8">
-      <v-col cols="12">
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-xl font-semibold mb-4">Active Projects</h2>
-          <div class="space-y-6">
-            <div class="border-b pb-4">
-              <h3 class="text-lg font-medium">Website Redesign</h3>
-              <p class="text-gray-600 mb-2">Due: April 30, 2024</p>
-              <p class="text-gray-700">Complete overhaul of company website with modern design principles.</p>
-              <div class="mt-3">
-                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full">In Progress</span>
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <v-container class="py-12">
+      <v-row>
+        <v-col cols="12" class="text-center mb-12">
+          <div class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-400 pb-4">
+            Our Amazing Team
+          </div>
+          <div class="mt-4 text-gray-600 text-lg">Meet the talented individuals behind our success</div>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          v-for="profile in profiles"
+          :key="profile.id"
+          cols="12"
+          class="mb-6"
+        >
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+            <div class="flex flex-col sm:flex-row">
+              <div class="p-6 flex items-center justify-center">
+                <div class="w-[120px] h-[120px] rounded-full overflow-hidden ring-4 ring-indigo-600/10">
+                  <img
+                    :src="profile.avatar"
+                    :alt="profile.name"
+                    class="w-full h-full rounded-full"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="border-b pb-4">
-              <h3 class="text-lg font-medium">API Development</h3>
-              <p class="text-gray-600 mb-2">Due: May 15, 2024</p>
-              <p class="text-gray-700">Building RESTful API for mobile application backend.</p>
-              <div class="mt-3">
-                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full">Planning</span>
+
+              <div class="flex-grow p-6">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                  <div class="space-y-1">
+                    <h3 class="text-2xl font-bold text-gray-800">
+                      {{ profile.name }}
+                    </h3>
+                  </div>
+                  <div class="flex items-center bg-amber-50 px-3 py-1 rounded-full">
+                    <i class="mdi mdi-star text-amber-600 mr-1 text-sm"></i>
+                    <span class="text-amber-700 font-medium">{{ profile.rating }}/5</span>
+                  </div>
+                </div>
+
+                <p class="mt-4 text-gray-600 leading-relaxed">{{ profile.description }}</p>
+
+                <div class="mt-6 flex flex-wrap gap-2">
+                  <span
+                    v-for="skill in profile.skills"
+                    :key="skill"
+                    class="px-3 py-1 rounded-full text-sm font-medium bg-indigo-600/10 text-indigo-600"
+                  >
+                    {{ skill }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </v-col>
-    </v-row>
-
-    <!-- Post New Job -->
-    <v-row>
-      <v-col cols="12">
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-xl font-semibold mb-4">Post a New Job</h2>
-          <form class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Job Title</label>
-              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Description</label>
-              <textarea rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
-            </div>
-            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
-              Post Job
-            </button>
-          </form>
-        </div>
-      </v-col>
-    </v-row>
-  </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
