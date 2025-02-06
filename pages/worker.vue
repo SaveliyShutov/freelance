@@ -74,48 +74,7 @@ const jobs = ref([
 
           <div class="space-y-6">
             <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
-              <v-row>
-                <v-col cols="12" md="8">
-                  <!-- Job Title and Organization -->
-                  <div class="mb-3">
-                    <h3 class="text-xl font-semibold text-gray-900">{{ job.title }}</h3>
-                    <p class="text-lg text-indigo-600">{{ job.organization }}</p>
-                  </div>
-
-                  <!-- Location -->
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-gray-600">📍</span>
-                    <span>{{ job.town }}</span>
-                  </div>
-
-                  <!-- Time and Duration -->
-                  <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
-                    <div class="flex items-center gap-2">
-                      <span class="text-gray-600">🕒</span>
-                      <span>{{ job.workingHours }}</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <span class="text-gray-600">📅</span>
-                      <span> {{ job.postedDate }}</span>
-                    </div>
-                  </div>
-                </v-col>
-
-                <v-col cols="12" md="4" class="flex flex-col justify-between">
-                  <!-- Price -->
-                  <div class="text-right mb-4">
-                    <p class="text-2xl font-bold">{{ job.salaryRange }}₽</p>
-                  </div>
-
-                  <!-- Apply Button -->
-                  <div class="text-right">
-                    <button
-                      class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
-                      Откликнуться
-                    </button>
-                  </div>
-                </v-col>
-              </v-row>
+              <WorkCard :job="job" />
             </div>
           </div>
         </div>

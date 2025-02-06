@@ -1,72 +1,78 @@
+<script setup>
+const currentRole = ref('employer')
+
+const jobs = ref([
+  {
+    id: 1,
+    title: 'Уборка снега',
+    organization: 'ООО Жек',
+    postedDate: '2024-04-05',
+    postedTime: '09:30 AM',
+    workingHours: '08.00-12.00',
+    duration: '6 часов',
+    town: 'Пермь, ул. петропавловская д 21',
+    description: '',
+    salaryRange: '500',
+    applications: [
+      {
+        id: 1,
+        workerName: 'John Doe',
+        status: 'Pending',
+        avatar: 'https://ui-avatars.com/api/?name=John+Doe&background=c7d2fe&color=4f46e5',
+        rating: 4.5
+      },
+    ]
+  }
+])
+</script>
 <template>
   <v-container class="py-12">
     <v-row>
-      <v-col cols="12">
-        <h1 class="text-3xl font-bold text-gray-900 mb-8">Job Requests</h1>
+      <v-col cols="12" class="mb-8">
+        <div class="flex items-center gap-4">
+          <div class="bg-gray-200 rounded-lg p-1 inline-flex">
+            <button @click="currentRole = 'employer'" :class="[
+              'px-4 py-2 rounded-md text-xl font-medium transition-all duration-200',
+              currentRole === 'employer'
+                ? 'bg-white text-indigo-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            ]">
+              Мои Заказы (заказчик)
+            </button>
+            <button @click="currentRole = 'worker'" :class="[
+              'px-4 py-2 rounded-md text-xl font-medium transition-all duration-200',
+              currentRole === 'worker'
+                ? 'bg-white text-indigo-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            ]">
+              Мои Заявки (исполнитель)
+            </button>
+          </div>
+        </div>
       </v-col>
     </v-row>
-
-    <!-- Job Applications -->
-    <v-row class="mb-8">
+    <v-row v-if="currentRole === 'employer'">
       <v-col cols="12">
         <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-xl font-semibold mb-4">My Applications</h2>
-          <div class="space-y-6">
-            <div class="border-b pb-4">
-              <h3 class="text-lg font-medium">Senior Frontend Developer</h3>
-              <p class="text-gray-600 mb-2">Applied on: April 1, 2024</p>
-              <p class="text-gray-700 mb-3">Building modern web applications using React and Vue.js</p>
-              <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full">Under Review</span>
-            </div>
-            <div class="border-b pb-4">
-              <h3 class="text-lg font-medium">UI/UX Designer</h3>
-              <p class="text-gray-600 mb-2">Applied on: March 28, 2024</p>
-              <p class="text-gray-700 mb-3">Creating user-centered designs for web and mobile applications</p>
-              <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full">Interview Scheduled</span>
+          <p class="text-2xl font-semibold mb-6">Мои заказы</p>
+          <div class="space-y-8">
+            <div class="space-y-6">
+              <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <OrderCard :job="job" />
+              </div>
             </div>
           </div>
         </div>
       </v-col>
     </v-row>
-
-    <!-- Received Applications -->
-    <v-row>
+    <v-row v-if="currentRole === 'worker'">
       <v-col cols="12">
         <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-xl font-semibold mb-4">Received Applications</h2>
-          <div class="space-y-6">
-            <div class="border-b pb-4">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h3 class="text-lg font-medium">John Doe</h3>
-                  <p class="text-gray-600">Applied for: Full Stack Developer</p>
-                  <p class="text-gray-700 mt-2">5 years of experience in web development</p>
-                </div>
-                <div class="flex gap-2">
-                  <button class="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600">
-                    Accept
-                  </button>
-                  <button class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600">
-                    Decline
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="border-b pb-4">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h3 class="text-lg font-medium">Jane Smith</h3>
-                  <p class="text-gray-600">Applied for: UI Designer</p>
-                  <p class="text-gray-700 mt-2">3 years of experience in UI/UX design</p>
-                </div>
-                <div class="flex gap-2">
-                  <button class="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600">
-                    Accept
-                  </button>
-                  <button class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600">
-                    Decline
-                  </button>
-                </div>
+          <p class="text-2xl font-semibold mb-6">Мои заявки</p>
+          <div class="space-y-8">
+            <div class="space-y-6">
+              <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <ApplicationCard :job="job" />
               </div>
             </div>
           </div>

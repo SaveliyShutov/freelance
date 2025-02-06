@@ -7,7 +7,7 @@
         <div class="flex gap-6">
           <NuxtLink to="/worker" class="text-gray-600 hover:text-gray-900">Работа</NuxtLink>
           <NuxtLink to="/employer" class="text-gray-600 hover:text-gray-900">Разместить обявление</NuxtLink>
-          <NuxtLink to="/requests" class="text-gray-600 hover:text-gray-900">Заявки</NuxtLink>
+          <NuxtLink to="/requests" class="text-gray-600 hover:text-gray-900">Мои заказы | заявки</NuxtLink>
           <NuxtLink to="/sign" class="text-gray-600 hover:text-gray-900">Войти</NuxtLink>
         </div>
       </nav>
