@@ -58,15 +58,7 @@ const getStatusClass = (status) => {
               </div>
               <div>
                 <p class="font-medium text-gray-900">{{ application.workerName }}</p>
-                <div class="flex items-center gap-1 mt-1">
-                  <div class="flex">
-                    <span v-for="i in 5" :key="i" class="text-lg">
-                      <span v-if="i <= application.rating" class="text-yellow-400">★</span>
-                      <span v-else class="text-gray-300">★</span>
-                    </span>
-                  </div>
-                  <span class="text-sm text-gray-600 ml-1">({{ application.rating }}/5)</span>
-                </div>
+                <StarsRating :rating="application.rating" />
               </div>
             </div>
           </v-col>

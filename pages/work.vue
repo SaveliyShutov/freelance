@@ -1,4 +1,6 @@
 <script setup>
+let router = useRouter()
+
 const filters = ref({
   town: '',
   date: ''
@@ -6,10 +8,8 @@ const filters = ref({
 
 const sortBy = ref('date')
 
-// Available towns
 const towns = ['Пермь']
 
-// Sample job data
 const jobs = ref([
   {
     id: 1,
@@ -73,8 +73,8 @@ const jobs = ref([
           </v-row>
 
           <div class="space-y-6">
-            <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
-              <WorkCard :job="job" />
+            <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+              <WorkCard @click="router.push(`/order/${job.id}`)" :job="job" />
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 <script setup>
+
 const { id } = useRoute().params
 </script>
 <template>
@@ -11,8 +12,11 @@ const { id } = useRoute().params
               <div class="mx-auto w-48 h-48 rounded-full overflow-hidden ring-4 ring-indigo-600/10 mb-6">
                 <img src="https://i.pravatar.cc/300?img=1" alt="Скибиди Диди" class="w-full h-full" />
               </div>
-              <h1 class="text-2xl font-bold text-gray-800">Скибиди Диди</h1>
-              <rating />
+              <div class="flex flex-col items-center">
+                <h1 class="text-2xl font-bold text-gray-800">Скибиди Диди</h1>
+                <StarsRating rating="2.2" />
+              </div>
+
             </div>
           </div>
         </v-col>
@@ -92,7 +96,7 @@ const { id } = useRoute().params
                       <h3 class="mt-2 text-gray-600">
                         Оценка работы:
                       </h3>
-                      <stars-feedback />
+                      <StarsRating rating="4.1" class="mx-2" />
                     </div>
                     <p class="mt-2 text-gray-600">
                       Отзыв: Работа выполняется на ура.
@@ -103,11 +107,11 @@ const { id } = useRoute().params
                       <div class="font-semibold text-gray-800">Покупка ээээ хз</div>
                       <div class="text-indigo-600/80">МММ</div>
                       <div class="text-sm text-gray-600">2000</div>
-                      <div class="flex items-center">
+                      <div class="flex justify-start items-center">
                         <h3 class="mt-2 text-gray-600">
                           Оценка работы:
                         </h3>
-                        <stars-feedback />
+                        <StarsRating rating="5" class="mx-2" />
                       </div>
                       <p class="mt-2 text-gray-600">
                         Работодатель не оставил отзыв.

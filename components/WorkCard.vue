@@ -13,7 +13,6 @@ const { job } = defineProps(['job'])
         <i class="mdi mdi-map-marker text-indigo-600"></i>
         <span>{{ job.town }}</span>
       </div>
-
       <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
         <div class="flex items-center gap-2">
           <i class="mdi mdi-clock-time-three text-indigo-600"></i>
