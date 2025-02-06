@@ -9,7 +9,7 @@
           <NuxtLink to="/employer" class="text-gray-600 hover:text-gray-900">Разместить обявление</NuxtLink>
           <NuxtLink to="/requests" class="text-gray-600 hover:text-gray-900">Мои заказы | заявки</NuxtLink>
           <NuxtLink to="/sign" class="text-gray-600 hover:text-gray-900">Войти</NuxtLink>
-          <NuxtLink to="/profile/id" class="text-gray-600 hover:text-gray-900">Профиль</NuxtLink>
+          <NuxtLink to="/profile" class="text-gray-600 hover:text-gray-900">Профиль</NuxtLink>
         </div>
       </nav>
     </v-container>
