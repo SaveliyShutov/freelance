@@ -1,4 +1,128 @@
 <script setup>
+const jobTypes = [
+  'Доставка',
+  'Переводчик',
+  'Репетитор',
+  'Кейтеринг',
+  'Грузчик',
+  'Сиделка',
+  'Охрана',
+  'Чистка крыши',
+  'Другое'
+]
+
+const jobType = ref('')
+const description = ref('')
+const location = ref('')
+const budget = ref('')
+const deadline = ref('')
+const completionTime = ref('')
+
+const submitForm = () => {
+  console.log({
+    jobType: jobType.value,
+    description: description.value,
+    location: location.value,
+    budget: budget.value,
+    deadline: deadline.value,
+    completionTime: completionTime.value
+  })
+}
+</script>
+<template>
+  <div class="min-h-screen bg-gray-50">
+    <v-container>
+      <div class="max-w-3xl mx-auto py-8">
+        <h1 class="text-3xl font-bold mb-8 text-gray-800">Создание объявления</h1>
+        
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <form @submit.prevent="submitForm">
+            <v-row>
+              <v-col cols="12">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Вид работы</label>
+                <select
+                  v-model="jobType"
+                  required
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]"
+                >
+                  <option value="" disabled>Выберите вид работы</option>
+                  <option v-for="type in jobTypes" :key="type" :value="type">
+                    {{ type }}
+                  </option>
+                </select>
+              </v-col>
+
+              <v-col cols="12">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Введите описание работы</label>
+                <textarea
+                  v-model="description"
+                  required
+                  rows="4"
+                  placeholder="А вот здесь поподробнее"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]"
+                ></textarea>
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Локация</label>
+                <input
+                  type="text"
+                  v-model="location"
+                  required
+                  placeholder="Город, адрес"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Бюджет (₽)</label>
+                <input
+                  type="number"
+                  v-model="budget"
+                  required
+                  min="100"
+                  step="50"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Deadline</label>
+                <input
+                  type="date"
+                  v-model="deadline"
+                  required
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Completion Time (hours)</label>
+                <input
+                  type="number"
+                  v-model="completionTime"
+                  min="1"
+                  required
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]"
+                />
+              </v-col>
+
+              <v-col cols="12" class="text-right">
+                <button
+                  type="submit"
+                  class="px-8 py-2 bg-[#473CD2] text-white rounded-md hover:bg-[#3730A3] transition-colors duration-200"
+                >
+                  Post Job
+                </button>
+              </v-col>
+            </v-row>
+          </form>
+        </div>
+      </div>
+    </v-container>
+  </div>
+</template>
+<!-- <script setup>
 const profiles = [
   {
     id: 1,
@@ -72,4 +196,4 @@ const profiles = [
       </v-row>
     </v-container>
   </div>
-</template>
+</template> -->
