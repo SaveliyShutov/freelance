@@ -28,10 +28,12 @@ const submitForm = () => {
     completionTime: completionTime.value
   })
 }
+
+const authStore = useAuth() 
 </script>
 <template>
-  <div class="min-h-screen bg-gray-50">
     <v-container>
+  {{ authStore.user.name }}
       <div class="max-w-3xl mx-auto py-8">
         <h1 class="text-3xl font-bold mb-8 text-gray-800">Создание объявления</h1>
         
@@ -120,7 +122,6 @@ const submitForm = () => {
         </div>
       </div>
     </v-container>
-  </div>
 </template>
 <!-- <script setup>
 const profiles = [

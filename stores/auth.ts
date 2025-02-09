@@ -12,8 +12,32 @@ export const useAuth = defineStore('auth', () => {
     surname: 'tomilov',
     email: 'sanya@gmail.com',
     password: '12345678',
-    role: 'worker',
+    role: 'employer',
     avatars: [''],
+    rating: 4.5,
+    orders: [
+      {
+        id: '1',
+        title: 'Уборка снега',
+        organization: 'ООО Жек',
+        date: '2024-04-05',
+        workingHours: '08.00-12.00',
+        duration: 6,
+        adress: 'Пермь, ул. петропавловская д 21',
+        description: '',
+        salaryRange: 500,
+        applications: [
+          {
+            _id: '1',
+            workerName: 'John Doe',
+            worker: 'sanya',
+            status: 'Pending',
+            avatar: 'https://ui-avatars.com/api/?name=John+Doe&background=c7d2fe&color=4f46e5',
+            rating: 4.5
+          },
+        ]
+      }
+    ]
   }
   // async function registration(data: any): Promise<boolean> {
   //   try {
@@ -58,7 +82,7 @@ export const useAuth = defineStore('auth', () => {
   //       return true
   //     }
   //     const response = await AuthAPI.refresh()
-      
+
   //     if (response.data.value?._id) {
   //       user.value = response.data.value
   //       return true
