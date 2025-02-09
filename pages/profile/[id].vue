@@ -9,9 +9,9 @@ const { id } = useRoute().params
           <div class="bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="p-8 text-center">
               <div class="mx-auto w-48 h-48 rounded-full overflow-hidden ring-4 ring-indigo-600/10 mb-6">
-                <img src="https://i.pravatar.cc/300?img=1" alt="Скибиди Диди" class="w-full h-full" />
+                <img src="assets\maaaks.png" alt="Макс Стариков" class="w-full h-full" />
               </div>
-              <h1 class="text-2xl font-bold text-gray-800">Скибиди Диди</h1>
+              <h1 class="text-2xl font-bold text-gray-800">Макс Стариков</h1>
               <rating />
             </div>
           </div>
@@ -27,7 +27,7 @@ const { id } = useRoute().params
                   О мне
                 </h2>
                 <p class="text-gray-600 leading-relaxed ml-2">
-                  В 8 лет я потерялся в Турции. Меня так и не нашли.
+                  Имею Высшее образование, занимаюсь спортом, готов к большим физцическим нагрузкам.
                 </p>
               </div>
               <div>
@@ -39,16 +39,16 @@ const { id } = useRoute().params
                   <div class="flex items-center text-gray-600">
                     <i class="mdi mdi-email text-indigo-600 mr-3"></i>
                     <a href="mailto:sarah.j@example.com" class="hover:text-indigo-600 transition-colors">
-                      sarah.j@example.com
+                      Maaaks2003@gmail.com
                     </a>
                   </div>
                   <div class="flex items-center text-gray-600">
                     <i class="mdi mdi-phone text-indigo-600 mr-3"></i>
-                    <span>+1 (555) 123-4567</span>
+                    <span>+7(902) 34-586-90</span>
                   </div>
                   <div class="flex items-center text-gray-600">
                     <i class="mdi mdi-map-marker text-indigo-600 mr-3"></i>
-                    <span>San Francisco, CA</span>
+                    <span>г.Москва, район Патрики</span>
                   </div>
                 </div>
               </div>
@@ -85,9 +85,9 @@ const { id } = useRoute().params
                 </h2>
                 <div class="space-y-4">
                   <div class="border-l-2 border-indigo-600/20 pl-4 ml-2">
-                    <div class="font-semibold text-gray-800">Чистка унитаза</div>
-                    <div class="text-indigo-600/80">ООО Ненаеб</div>
-                    <div class="text-sm text-gray-600">2020 - Настоящее время</div>
+                    <div class="font-semibold text-gray-800">Погрузка грузовика</div>
+                    <div class="text-indigo-600/80">ООО Озон</div>
+                    <div class="text-sm text-gray-600">03.07.2023</div>
                     <div class="flex items-center">
                       <h3 class="mt-2 text-gray-600">
                         Оценка работы:
@@ -95,14 +95,14 @@ const { id } = useRoute().params
                       <stars-feedback />
                     </div>
                     <p class="mt-2 text-gray-600">
-                      Отзыв: Работа выполняется на ура.
+                      Отзыв: Отлично отработал, претензий нет.
                     </p>
                   </div>
                   <div class="space-y-4">
                     <div class="border-l-2 border-indigo-600/20 pl-4 ml-2">
-                      <div class="font-semibold text-gray-800">Покупка ээээ хз</div>
-                      <div class="text-indigo-600/80">МММ</div>
-                      <div class="text-sm text-gray-600">2000</div>
+                      <div class="font-semibold text-gray-800">Помощь с заполнением бумаг</div>
+                      <div class="text-indigo-600/80">Гос. бухгалтерия</div>
+                      <div class="text-sm text-gray-600">20.03.2022-22.03.2022</div>
                       <div class="flex items-center">
                         <h3 class="mt-2 text-gray-600">
                           Оценка работы:
@@ -110,7 +110,7 @@ const { id } = useRoute().params
                         <stars-feedback />
                       </div>
                       <p class="mt-2 text-gray-600">
-                        Работодатель не оставил отзыв.
+                        <i>Работодатель не оставил отзыв.</i>
                       </p>
                     </div>
                   </div>

@@ -84,18 +84,18 @@ const jobs = ref([
 
                   <!-- Location -->
                   <div class="flex items-center gap-2 mb-2">
-                    <span class="text-gray-600">📍</span>
+                    <i class="mdi mdi-earth text-indigo-600 text-xl"></i>
                     <span>{{ job.town }}</span>
                   </div>
 
                   <!-- Time and Duration -->
                   <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
                     <div class="flex items-center gap-2">
-                      <span class="text-gray-600">🕒</span>
+                      <i class="mdi mdi-clock-outline text-indigo-600 text-xl"></i>
                       <span>{{ job.workingHours }}</span>
                     </div>
                     <div class="flex items-center gap-2">
-                      <span class="text-gray-600">📅</span>
+                      <i class="mdi mdi-calendar-range text-indigo-600 text-xl"></i>
                       <span> {{ job.postedDate }}</span>
                     </div>
                   </div>
