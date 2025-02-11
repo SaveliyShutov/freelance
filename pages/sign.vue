@@ -14,10 +14,10 @@ const handleSubmit = () => {
 }
 </script>
 <template>
-  <v-container class="min-h-screen flex  justify-center py-12">
+  <v-container class="min-h-screen flex justify-center py-12">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        <div class="space-y-8">
+        <div class="space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <div>
             <h2 class="text-center text-3xl font-extrabold text-gray-900">{{ isSignUp ? 'Войти' : 'Создать аккаунт' }}
             </h2>

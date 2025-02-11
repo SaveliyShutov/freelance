@@ -31,7 +31,7 @@ const jobs = ref([
     <v-row>
       <v-col cols="12" class="flex flex-row align-center justify-between">
         <h1 class="text-4xl font-bold text-gray-900 my-8">Вся работа</h1>
-        <button class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+        <button @click="router.push('/employer/create-order')" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
           Разместить заказ
         </button>
       </v-col>
@@ -39,7 +39,7 @@ const jobs = ref([
 
     <v-row>
       <v-col cols="12">
-        <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <!-- Filters and Sorting -->
           <v-row class="mb-6">
             <v-col cols="12" md="4">

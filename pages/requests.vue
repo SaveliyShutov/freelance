@@ -53,30 +53,44 @@ const jobs = ref([
     </v-row>
     <v-row v-if="currentRole === 'employer'">
       <v-col cols="12">
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <p class="text-2xl font-semibold mb-6">Мои заказы</p>
-          <div class="space-y-8">
-            <div class="space-y-6">
-              <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <OrderCard :job="job" />
+        <v-row>
+          <v-col cols="12" class="flex flex-row align-center justify-between">
+            <h1 class="text-4xl font-bold text-gray-900 mb-8">Мои заказы</h1>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <div class="space-y-8">
+              <div class="space-y-6">
+                <div v-for="job in jobs" :key="job.id"
+                  class=" bg-white p-10 rounded-xl shadow-lg border border-gray-100">
+                  <OrderCard :job="job" />
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
+
     <v-row v-if="currentRole === 'worker'">
       <v-col cols="12">
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <p class="text-2xl font-semibold mb-6">Мои заявки</p>
-          <div class="space-y-8">
-            <div class="space-y-6">
-              <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <ApplicationCard :job="job" />
+        <v-row>
+          <v-col cols="12" class="flex flex-row align-center justify-between">
+            <h1 class="text-4xl font-bold text-gray-900 mb-8">Мои заявки</h1>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <div class="space-y-8">
+              <div class="space-y-6">
+                <div v-for="job in jobs" :key="job.id" class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
+                  <ApplicationCard :job="job" />
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>

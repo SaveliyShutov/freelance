@@ -6,10 +6,10 @@ const job = ref(
     id: 1,
     title: 'Уборка снега',
     organization: {
-      name:'ООО Жек',
-      rating:'4.5',
-      shortDescription:'Жилищно-эксплуатационная контора (ЖЭК) — предприятие жилищно-коммунального хозяйства (ЖКХ), существовавшее в Советском Союзе, а затем в Российской Федерации',
-      avatar:'https://i.pravatar.cc/300',
+      name: 'ООО Жек',
+      rating: '4.5',
+      shortDescription: 'Жилищно-эксплуатационная контора (ЖЭК) — предприятие жилищно-коммунального хозяйства (ЖКХ), существовавшее в Советском Союзе, а затем в Российской Федерации',
+      avatar: 'https://i.pravatar.cc/300',
     },
     postedDate: '2024-04-05',
     workingHours: '08.00-12.00',
@@ -21,13 +21,15 @@ const job = ref(
 )
 </script>
 <template>
-  <v-container class="py-12">
-    <v-row class="mb-8">
-      <BackButton />
+  <v-container>
+    <v-row>
+      <v-col cols="12" class="my-8">
+        <BackButton />
+      </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
-        <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <div class="">
             <v-col cols="12" class="flex justify-between">
               <p class="text-4xl font-bold text-gray-900">{{ job.title }}</p>
@@ -53,7 +55,7 @@ const job = ref(
               </div>
             </v-col>
             <v-col cols="12">
-              <ShortProfileCard @click="router.push('/profile/1')" :profile="job.organization"/>
+              <ShortProfileCard @click="router.push('/profile/1')" :profile="job.organization" />
             </v-col>
           </div>
         </div>

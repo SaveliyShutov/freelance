@@ -32,12 +32,10 @@ const jobs = ref([
     </v-row>
     <v-row>
       <v-col cols="12">
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <div class="space-y-8">
-            <div class="space-y-6">
-              <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <OrderCard :job="job" />
-              </div>
+        <div class="space-y-8">
+          <div class="space-y-6">
+            <div v-for="job in jobs" :key="job.id" class=" bg-white p-10 rounded-xl shadow-lg border border-gray-100">
+              <OrderCard :job="job" />
             </div>
           </div>
         </div>
