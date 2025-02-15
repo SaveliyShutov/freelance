@@ -30,34 +30,35 @@ const job = ref(
     <v-row>
       <v-col cols="12">
         <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
-          <div class="">
-            <v-col cols="12" class="flex justify-between">
-              <p class="text-4xl font-bold text-gray-900">{{ job.title }}</p>
-              <p class="text-2xl font-bold text-gray-900">{{ job.salaryRange }}₽ / {{ job.duration }}</p>
-            </v-col>
-            <v-col cols="12">
-              <p>{{ job.description }}</p>
-            </v-col>
-            <v-col cols="12">
+          <v-col cols="12" class="flex justify-between">
+            <p class="text-4xl font-bold text-gray-900">{{ job.title }}</p>
+            <p class="text-2xl font-bold text-gray-900">{{ job.salaryRange }} ₽ / {{ job.duration }}</p>
+          </v-col>
+          <v-col cols="12">
+            <p>{{ job.description }}</p>
+          </v-col>
+          <v-col cols="12">
+            <div class="flex flex-row justify-between">
               <div class="flex items-center gap-2 mb-2">
                 <i class="mdi mdi-map-marker text-indigo-600"></i>
                 <p class="font-semibold">{{ job.adress }}</p>
               </div>
-              <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
-                <div class="flex items-center gap-2">
-                  <i class="mdi mdi-clock-time-three text-indigo-600"></i>
-                  <p class="font-semibold">{{ job.workingHours }}</p>
-                </div>
-                <div class="flex items-center gap-2">
-                  <i class="mdi mdi-calendar-range text-indigo-600"></i>
-                  <p class="font-semibold"> {{ job.postedDate }}</p>
-                </div>
+              <ApplyButton />
+            </div>
+            <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
+              <div class="flex items-center gap-2">
+                <i class="mdi mdi-clock-time-three text-indigo-600"></i>
+                <p class="font-semibold">{{ job.workingHours }}</p>
               </div>
-            </v-col>
-            <v-col cols="12">
-              <ShortProfileCard @click="router.push('/profile/1')" :profile="job.organization" />
-            </v-col>
-          </div>
+              <div class="flex items-center gap-2">
+                <i class="mdi mdi-calendar-range text-indigo-600"></i>
+                <p class="font-semibold"> {{ job.postedDate }}</p>
+              </div>
+            </div>
+          </v-col>
+          <v-col cols="12">
+            <ShortProfileCard @click="router.push('/profile/1')" :profile="job.organization" />
+          </v-col>
         </div>
       </v-col>
     </v-row>

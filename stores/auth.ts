@@ -12,9 +12,12 @@ export const useAuth = defineStore('auth', () => {
     surname: 'tomilov',
     email: 'sanya@gmail.com',
     password: '12345678',
+    address: 'Пермь, Дзержинский район',
+    description:'отвественый и приятный в общении',
     role: 'worker',
     avatars: [''],
     rating: 4.5,
+    phone: '89226945621',
     orders: [
       {
         id: '1',
