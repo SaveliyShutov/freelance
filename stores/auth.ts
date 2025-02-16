@@ -13,7 +13,7 @@ export const useAuth = defineStore('auth', () => {
     password: '12345678',
     address: 'Пермь, Дзержинский район',
     description:'отвественый и приятный в общении',
-    role: 'worker',
+    role: 'employer',
     avatars: [''],
     rating: 4.5,
     phone: '89226945621',

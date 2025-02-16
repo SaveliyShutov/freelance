@@ -1,4 +1,8 @@
 <script setup>
+definePageMeta({
+  middleware: ["worker"],
+})
+
 const email = ref('')
 const password = ref('')
 const phone = ref('')

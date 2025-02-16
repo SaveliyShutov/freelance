@@ -1,3 +1,8 @@
+<script setup lang='ts'>
+definePageMeta({
+  middleware: ["employer"],
+})
+</script>
 <template>
   <v-container class="py-12">
     <v-row>

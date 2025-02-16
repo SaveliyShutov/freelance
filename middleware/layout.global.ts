@@ -14,7 +14,7 @@ export default defineNuxtRouteMiddleware(async () => {
     return setPageLayout('employer')
   } else if (authStore.user?.role == 'worker') {
     return setPageLayout('worker')
-  } else if (authStore.user?.role == 'guest') {
+  } else {
     return setPageLayout('default')
   }
 
