@@ -61,23 +61,6 @@ const router = useRouter();
                 <i class="mdi mdi-briefcase text-indigo-600 mr-2"></i>
                 Выполненные заказы
               </h2>
-              <!-- <div class="space-y-4">
-                <div class="border-l-2 border-indigo-600/20 pl-4 ml-2">
-                  <div class="font-semibold text-gray-800">{{ userstore.user.title }}</div>
-                  <div class="text-indigo-600/80">{{ userstore.user.organisation }}</div>
-                  <div class="text-sm text-gray-600">{{ userstore.user.date }}</div>
-                  <div class="flex items-center">
-                    <h3 class="mt-2 text-gray-600">
-                      Оценка работы:
-                    </h3>
-                    <StarsRating rating={{ userstore.user.orders.applications.rating }} class="mx-2" />
-                  </div>
-                  <p class="mt-2 text-gray-600">
-                    Отзыв: {{ userstore.user.orders.description }}
-                  </p>
-                </div>
-                
-              </div> -->
               <div v-for="review in userstore.user.orders" :key="review._id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
                 <WorkHistoryCard @click="router.push(`/order/${review._id}`)" :review="review"/>
               </div>
