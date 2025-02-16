@@ -6,7 +6,10 @@ export interface User {
 	_id: string
 	name: string
 	surname: string
+	info: string
 	email: string
+	phone: string
+	geo: string
 	password: string
 	role: string
 	avatars: string[]

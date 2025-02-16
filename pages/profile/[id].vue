@@ -1,6 +1,7 @@
 <script setup>
-
-const { id } = useRoute().params
+const userstore = useAuth();
+const { id } = useRoute().params;
+const router = useRouter();
 </script>
 <template>
   <v-container class="py-12">
@@ -9,11 +10,11 @@ const { id } = useRoute().params
         <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <div class="p-8 text-center">
             <div class="mx-auto w-48 h-48 rounded-full overflow-hidden ring-4 ring-indigo-600/10 mb-6">
-              <img src="https://i.pravatar.cc/300?img=1" alt="Скибиди Диди" class="w-full h-full" />
+              <img src="assets\maaaks.png" alt="" class="w-full h-full" />
             </div>
             <div class="flex flex-col items-center">
-              <h1 class="text-2xl font-bold text-gray-800">Скибиди Диди</h1>
-              <StarsRating rating="2.2" />
+              <h1 class="text-2xl font-bold text-gray-800">{{ userstore.user.name }} {{ userstore.user.surname }}</h1>
+              <StarsRating/>
             </div>
 
           </div>
@@ -30,7 +31,7 @@ const { id } = useRoute().params
                 О мне
               </h2>
               <p class="text-gray-600 leading-relaxed ml-2">
-                В 8 лет я потерялся в Турции. Меня так и не нашли.
+                {{ userstore.user.info }}
               </p>
             </div>
             <div>
@@ -47,11 +48,11 @@ const { id } = useRoute().params
                 </div>
                 <div class="flex items-center text-gray-600">
                   <i class="mdi mdi-phone text-indigo-600 mr-3"></i>
-                  <span>+1 (555) 123-4567</span>
+                  <span>{{ userstore.user.phone }}</span>
                 </div>
                 <div class="flex items-center text-gray-600">
                   <i class="mdi mdi-map-marker text-indigo-600 mr-3"></i>
-                  <span>San Francisco, CA</span>
+                  <span>{{ userstore.user.geo }}</span>
                 </div>
               </div>
             </div>
@@ -60,37 +61,25 @@ const { id } = useRoute().params
                 <i class="mdi mdi-briefcase text-indigo-600 mr-2"></i>
                 Выполненные заказы
               </h2>
-              <div class="space-y-4">
+              <!-- <div class="space-y-4">
                 <div class="border-l-2 border-indigo-600/20 pl-4 ml-2">
-                  <div class="font-semibold text-gray-800">Чистка унитаза</div>
-                  <div class="text-indigo-600/80">ООО Ненаеб</div>
-                  <div class="text-sm text-gray-600">2020 - Настоящее время</div>
+                  <div class="font-semibold text-gray-800">{{ userstore.user.title }}</div>
+                  <div class="text-indigo-600/80">{{ userstore.user.organisation }}</div>
+                  <div class="text-sm text-gray-600">{{ userstore.user.date }}</div>
                   <div class="flex items-center">
                     <h3 class="mt-2 text-gray-600">
                       Оценка работы:
                     </h3>
-                    <StarsRating rating="4.1" class="mx-2" />
+                    <StarsRating rating={{ userstore.user.orders.applications.rating }} class="mx-2" />
                   </div>
                   <p class="mt-2 text-gray-600">
-                    Отзыв: Работа выполняется на ура.
+                    Отзыв: {{ userstore.user.orders.description }}
                   </p>
                 </div>
-                <div class="space-y-4">
-                  <div class="border-l-2 border-indigo-600/20 pl-4 ml-2">
-                    <div class="font-semibold text-gray-800">Покупка ээээ хз</div>
-                    <div class="text-indigo-600/80">МММ</div>
-                    <div class="text-sm text-gray-600">2000</div>
-                    <div class="flex justify-start items-center">
-                      <h3 class="mt-2 text-gray-600">
-                        Оценка работы:
-                      </h3>
-                      <StarsRating rating="5" class="mx-2" />
-                    </div>
-                    <p class="mt-2 text-gray-600">
-                      Работодатель не оставил отзыв.
-                    </p>
-                  </div>
-                </div>
+                
+              </div> -->
+              <div v-for="review in userstore.user.orders" :key="review._id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+                <WorkHistoryCard @click="router.push(`/order/${review._id}`)" :review="review"/>
               </div>
             </div>
           </div>

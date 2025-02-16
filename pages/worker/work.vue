@@ -73,7 +73,7 @@ const jobs = ref([
           </v-row>
 
           <div class="space-y-6">
-            <div v-for="job in jobs" :key="job.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <div v-for="job in jobs" :key="job" class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
               <WorkCard @click="router.push(`/order/${job.id}`)" :job="job" />
             </div>
           </div>

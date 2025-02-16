@@ -2,7 +2,6 @@ import { defineStore } from "pinia"
 // import AuthAPI from "../api/AuthApi"
 
 import type { User } from "../types/user.interface"
-import { ref } from "vue"
 
 export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
@@ -10,21 +9,24 @@ export const useAuth = defineStore('auth', () => {
     _id: '1',
     name: 'sanya',
     surname: 'tomilov',
+    info: 'Имею высшее образование, занимаюсь борьбой 8 лет.',
     email: 'sanya@gmail.com',
+    geo: 'Россия, г.Пермь, ул.Краснознаменная 9',
     password: '12345678',
+    phone: '+79024534166',
     role: 'worker',
     avatars: [''],
     rating: 4.5,
     orders: [
       {
-        id: '1',
+        _id: '1',
         title: 'Уборка снега',
         organization: 'ООО Жек',
         date: '2024-04-05',
         workingHours: '08.00-12.00',
         duration: 6,
         adress: 'Пермь, ул. петропавловская д 21',
-        description: '',
+        description: 'Работу выполнил на отлично',
         salaryRange: 500,
         applications: [
           {
@@ -36,7 +38,7 @@ export const useAuth = defineStore('auth', () => {
             rating: 4.5
           },
         ]
-      }
+      },
     ]
   }
   // async function registration(data: any): Promise<boolean> {

@@ -1,7 +1,7 @@
 import type { Application } from './application.interface';
 
 export interface Order {
-  id: string,
+  _id: string,
   title: string,
   organization: string, // organisation._id
   date: string,
