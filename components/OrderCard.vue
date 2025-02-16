@@ -1,25 +1,5 @@
 <script setup>
 const { job } = defineProps(['job'])
-
-const getStatusClass = (status) => {
-  const classes = {
-    'InProgress': 'bg-yellow-100 text-yellow-800',
-    'Accepted': 'bg-green-100 text-green-800',
-    'Rejected': 'bg-red-100 text-red-800',
-  }
-  return classes[status] || 'bg-gray-100 text-gray-800'
-}
-
-// Function to update application status
-const updateApplicationStatus = (jobId, applicationId, newStatus) => {
-  const job = employerJobs.value.find(j => j.id === jobId)
-  if (job) {
-    const application = job.applications.find(a => a.id === applicationId)
-    if (application) {
-      application.status = newStatus
-    }
-  }
-}
 </script>
 <template>
   <v-row>
@@ -48,7 +28,7 @@ const updateApplicationStatus = (jobId, applicationId, newStatus) => {
 
     <v-col cols="12" md="4" class="flex flex-col justify-between">
       <div class="text-right mb-4">
-        <p class="text-2xl font-bold">{{ job.salaryRange }}₽</p>
+        <p class="text-2xl font-bold">{{ job.salaryRange }} ₽</p>
       </div>
     </v-col>
     <v-col>

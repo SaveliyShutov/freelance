@@ -4,6 +4,9 @@ import type { Organization } from './organisation.interface';
 
 export interface User {
 	_id: string
+	phone: string
+	address: string
+	description: string
 	name: string
 	surname: string
 	info: string

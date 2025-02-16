@@ -13,10 +13,12 @@ export const useAuth = defineStore('auth', () => {
     email: 'sanya@gmail.com',
     geo: 'Россия, г.Пермь, ул.Краснознаменная 9',
     password: '12345678',
-    phone: '+79024534166',
+    address: 'Пермь, Дзержинский район',
+    description:'отвественый и приятный в общении',
     role: 'worker',
     avatars: [''],
     rating: 4.5,
+    phone: '89226945621',
     orders: [
       {
         _id: '1',
