@@ -1,4 +1,7 @@
 <script setup>
+definePageMeta({
+  middleware: ["worker"],
+})
 
 const jobs = ref([
   {

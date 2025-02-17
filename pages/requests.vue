@@ -1,4 +1,7 @@
 <script setup>
+definePageMeta({
+  middleware: ["guest"],
+})
 const currentRole = ref('employer')
 
 const jobs = ref([

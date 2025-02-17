@@ -1,4 +1,7 @@
 <script setup>
+definePageMeta({
+  middleware: ["employer"],
+})
 let router = useRouter()
 
 const filters = ref({

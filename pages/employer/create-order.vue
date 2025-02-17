@@ -1,4 +1,8 @@
 <script setup>
+definePageMeta({
+  middleware: ["employer"],
+})
+
 const jobTypes = [
   'Доставка',
   'Переводчик',
