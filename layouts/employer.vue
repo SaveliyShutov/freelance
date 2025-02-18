@@ -1,5 +1,8 @@
 <script setup>
+import UserDropdownCard from '~/components/UserDropdownCard.vue';
+
 const userStore = useAuth()
+
 </script>
 <template>
   <!-- Header -->
@@ -12,22 +15,7 @@ const userStore = useAuth()
           <NuxtLink to="/employer/create-order" class="text-gray-600 hover:text-gray-900">Разместить обявление
           </NuxtLink>
           <NuxtLink to="/employer/requests" class="text-gray-600 hover:text-gray-900">Мои заказы</NuxtLink>
-          <div class="flex align-center justify-between">
-            <div class="" v-if="userStore.user?.avatars[0]">
-              <v-avatar class="border" :image="userStore.user?.avatars[0]"></v-avatar>
-            </div>
-            <div class="" v-else>
-              <v-avatar class="border">{{ userStore.user?.name[0] }}{{ userStore.user?.surname[0] }}</v-avatar>
-            </div>
-            <div class="mx-2">
-              <p class="text-sm">
-                {{ userStore.user?.name }}
-              </p>
-              <p class="text-xs">
-                {{ userStore.user?.role }}
-              </p>
-            </div>
-          </div>
+          <UserDropdownCard/>
         </div>
       </nav>
     </v-container>
