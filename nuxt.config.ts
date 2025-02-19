@@ -22,6 +22,15 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
   ],
 
+  runtimeConfig: {
+    ycAccessKeyId: process.env.YC_KEY_ID,
+    ycSecretAccessKKey: process.env.YC_SECRET,
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE,
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
+    },
+  },
+
   vite: {
     vue: {
       template: {
@@ -35,6 +44,10 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+
+  devServer: {
+    port: 3011,
   },
 
   app: {

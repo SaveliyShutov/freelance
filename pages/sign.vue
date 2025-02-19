@@ -4,6 +4,8 @@ const password = ref('')
 const phone = ref('')
 const isSignUp = ref(false)
 
+const router = useRoute()
+
 const handleSubmit = () => {
   // Handle form submission here
   console.log('Form submitted:', {
@@ -19,14 +21,13 @@ const handleSubmit = () => {
       <v-col cols="12" sm="8" md="6" lg="4">
         <div class="space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <div>
-            <h2 class="text-center text-3xl font-extrabold text-gray-900">{{ isSignUp ? 'Войти' : 'Создать аккаунт' }}
+            <h2 class="text-center text-3xl font-extrabold text-gray-900">Войти
             </h2>
             <p class="mt-2 text-center text-sm text-gray-600">
               или
-              <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"
-                @click.prevent="isSignUp = !isSignUp">
-                {{ isSignUp ? 'создать новый акканут' : 'войти в акканут' }}
-              </a>
+              <NuxtLink to="/reg" class="font-medium text-indigo-600 hover:text-indigo-500">
+                создать новый акканут'
+              </NuxtLink>
             </p>
           </div>
           <form class="space-y-6" @submit.prevent="handleSubmit">
@@ -54,7 +55,7 @@ const handleSubmit = () => {
             <div>
               <button type="submit"
                 class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {{ isSignUp ? 'Войти' : 'Зарегистрироваться' }}
+                Войти
               </button>
             </div>
           </form>

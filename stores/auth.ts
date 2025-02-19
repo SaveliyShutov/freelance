@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-// import AuthAPI from "../api/AuthApi"
+import AuthAPI from "../api/AuthApi"
 
 import type { User } from "../types/user.interface"
 
@@ -12,7 +12,7 @@ export const useAuth = defineStore('auth', () => {
     email: 'sanya@gmail.com',
     password: '12345678',
     address: 'Пермь, Дзержинский район',
-    description:'отвественый и приятный в общении',
+    description: 'отвественый и приятный в общении',
     role: 'employer',
     avatars: [''],
     rating: 4.5,
@@ -41,6 +41,19 @@ export const useAuth = defineStore('auth', () => {
       },
     ]
   }
+
+  async function registration(user: any): Promise<boolean> {
+    try {
+      const response = await AuthAPI.registration(user)
+      if (response.data.value) {
+        console.log(response);
+      }
+      return true
+    } catch {
+      return false
+    }
+  }
+
   // async function registration(data: any): Promise<boolean> {
   //   try {
   //     const response = await AuthAPI.registration(data)
@@ -189,8 +202,9 @@ export const useAuth = defineStore('auth', () => {
   return {
     // variables
     user,
+    registration
     // functions
-    // registration, login, checkAuth, logout,
+    //  registration, login, checkAuth, logout,
     // updateUser, sendResetLink, resetPassword, registerStudent,
     // getAllUsers, uploadAvatar,
   }
