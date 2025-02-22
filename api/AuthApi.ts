@@ -1,7 +1,7 @@
-// export default {
-//   registration(user: any): Promise<any> {
-//     return useApiFetch('/auth/registration', { method: 'POST', body: user })
-//   },
+export default {
+  registration(user: any): Promise<any> {
+    return useApiFetch('/auth/registration', { method: 'POST', body: user })
+  },
 // //   registerStudent(user: any): Promise<any> {
 // //     return useApiFetch('/auth/register-student', { method: 'POST', body: user })
 // //   },
@@ -37,4 +37,4 @@
 // //   uploadAvatar(formData: FormData, userId: string) {
 // //     return useApiFetch(`/auth/upload-avatar?user_id=${userId}`, { method: 'POST', headers: { 'Content-Type': 'multipart/form-data' }, body: formData })
 // //   }
-// // }
+}
