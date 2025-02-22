@@ -1,21 +1,12 @@
 export default defineNuxtRouteMiddleware(async () => {
   let authStore = useAuth()
-  // let isAuth = await authStore.checkAuth()
+  let isAuth = !!authStore.user
 
-  // if (isAuth && authStore.user?.roles[0] == 'employer') {
-  //   return setPageLayout('employer')
-  // } else if (isAuth && authStore.user?.roles[0] == 'worker') {
-  //   return setPageLayout('worker')
-  // } else {
-  //   return setPageLayout('default')
-  // }
-
-  if (authStore.user?.role == 'employer') {
+  if (isAuth && authStore.user?.role == 'employer') {
     return setPageLayout('employer')
-  } else if (authStore.user?.role == 'worker') {
+  } else if (isAuth && authStore.user?.role == 'worker') {
     return setPageLayout('worker')
   } else {
     return setPageLayout('default')
   }
-
 })

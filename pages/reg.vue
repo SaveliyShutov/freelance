@@ -20,37 +20,37 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   },
   validationSchema: {
     name(value: string) {
-      if (value.length === 0) return 'введите имя'
-      if (value.length < 2) return 'слишком короткое имя'
-      if (value.length > 22) return 'слишком длинное имя'
+      if (value?.length === 0) return 'введите имя'
+      if (value?.length < 2) return 'слишком короткое имя'
+      if (value?.length > 22) return 'слишком длинное имя'
 
       return true
     },
     surname(value: string) {
-      if (value.length === 0) return 'введите фамилию'
-      if (value.length < 2) return 'слишком короткое фамилия'
-      if (value.length > 22) return 'слишком длинное фамилия'
+      if (value?.length === 0) return 'введите фамилию'
+      if (value?.length < 2) return 'слишком короткое фамилия'
+      if (value?.length > 22) return 'слишком длинное фамилия'
 
       return true
     },
     email(value: string) {
-      if (value.length === 0) return 'введите почту'
+      if (value?.length === 0) return 'введите почту'
       if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value))
         return 'неправильно ведено'
 
       return true
     },
     phone(value: string) {
-      if (value.length === 0) return 'введите номер'
+      if (value?.length === 0) return 'введите номер'
       if (!/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/g.test(value))
         return 'неправильно ведено'
 
       return true
     },
     password(value: string) {
-      if (value.length === 0) return 'введите пароль'
-      if (value.length < 8) return 'минимум 8 символов'
-      if (value.length > 30) return 'слишком длинный пароль'
+      if (value?.length === 0) return 'введите пароль'
+      if (value?.length < 8) return 'минимум 8 символов'
+      if (value?.length > 30) return 'слишком длинный пароль'
 
       return true
     },
