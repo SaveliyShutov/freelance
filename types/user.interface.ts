@@ -1,7 +1,3 @@
-import type { Application } from './application.interface';
-import type { Order } from './order.interface';
-import type { Organization } from './organisation.interface';
-
 export interface User {
 	_id: string
 	address: string
@@ -13,8 +9,8 @@ export interface User {
 	password: string
 	role: string
 	avatars: string[]
-	rating?: number
-	applications?: [Application]
-	orders?: [Order]
-	organisation?: Organization // organisation._id
+	rating: string
+	applications: string[]
+	orders: string[]
+	organisation: string // organisation._id
 }
