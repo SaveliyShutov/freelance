@@ -11,10 +11,10 @@ const userStore = useAuth()
       <nav class="h-16 flex items-center justify-between">
         <NuxtLink to="/employer" class="text-2xl font-bold text-indigo-600">Freelance</NuxtLink>
         <div class="flex items-center gap-6">
-          <NuxtLink to="/employer/work" class="text-gray-600 hover:text-gray-900">Работа</NuxtLink>
-          <NuxtLink to="/employer/create-order" class="text-gray-600 hover:text-gray-900">Разместить обявление
+          <NuxtLink to="/employer/work" class="text-gray-600 hover:text-indigo-600">Работа</NuxtLink>
+          <NuxtLink to="/employer/create-order" class="text-gray-600 hover:text-indigo-600">Разместить обявление
           </NuxtLink>
-          <NuxtLink to="/employer/requests" class="text-gray-600 hover:text-gray-900">Мои заказы</NuxtLink>
+          <NuxtLink to="/employer/requests" class="text-gray-600 hover:text-indigo-600">Мои заказы</NuxtLink>
           <UserDropdownCard/>
         </div>
       </nav>

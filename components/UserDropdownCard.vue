@@ -43,9 +43,9 @@ onMounted(() => {
                             <p class="text-sm">
                                 {{ userStore.user?.name }}
                             </p>
-                            <p class="text-xs">
+                            <p class="text-x -mt-1"><b>
                                 {{ userStore.user?.role }}
-                            </p>
+                            </b></p>
                         </div>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -55,18 +55,17 @@ onMounted(() => {
                 </button>
 
                 <div v-show="isOpen"
-                    class="absolute mt-2 w-60 bg-white rounded-lg shadow-lg py-2 border border-gray-100">
-                    <a href="worker/profile"
-                        class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors duration-200">
+                    class="absolute mt-2 w-64 bg-white rounded-lg shadow-lg py-2 border border-gray-100">
+                    <NuxtLink @click="toggleRole" to="/worker" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors duration-200">
                         <span class="mdi mdi-account text-indigo-600"></span>
                         Профиль
-                    </a>
+                    </NuxtLink>
 
                     <button @click="toggleRole"
                         class="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors duration-200">
                         <span class="mdi mdi-swap-horizontal text-indigo-600"></span>
                         <!-- Сменить роль на {{ currentRole === {{ userStore.user.role }} ? 'Employer' : 'Worker' }} -->
-                        Сменить роль на {{ currentRole === 'employer' ? 'Employer' : 'Worker' }}
+                        Сменить роль на {{ currentRole === 'worker' ? 'Worker' : 'Employer' }}
                     </button>
                     <button @click="logout"
                         class="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-50 transition-colors duration-200">
