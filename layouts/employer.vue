@@ -1,5 +1,6 @@
 <script setup>
 const userStore = useAuth()
+
 </script>
 <template>
   <!-- Header -->
@@ -13,18 +14,18 @@ const userStore = useAuth()
           </NuxtLink>
           <NuxtLink to="/employer/requests" class="text-gray-600 hover:text-gray-900">Мои заказы</NuxtLink>
           <div class="flex align-center justify-between">
-            <div class="" v-if="userStore.user?.avatars[0]">
-              <v-avatar class="border" :image="userStore.user?.avatars[0]"></v-avatar>
+            <div class="" v-if="userStore.employer?.avatar">
+              <v-avatar class="border" :image="userStore.employer?.avatar"></v-avatar>
             </div>
             <div class="" v-else>
-              <v-avatar class="border">{{ userStore.user?.name[0] }}{{ userStore.user?.surname[0] }}</v-avatar>
+              <v-avatar class="border">{{ userStore.employer?.name[0] }}</v-avatar>
             </div>
             <div class="mx-2">
               <p class="text-sm">
-                {{ userStore.user?.name }}
+                {{ userStore.employer?.name }}
               </p>
               <p class="text-xs">
-                {{ userStore.user?.role }}
+                заказчик
               </p>
             </div>
           </div>

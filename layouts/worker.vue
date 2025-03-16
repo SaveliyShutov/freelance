@@ -12,18 +12,18 @@ let userStore = useAuth()
           <NuxtLink to="/create-order" class="text-gray-600 hover:text-gray-900">Разместить обявление</NuxtLink>
           <NuxtLink to="/worker/requests" class="text-gray-600 hover:text-gray-900">Мои заявки</NuxtLink>
           <div class="flex align-center justify-between">
-            <div class="" v-if="userStore.user?.avatars[0]">
-              <v-avatar class="border" :image="userStore.user?.avatars[0]"></v-avatar>
+            <div class="" v-if="userStore.worker?.avatar">
+              <v-avatar class="border" :image="userStore.worker?.avatars"></v-avatar>
             </div>
             <div class="" v-else>
-              <v-avatar class="border">{{ userStore.user?.name[0] }}{{ userStore.user?.surname[0] }}</v-avatar>
+              <v-avatar class="border">{{ userStore.worker?.name[0] }}{{ userStore.worker?.surname[0] }}</v-avatar>
             </div>
             <div class="mx-2">
               <p class="text-sm">
-                {{ userStore.user?.name }}
+                {{ userStore.worker?.name }}
               </p>
               <p class="text-xs">
-                {{ userStore.user?.role }}
+                исполнитель
               </p>
             </div>
           </div>

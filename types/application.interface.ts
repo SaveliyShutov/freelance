@@ -1,8 +1,9 @@
 export interface Application {
   _id: string,
-  worker: string, // user.id
+  worker: string,
   workerName: string
   status: string, // на рассмотрении, подтверждено, отказ
-  avatar: string
-  rating: number
+  images: [],
+  rating: string,
+  employer: string
 }

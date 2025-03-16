@@ -30,7 +30,7 @@ const login = handleSubmit(async values => {
 
   loading.value = false
   if (res?.status?.value == "success") {
-    router.push(`/${auth.user?.role}`)
+    router.push(`/${auth.currentRole}`)
   }
 })
 </script>
