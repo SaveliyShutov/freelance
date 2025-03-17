@@ -3,7 +3,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   let isAuth = !!authStore.user
 
   if (isAuth) {
-    if (authStore.user?.role === 'employer') {
+    if (authStore?.currentRole === 'employer') {
       return true;
     }
   }

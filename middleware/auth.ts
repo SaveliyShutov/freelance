@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     abortNavigation();
     return navigateTo('/')
   }
-  if (!authStore.user?.role) {
+  if (!authStore.currentRole) {
     abortNavigation();
     return navigateTo('/')
   }

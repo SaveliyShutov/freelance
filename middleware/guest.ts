@@ -3,14 +3,14 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   let isAuth = !!authStore.user
 
   if (isAuth) {
-    if (authStore.user?.role === 'worker') {
+    if (authStore.currentRole === 'worker') {
       abortNavigation();
       return navigateTo('/worker')
     }
   }
 
   if (isAuth) {
-    if (authStore.user?.role === 'employer') {
+    if (authStore.currentRole === 'employer') {
       abortNavigation();
       return navigateTo('/employer')
     }
