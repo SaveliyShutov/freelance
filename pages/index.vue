@@ -3,17 +3,17 @@ const advantages = ref([
   {
     icon: '🚀',
     title: 'Быстрый старт',
-    description: 'Начните работу с проектом в течение нескольких часов'
+    description: 'Зарегистрируйтесь и начните работу уже сейчас!'
   },
   {
     icon: '💎',
     title: 'Качество',
-    description: 'Только проверенные специалисты с подтвержденным опытом'
+    description: 'Четко указанные комиссии для исполнителей и заказчиков, без скрытых платежей'
   },
   {
     icon: '🛡️',
     title: 'Гарантии',
-    description: 'Безопасная сделка с гарантией возврата средств'
+    description: 'Вы сами выбираете работников для своей задачи!'
   }
 ])
 
@@ -22,19 +22,22 @@ const reviews = ref([
     id: 1,
     name: 'Анна Петрова',
     position: 'CEO, TechStart',
+    rating: 5,
     text: 'Отличная платформа для поиска специалистов. Нашли разработчика за 2 дня!'
   },
   {
     id: 2,
     name: 'Иван Смирнов',
     position: 'Фрилансер',
+    rating: 5,
     text: 'Удобный интерфейс и много интересных проектов. Работаю здесь уже год.'
   },
   {
     id: 3,
     name: 'Мария Иванова',
     position: 'Дизайнер',
-    text: 'Безопасные платежи и отличная поддержка. Рекомендую всем коллегам.'
+    rating: 1,
+    text: 'Мне не понравилось.'
   }
 ])
 
@@ -58,6 +61,7 @@ const projects = ref([
     tags: ['Vue.js', 'Tailwind', 'SEO']
   }
 ])
+console.log(reviews.value[0].id);
 </script>
 
 
@@ -73,9 +77,9 @@ const projects = ref([
       <v-container class="relative">
         <div class="text-center max-w-4xl mx-auto px-4">
           <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-            Freelance Marketplace
+            Фриланс биржа
           </h1>
-          <p class="text-xl md:text-2xl mb-8 md:mb-12 text-indigo-100">Находите лучших фрилансеров для ваших проектов
+          <p class="text-xl md:text-2xl mb-8 md:mb-12 text-indigo-100">Находите лучших исполнителей для ваших задач
           </p>
           <NuxtLink to="/sign"
             class="group bg-white text-indigo-600 px-6 md:px-10 py-4 md:py-5 rounded-full text-base md:text-lg font-medium hover:bg-indigo-50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-flex items-center gap-2">
@@ -94,10 +98,7 @@ const projects = ref([
           <v-col cols="12" md="6" class="px-4">
             <div class="prose lg:prose-lg transform hover:scale-105 transition-transform duration-300">
               <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
-                Наша платформа соединяет талантливых фрилансеров с компаниями и предпринимателями,
-                которые ищут профессионалов для реализации своих проектов. Мы создаем надежное
-                и эффективное пространство для сотрудничества, где каждый может найти подходящую
-                работу или исполнителя.
+                “Мы создаем надежное и эффективное пространство для сотрудничества, где компании и предприниматели могут легко найти исполнителей для реализации оффлайн проектов. Больше нет необходимости искать исполнителей по объявлениям – просто разместите заказ, и местные профессионалы предложат свои услуги. Для исполнителей это – отличная возможность найти интересную работу в своем городе и расширить клиентскую базу.”
               </p>
             </div>
           </v-col>
@@ -117,14 +118,14 @@ const projects = ref([
                     class="w-10 md:w-12 h-10 md:h-12 rounded-full bg-indigo-100 flex items-center justify-center group-hover:bg-indigo-600 transition-colors duration-300">
                     <span class="text-indigo-600 group-hover:text-white transition-colors duration-300">✓</span>
                   </span>
-                  <span class="text-base md:text-lg">Безопасные платежи</span>
+                  <span class="text-base md:text-lg">Прозрачные комиссии</span>
                 </li>
                 <li class="flex items-center gap-4 group">
                   <span
                     class="w-10 md:w-12 h-10 md:h-12 rounded-full bg-indigo-100 flex items-center justify-center group-hover:bg-indigo-600 transition-colors duration-300">
                     <span class="text-indigo-600 group-hover:text-white transition-colors duration-300">✓</span>
                   </span>
-                  <span class="text-base md:text-lg">Поддержка 24/7</span>
+                  <span class="text-base md:text-lg">Простое размещение заказов</span>
                 </li>
               </ul>
             </div>
@@ -170,9 +171,9 @@ const projects = ref([
                 </div>
               </div>
               <p class="text-base md:text-lg text-gray-600 italic">{{ review.text }}</p>
-              <div class="flex text-yellow-400 mt-4 md:mt-6 text-xl md:text-2xl">
-                <span v-for="star in 5" :key="star" class="transform hover:scale-125 transition-transform">★</span>
-              </div>
+                <div class="flex text-yellow-400 mt-4 md:mt-6 text-xl md:text-2xl">
+                  <span v-for="star in review.rating" :key="star" class="transform hover:scale-125 transition-transform">★</span>
+                </div>
             </div>
           </v-col>
         </v-row>
