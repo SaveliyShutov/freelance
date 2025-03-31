@@ -14,23 +14,8 @@ const userStore = useAuth()
           <NuxtLink to="/employer/work" class="text-gray-600 hover:text-indigo-600">Работа</NuxtLink>
           <NuxtLink to="/employer/create-order" class="text-gray-600 hover:text-indigo-600">Разместить обявление
           </NuxtLink>
-          <NuxtLink to="/employer/requests" class="text-gray-600 hover:text-gray-900">Мои заказы</NuxtLink>
-          <div class="flex align-center justify-between">
-            <div class="" v-if="userStore.employer?.avatar">
-              <v-avatar class="border" :image="userStore.employer?.avatar"></v-avatar>
-            </div>
-            <div class="" v-else>
-              <v-avatar class="border">{{ userStore.employer?.name[0] }}</v-avatar>
-            </div>
-            <div class="mx-2">
-              <p class="text-sm">
-                {{ userStore.employer?.name }}
-              </p>
-              <p class="text-xs">
-                заказчик
-              </p>
-            </div>
-          </div>
+          <NuxtLink to="/employer/requests" class="text-gray-600 hover:text-indigo-600">Мои заказы</NuxtLink>
+          <UserDropdownCard/>
         </div>
       </nav>
     </v-container>
