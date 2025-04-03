@@ -12,7 +12,7 @@ if(userStore.user._id){
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" class="my-8">
+      <v-col cols="12" xs="3" class="my-8">
         <BackButton />
       </v-col>
     </v-row>
