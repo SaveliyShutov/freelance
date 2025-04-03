@@ -36,7 +36,7 @@ let drawer = ref(false)
       </v-container>
     </v-app-bar>
 
-    <!-- Mobile Navigation Drawer (xs only) -->
+    <!-- Mobile Navigation Drawer (xs) -->
     <v-navigation-drawer
       v-model="drawer"
       location="right"
