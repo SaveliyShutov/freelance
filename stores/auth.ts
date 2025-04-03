@@ -2,31 +2,39 @@ import { defineStore } from "pinia"
 import AuthAPI from "../api/AuthApi"
 
 import type { User } from "../types/user.interface"
-import type { Worker } from "../types/worker.interface"
-import type { Employer } from "../types/employer.interface"
 
 export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
   let currentRole = ref()
-  let worker = ref();
-  let employer = ref();
+
+  user.value = {
+    _id: '1',
+    email: 'glebkusakin@gmail.com',
+    employer_avatar: '',
+    employer_name: 'ООО Глеб корп',
+    employer_shortDescription: '',
+    employer_description: '',
+    employer_rating: '',
+    employer_reviews: [],
+    employer_orders: [],
+    employer_address: '',
+    employer_contacts: '',
+    worker_name: 'Глеб',
+    worker_surname: 'Кусакин',
+    worker_avatar: '',
+    worker_description: '',
+    worker_applications: [],
+    worker_reviews: [],
+    worker_address: '',
+    worker_phone: '89526959522',
+    worker_rating: '4.4',
+  }
 
   async function registration(user: any): Promise<boolean> {
     try {
       const response = await AuthAPI.registration(user)
       if (response.data.value) {
         user.value = response.data.value.user
-
-        if (response.data.value?.worker) {
-          worker.value = response.data.value.worker
-          currentRole.value = 'worker'
-        }
-
-        if (response.data.value?.employer) {
-          employer.value = response.data.value.employer
-          currentRole.value = 'employer'
-        }
-
       }
       return true
     } catch {
@@ -39,17 +47,6 @@ export const useAuth = defineStore('auth', () => {
       const response = await AuthAPI.login(email, password)
       if (response.data.value) {
         user.value = response.data.value.user
-
-        if (response.data.value?.worker) {
-          worker.value = response.data.value.worker
-          currentRole.value = 'worker'
-        }
-
-        if (response.data.value?.employer) {
-          employer.value = response.data.value.employer
-          currentRole.value = 'employer'
-        }
-
       }
       return response
     } catch {
@@ -143,8 +140,6 @@ export const useAuth = defineStore('auth', () => {
   return {
     // variables
     user,
-    worker,
-    employer,
     currentRole,
     registration,
     login,
