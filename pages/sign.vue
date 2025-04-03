@@ -38,7 +38,7 @@ const login = handleSubmit(async values => {
   <v-container class="min-h-screen flex justify-center py-12">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        <div class="space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100">
+        <div class="space-y-8 bg-[url('assets\background.jpg')] p-10 rounded-xl shadow-lg border-2 border-zinc-300/25 backdrop-blur-xs">
           <div>
             <h2 class="text-4xl font-bold text-gray-900 text-center">Войти
             </h2>
