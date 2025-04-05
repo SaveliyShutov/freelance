@@ -170,12 +170,31 @@ const projects = computed(() => {
         <v-row no-gutters>
           <v-col cols="12">
             <div class="py-16">
-              <v-row align="center" justify="center">
+              <!-- Desktop and Tablet main text -->
+              <v-row align="center" justify="center d-none d-sm-flex">
                 <v-col cols="12" md="8" class="text-center">
                   <h1 class="text-white text-h1 font-weight-black mb-6" style="font-family: 'Montserrat', sans-serif;">
                     {{ currentRole === 'worker' ? 'Найдите прибыльную подработку' : 'Найдите людей для вашей задачи' }}
                   </h1>
                   <p class="text-white text-h5 font-weight-regular mb-8">
+                    {{ currentRole === 'worker'
+                      ? 'Деньги 200 метров от вас'
+                      : 'Считайте что работа уже сделана' }}
+                  </p>
+                  <NuxtLink to="/sign">
+                    <v-btn size="x-large" color="white" class="text-primary font-weight-bold px-8 text-body-1">
+                      {{ currentRole === 'worker' ? 'Найти работу' : 'Найти работника' }}
+                    </v-btn>
+                  </NuxtLink>
+                </v-col>
+              </v-row>
+              <!-- Mobile main text -->
+              <v-row align="center" justify="center">
+                <v-col cols="12" md="8" class="text-center d-sm-none">
+                  <h1 class="text-white text-4xl font-weight-black mb-6" style="font-family: 'Montserrat', sans-serif;">
+                    {{ currentRole === 'worker' ? 'Найдите прибыльную подработку' : 'Найдите людей для вашей задачи' }}
+                  </h1>
+                  <p class="text-white text-lg font-weight-regular mb-8">
                     {{ currentRole === 'worker'
                       ? 'Деньги 200 метров от вас'
                       : 'Считайте что работа уже сделана' }}
