@@ -5,30 +5,29 @@ import type { User } from "../types/user.interface"
 
 export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
-  let currentRole = ref()
 
-  user.value = {
-    _id: '1',
-    email: 'glebkusakin@gmail.com',
-    employer_avatar: '',
-    employer_name: 'ООО Глеб корп',
-    employer_shortDescription: '',
-    employer_description: '',
-    employer_rating: '',
-    employer_reviews: [],
-    employer_orders: [],
-    employer_address: '',
-    employer_contacts: '',
-    worker_name: 'Глеб',
-    worker_surname: 'Кусакин',
-    worker_avatar: '',
-    worker_description: '',
-    worker_applications: [],
-    worker_reviews: [],
-    worker_address: '',
-    worker_phone: '89526959522',
-    worker_rating: '4.4',
-  }
+  // user.value = {
+  //   _id: '1',
+  //   email: 'glebkusakin@gmail.com',
+  //   employer_avatar: '',
+  //   employer_name: 'ООО Глеб корп',
+  //   employer_shortDescription: '',
+  //   employer_description: '',
+  //   employer_rating: '',
+  //   employer_reviews: [],
+  //   employer_orders: [],
+  //   employer_address: '',
+  //   employer_contacts: '',
+  //   worker_name: 'Глеб',
+  //   worker_surname: 'Кусакин',
+  //   worker_avatar: '',
+  //   worker_description: '',
+  //   worker_applications: [],
+  //   worker_reviews: [],
+  //   worker_address: '',
+  //   worker_phone: '89526959522',
+  //   worker_rating: '4.4',
+  // }
 
   async function registration(user: any): Promise<boolean> {
     try {
@@ -140,7 +139,6 @@ export const useAuth = defineStore('auth', () => {
   return {
     // variables
     user,
-    currentRole,
     registration,
     login,
     checkAuth,

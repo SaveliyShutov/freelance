@@ -5,28 +5,28 @@ import _ from 'lodash'
 let auth = useAuth()
 
 const { meta, handleSubmit, handleReset, validate } = useForm<{
-  name: string,
-  surname: string,
+  worker_name: string,
+  worker_surname: string,
   email: string,
-  phone: string,
+  worker_phone: string,
   password: string,
 }>({
   initialValues: {
-    phone: '',
-    name: '',
-    surname: '',
+    worker_phone: '',
+    worker_name: '',
+    worker_surname: '',
     email: '',
     password: '',
   },
   validationSchema: {
-    name(value: string) {
+    worker_name(value: string) {
       if (value?.length === 0) return 'введите имя'
       if (value?.length < 2) return 'слишком короткое имя'
       if (value?.length > 22) return 'слишком длинное имя'
 
       return true
     },
-    surname(value: string) {
+    worker_surname(value: string) {
       if (value?.length === 0) return 'введите фамилию'
       if (value?.length < 2) return 'слишком короткое фамилия'
       if (value?.length > 22) return 'слишком длинное фамилия'
@@ -40,7 +40,7 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
 
       return true
     },
-    phone(value: string) {
+    worker_phone(value: string) {
       if (value?.length === 0) return 'введите номер'
       if (!/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/g.test(value))
         return 'неправильно ведено'
@@ -57,9 +57,9 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   },
 })
 
-let name = useField<string>('name')
-let phone = useField<string>('phone')
-let surname = useField<string>('surname')
+let worker_name = useField<string>('worker_name')
+let worker_phone = useField<string>('worker_phone')
+let worker_surname = useField<string>('worker_surname')
 let email = useField<string>('email')
 let password = useField<string>('password')
 
@@ -67,9 +67,10 @@ let loading = ref(false)
 let show_password = ref(false)
 
 const submit = handleSubmit(async values => {
+  localStorage.setItem('role', 'worker')
   loading.value = true
 
-  let toSend = { ...values, role: 'worker' }
+  let toSend = { ...values }
   await auth.registration(toSend)
 
   loading.value = false
@@ -77,14 +78,14 @@ const submit = handleSubmit(async values => {
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field required label="Имя" type="name" placeholder="Иван" v-model="name.value.value"
-      :error-messages="name.errors.value" variant="outlined" density="compact" class="w-100" />
+    <v-text-field required label="Имя" type="worker_name" placeholder="Иван" v-model="worker_name.value.value"
+      :error-messages="worker_name.errors.value" variant="outlined" density="compact" class="w-100" />
 
-    <v-text-field required label="Фамилия" type="surname" placeholder="Иванов" v-model="surname.value.value"
-      :error-messages="surname.errors.value" variant="outlined" density="compact" class="w-100" />
+    <v-text-field required label="Фамилия" type="worker_surname" placeholder="Иванов" v-model="worker_surname.value.value"
+      :error-messages="worker_surname.errors.value" variant="outlined" density="compact" class="w-100" />
 
-    <v-text-field required label="Телефон" type="phone" placeholder="89226252872" v-model="phone.value.value"
-      :error-messages="phone.errors.value" variant="outlined" density="compact" class="w-100" />
+    <v-text-field required label="Телефон" type="worker_phone" placeholder="89226252872" v-model="worker_phone.value.value"
+      :error-messages="worker_phone.errors.value" variant="outlined" density="compact" class="w-100" />
 
     <v-text-field required label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
       :error-messages="email.errors.value" variant="outlined" density="compact" class="w-100 mt-1" />
