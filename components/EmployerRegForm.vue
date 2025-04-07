@@ -5,19 +5,19 @@ import _ from 'lodash'
 let auth = useAuth()
 
 const { meta, handleSubmit, handleReset, validate } = useForm<{
-  name: string,
-  shortDescription: string,
-  description: string,
+  employer_name: string,
+  employer_shortDescription: string,
+  employer_description: string,
   email: string,
   password: string,
 }>({
   initialValues: {
-    name: '',
+    employer_name: '',
     email: '',
     password: '',
   },
   validationSchema: {
-    name(value: string) {
+    employer_name(value: string) {
       if (value?.length === 0) return 'введите имя'
       if (value?.length < 2) return 'слишком короткое имя'
       if (value?.length > 22) return 'слишком длинное имя'
@@ -41,19 +41,20 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   },
 })
 
-let name = useField<string>('name')
+let employer_name = useField<string>('employer_name')
 let email = useField<string>('email')
-let shortDescription = useField<string>('shortDescription')
-let description = useField<string>('description')
+let employer_shortDescription = useField<string>('employer_shortDescription')
+let employer_description = useField<string>('employer_description')
 let password = useField<string>('password')
 
 let loading = ref(false)
 let show_password = ref(false)
 
 const submit = handleSubmit(async values => {
+  localStorage.setItem('role', 'employer')
   loading.value = true
 
-  let toSend = { ...values, role: 'employer' }
+  let toSend = { ...values}
   await auth.registration(toSend)
 
   loading.value = false
@@ -61,13 +62,13 @@ const submit = handleSubmit(async values => {
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field required label="Названии компании" type="name" placeholder="ООО ТУР" v-model="name.value.value"
-      :error-messages="name.errors.value" variant="outlined" density="compact" class="w-100" />
+    <v-text-field required label="Названии компании" type="name" placeholder="ООО ТУР" v-model="employer_name.value.value"
+      :error-messages="employer_name.errors.value" variant="outlined" density="compact" class="w-100" />
 
-    <v-text-field label="Короткое описание компании (необязательно)" v-model="shortDescription.value.value" type="shortDescription" variant="outlined" density="compact"
+    <v-text-field label="Короткое описание компании (необязательно)" v-model="employer_shortDescription.value.value" type="shortDescription" variant="outlined" density="compact"
       class="w-100" />
 
-    <v-textarea label="О компании (необязательно)" v-model="description.value.value" type="description" placeholder="" variant="outlined" density="compact"
+    <v-textarea label="О компании (необязательно)" v-model="employer_description.value.value" type="description" placeholder="" variant="outlined" density="compact"
       class="w-100" />
 
     <v-text-field required label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
