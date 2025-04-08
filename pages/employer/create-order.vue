@@ -86,16 +86,15 @@ let loading = ref(false)
 let show_password = ref(false)
 
 const submit = handleSubmit(async values => {
-  // loading.value = true
-  // let toSend:Order;
-  // if (auth.user?.employer) {
-  //   // toSend = { ...values, _id: auth.user?.employer }
-  //   toSend = { ...values, _id: '67d6d0f2d4dfc351e71a557c' }
-  //   await orderStore.createOrder(toSend)
+  loading.value = true
+  let toSend: Order;
+  if (auth.user?.employer_name) {
+    toSend = { ...values, employer: auth.user._id }
+    await orderStore.createOrder(toSend)
 
-  // } else {
-  //   auth.checkAuth()
-  // }
+  } else {
+    auth.checkAuth()
+  }
 
   loading.value = false
 })

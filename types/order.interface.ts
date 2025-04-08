@@ -1,5 +1,5 @@
 export interface Order {
-  _id: string,
+  _id?: string,
   title: string,
   type: string,
   employer?: string, // employer._id
@@ -8,5 +8,6 @@ export interface Order {
   location: string,
   description: string,
   budget: number,
-  applications?: [] // [ ...applications._ids ]
+  applications?: []
+  images?: [] // [ ...applications._ids ]
 }

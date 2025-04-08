@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const authStore = useAuth()
+
 const jobTypes = [
   'Доставка',
   'Переводчик',
@@ -11,31 +13,26 @@ const jobTypes = [
   'Другое'
 ]
 
-const jobType = ref('')
+const type = ref('')
 const description = ref('')
 const location = ref('')
 const budget = ref('')
-const deadline = ref('')
-const completionTime = ref('')
+const date = ref('')
+const hours = ref('')
+const title = ref('')
+
 
 const submitForm = () => {
   console.log({
-    jobType: jobType.value,
+    title: title.value,
+    type: type.value,
     description: description.value,
     location: location.value,
     budget: budget.value,
-    deadline: deadline.value,
-    completionTime: completionTime.value
+    date: date.value,
+    hours: hours.value
   })
 }
-
-const authStore = useAuth()
-
-onMounted(() => {
-  localStorage.setItem('currentRole', 'worker')
-  console.log(localStorage.getItem('currentRole'))
-})
-
 
 </script>
 <template>
@@ -55,7 +52,7 @@ onMounted(() => {
                   <i class="mdi mdi-briefcase text-indigo-600"></i>
                   <label class="block text-sm font-medium text-gray-700">Вид работы</label>
                 </div>
-                <select v-model="jobType" required
+                <select v-model="type" required
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]">
                   <option value="" disabled>Выберите вид работы</option>
                   <option v-for="type in jobTypes" :key="type" :value="type">
@@ -96,7 +93,7 @@ onMounted(() => {
                   <i class="mdi mdi-calendar-range text-indigo-600"></i>
                   <label class="block text-sm font-medium text-gray-700">Дата выполнения</label>
                 </div>
-                <input type="date" v-model="deadline" required
+                <input type="date" v-model="date" required
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]" />
               </v-col>
 
@@ -105,7 +102,7 @@ onMounted(() => {
                   <i class="mdi mdi-timer-sand-full text-indigo-600"></i>
                   <label class="block text-sm font-medium text-gray-700">Время работы</label>
                 </div>
-                <input type="number" v-model="completionTime" min="1" required placeholder="(в часах)"
+                <input type="number" v-model="hours" min="1" required placeholder="(в часах)"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]" />
               </v-col>
 

@@ -1,9 +1,9 @@
 export default {
   getAll(): Promise<any> {
-    return useApiFetch(`/orders/get-all`, { method: 'POST'})
+    return useApiFetch(`/order/get-all`, { method: 'POST'})
   },
   createOrder(order: any): Promise<any> {
-    return useApiFetch(`/orders/create`, {
+    return useApiFetch(`/order/create`, {
       method: 'POST',
       body: { order }
     })
