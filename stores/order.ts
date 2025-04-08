@@ -17,6 +17,12 @@ export const useOrder = defineStore('order', () => {
     return res
   }
 
+  async function getById(order_id: string) {
+    let res = await OrderApi.getById(order_id)
+
+    return res
+  }
+
   async function createOrder(order: Order) {
     return await OrderApi.createOrder(order)
   }
@@ -25,7 +31,7 @@ export const useOrder = defineStore('order', () => {
   return {
     orders,
     getAll,
-    createOrder
-
+    createOrder,
+    getById
   }
 })

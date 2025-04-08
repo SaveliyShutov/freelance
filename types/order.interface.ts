@@ -2,10 +2,11 @@ export interface Order {
   _id?: string,
   title: string,
   type: string,
-  employer?: string, // employer._id
+  employer_id?: string, // employer._id
+  employer_name?: string, // employer._id
   date: string,
   hours: number,
-  location: string,
+  address: string,
   description: string,
   budget: number,
   applications?: []

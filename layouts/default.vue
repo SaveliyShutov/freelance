@@ -8,7 +8,7 @@ let drawer = ref(false)
       <v-container class="px-4">
         <div class="d-flex align-center justify-space-between w-100">
           <NuxtLink to="/" class="text-2xl font-bold text-indigo-600 text-decoration-none">
-            Freelance
+             Nirby - работа рядом
           </NuxtLink>
 
           <!-- Desktop and Tablet Navigation -->
