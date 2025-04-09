@@ -1,33 +1,33 @@
 <script setup lang="ts">
-const { job } = defineProps(['job'])
+const { order } = defineProps(['order'])
 </script>
 <template>
   <v-row>
     <v-col cols="12" md="8">
       <div class="mb-3">
-        <h3 class="text-xl font-semibold text-gray-900">{{ job.title }}</h3>
-        <p class="text-lg text-indigo-600">{{ job.organization }}</p>
+        <h3 class="text-xl font-semibold text-gray-900">{{ order.title }}</h3>
+        <p class="text-lg text-indigo-600">{{ order.employer_ }}</p>
       </div>
 
       <div class="flex items-center gap-2 mb-2">
         <i class="mdi mdi-map-marker text-indigo-600"></i>
-        <span>{{ job.town }}</span>
+        <span>{{ order.address }}</span>
       </div>
       <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
         <div class="flex items-center gap-2">
           <i class="mdi mdi-clock-time-three text-indigo-600"></i>
-          <span>{{ job.workingHours }}</span>
+          <span>{{ order.hours }} часов</span>
         </div>
         <div class="flex items-center gap-2"> 
           <i class="mdi mdi-calendar-range text-indigo-600"></i>
-          <span> {{ job.postedDate }}</span>
+          <span> {{ order.date }}</span>
         </div>
       </div>
     </v-col>
 
     <v-col cols="12" md="4" class="flex flex-col justify-between">
       <div class="text-right mb-4">
-        <p class="text-2xl font-bold">{{ job.salaryRange }}₽</p>
+        <p class="text-2xl font-bold">{{ order.budget }}₽</p>
       </div>
 
       <div class="text-right">

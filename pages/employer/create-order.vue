@@ -24,7 +24,7 @@ const jobTypes = [
 const { meta, handleSubmit, handleReset, validate } = useForm<{
   title: string,
   type: string,
-  location: string,
+  address: string,
   description: string,
   budget: number,
   date: string,
@@ -34,7 +34,7 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   initialValues: {
     title: '',
     type: '',
-    location: '',
+    address: '',
     description: '',
     date: '',
     hours: 0,
@@ -51,7 +51,7 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
       if (value?.length === 0) return 'выбирете тип работы'
       return true
     },
-    location(value: string) {
+    address(value: string) {
       if (value?.length === 0) return 'введите адрес'
       if (value?.length < 2) return 'слишком короткий адрес'
       if (value?.length > 500) return 'слишком длинный адрес'
@@ -76,7 +76,7 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
 
 let title = useField<string>('title')
 let type = useField<string>('type')
-let location = useField<string>('location')
+let address = useField<string>('address')
 let budget = useField<number>('budget')
 let date = useField<string>('date')
 let hours = useField<number>('hours')
@@ -86,16 +86,15 @@ let loading = ref(false)
 let show_password = ref(false)
 
 const submit = handleSubmit(async values => {
-  // loading.value = true
-  // let toSend:Order;
-  // if (auth.user?.employer) {
-  //   // toSend = { ...values, _id: auth.user?.employer }
-  //   toSend = { ...values, _id: '67d6d0f2d4dfc351e71a557c' }
-  //   await orderStore.createOrder(toSend)
+  loading.value = true
+  let toSend: Order;
+  if (auth.user?.employer_name) {
+    toSend = { ...values, employer_id: auth.user._id, employer_name: auth.user.employer_name }
+    await orderStore.createOrder(toSend)
 
-  // } else {
-  //   auth.checkAuth()
-  // }
+  } else {
+    auth.checkAuth()
+  }
 
   loading.value = false
 })
@@ -121,8 +120,8 @@ const submit = handleSubmit(async values => {
               v-model="description.value.value" label="Введите описание работы"></v-textarea>
 
             <div class="w-100 flex justify-between">
-              <v-text-field :error-messages="location.errors.value" class="mr-2 w-50"
-                label="Место работы, адрес (Пермь, ул. Ленина 45)" v-model="location.value.value" type="location"
+              <v-text-field :error-messages="address.errors.value" class="mr-2 w-50"
+                label="Место работы, адрес (Пермь, ул. Ленина 45)" v-model="address.value.value" type="address"
                 variant="outlined" density="compact" />
 
               <v-text-field :error-messages="budget.errors.value" class="ml-2 w-50" label="Бюджет"
@@ -132,7 +131,7 @@ const submit = handleSubmit(async values => {
               <v-text-field :error-messages="date.errors.value" class="mr-2 w-50" label="Дата начала работ"
                 v-model="date.value.value" type="date" variant="outlined" density="compact" />
 
-              <v-text-field :error-messages="hours.errors.value" class="ml-2 w-50" label="Время работы сколько по часам"
+              <v-text-field :error-messages="hours.errors.value" class="ml-2 w-50" label="Время работы (сколько часов)"
                 v-model="hours.value.value" type="hours" variant="outlined" density="compact" />
             </div>
 
