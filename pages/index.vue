@@ -134,7 +134,7 @@ const projects = computed(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white w-full">
+  <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white w-full -z-10">
     <!-- Role Switcher -->
     <div class="fixed top-4 right-4 z-50 bg-white rounded-full shadow-lg p-1 transition-all duration-300 w-30" :class="[
       showRoleSwitcher ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
