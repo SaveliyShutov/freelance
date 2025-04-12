@@ -1,25 +1,83 @@
 <script setup>
-let userStore = useAuth()
+import UserDropdownCard from '~/components/UserDropdownCard.vue';
+
+const userStore = useAuth()
+let drawer = ref(false);
+let router = useRouter()
+
+const isDesktop = ref(false)
+
+onMounted(() => {
+  isDesktop.value = window.innerWidth >= 768
+})
+
 </script>
 <template>
-  <!-- Header -->
-  <header class="bg-white shadow-sm">
-    <v-container>
-      <nav class="h-16 flex items-center justify-between">
-        <NuxtLink to="/worker" class="text-2xl font-bold text-indigo-600"> Nirby - работа рядом</NuxtLink>
-        <div class="flex items-center gap-6">
-          <NuxtLink to="/worker/work" class="text-gray-600 hover:text-indigo-600">Работа</NuxtLink>
-          <NuxtLink to="/create-order" class="text-gray-600 hover:text-indigo-600">Разместить обявление</NuxtLink>
-          <NuxtLink to="/worker/requests" class="text-gray-600 hover:text-indigo-600">Мои заявки</NuxtLink>
-          <UserDropdownCard/>
-        </div>
-      </nav>
-    </v-container>
-  </header>
+  <v-app>
+    <v-app-bar color="white" elevation="0">
+      <v-container class="px-4">
+        <v-row class="d-flex align-center">
+          <v-col @click="router.push(`/`)" class="hidden md:flex text-2xl" cols="5">
+            <div class="d-flex gap-1"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
+          </v-col>
+          <v-col @click="router.push(`/`)" class="md:hidden flex ml-3 flex-col" cols="6">
+            <a class="text-2xl font-bold text-indigo-600 text-decoration-none h-[20px] leading-2">Nirby</a>
+            <p class="text-m font-bold text-indigo-600 text-decoration-none h-[20px] leading-3 mt-3">работа рядом</p>
+          </v-col>
 
-  <div class="bg-gray-50 min-h-screen">
-    <slot />
-  </div>
+          <!-- Desktop and Tablet Navigation -->
+          <v-spacer>
+          </v-spacer>
+          <v-col class="hidden md:flex gap-3 justify-end items-center" cols="7">
+            <NuxtLink to="/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+              Работа
+            </NuxtLink>
+            <NuxtLink to="/create-order" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+              Разместить обявление
+            </NuxtLink>
+            <NuxtLink to="/requests" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+              Заявки
+            </NuxtLink>
+            <div>
+              <UserDropdownCard />
+            </div>
+          </v-col>
 
-  <Footer />
+
+          <v-col class="md:hidden flex gap-3 justify-end" cols="4">
+            <!-- Mobile Navigation Button (xs only) -->
+            <v-app-bar-nav-icon class="md:hidden flex gap-6" @click="drawer = !drawer"></v-app-bar-nav-icon>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-app-bar>
+
+    <!-- Mobile Navigation Drawer (xs) -->
+    <div v-if="drawer" class="md:hidden flex">
+      <v-navigation-drawer v-model="drawer" location="right" temporary class="md:hidden flex">
+        <v-list class="">
+          <v-list-item>
+            <UserDropdownCard />
+          </v-list-item>
+          <v-list-item to="/work" class="text-gray-600">
+            Работа
+          </v-list-item>
+          <v-list-item to="/create-order" class="text-gray-600">
+            Разместить обявление
+          </v-list-item>
+          <v-list-item to="/requests" class="text-gray-600">
+            Заявки
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    </div>
+
+
+
+    <div class="bg-gray-50 mt-16">
+      <slot />
+    </div>
+
+    <Footer />
+  </v-app>
 </template>
