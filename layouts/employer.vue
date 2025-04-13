@@ -15,7 +15,7 @@ const userStore = useAuth()
           <NuxtLink to="/employer/create-order" class="text-gray-600 hover:text-indigo-600">Разместить обявление
           </NuxtLink>
           <NuxtLink to="/employer/requests" class="text-gray-600 hover:text-indigo-600">Мои заказы</NuxtLink>
-          <UserDropdownCard/>
+          <UserDropdownCard class="z-10"/>
         </div>
       </nav>
     </v-container>

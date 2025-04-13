@@ -5,6 +5,7 @@ import type { User } from "../types/user.interface"
 
 export const useAuth = defineStore('auth', () => {
   let user = ref<User | null>()
+  let currentRole = ref()
 
   // user.value = {
   //   _id: '1',
