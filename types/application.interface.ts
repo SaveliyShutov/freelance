@@ -1,9 +1,13 @@
 export interface Application {
-  _id: string,
+  _id?: string,
   worker: string,
-  workerName: string
-  status: string, // на рассмотрении, подтверждено, отказ
-  images: [],
-  rating: string,
-  employer: string
+  letter: string,
+  initials: string,
+  phone: string,
+  order: string,
+  date?: string,
+  status?: string, // на рассмотрении, подтверждено, отказ
+  images?: [],
+  rating?: string,
+  employer?: string
 }

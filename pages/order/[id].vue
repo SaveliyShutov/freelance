@@ -33,7 +33,10 @@ if (res) {
                 <i class="mdi mdi-map-marker text-indigo-600"></i>
                 <p class="font-semibold">{{ order.address }}</p>
               </div>
-              <ApplyButton />
+              <button @click="router.push(`/apply/${order._id}`)"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+                Откликнуться
+              </button>
             </div>
             <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
               <div class="flex items-center gap-2">

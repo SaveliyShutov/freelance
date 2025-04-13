@@ -4,6 +4,7 @@ import OrderApi from '../api/OrderApi'
 import { useAuth } from './auth';
 
 import type { Order } from "../types/order.interface"
+import type { Application } from "../types/application.interface"
 
 
 export const useOrder = defineStore('order', () => {
@@ -27,11 +28,15 @@ export const useOrder = defineStore('order', () => {
     return await OrderApi.createOrder(order)
   }
 
+  async function createApplication(application: Application) {
+    return await OrderApi.createApplication(application)
+  }
 
   return {
     orders,
     getAll,
     createOrder,
-    getById
+    getById,
+    createApplication
   }
 })

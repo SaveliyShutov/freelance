@@ -3,6 +3,7 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
+import { VTextField } from 'vuetify/components/VTextField'
 
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
@@ -12,11 +13,15 @@ export default defineNuxtPlugin((app) => {
           dark: false,
           colors: {
             primary: '#4F46E5',
-            // secondary:'000000'
           }
         },
       },
     },
+    defaults: {
+      // VTextField : {
+      //   style: 'border-color: blue !important;',
+      // },
+    }
   })
   app.vueApp.use(vuetify)
 })
