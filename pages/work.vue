@@ -27,13 +27,23 @@ const jobs = ref([
 </script>
 
 <template>
+  <!-- Desktop and Tablet main text and button Create Order -->
   <v-container>
     <v-row>
-      <v-col cols="12" class="flex flex-row align-center justify-between">
+      <v-col cols="12" class="flex flex-row align-center justify-between d-none d-sm-flex">
         <h1 class="text-4xl font-bold text-gray-900 my-8">Вся работа</h1>
         <button @click="router.push('/create-order')" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
           Разместить заказ
         </button>
+      </v-col>
+    </v-row>
+    <!-- Mobile main text and button Create Order -->
+    <v-row>
+      <v-col cols="12" class="flex flex-column align-center justify-between d-sm-none py-0">
+        <button @click="router.push('/create-order')" class="bg-indigo-600 text-white px-10 py-3 rounded-md hover:bg-indigo-700 transition-colors font-bold mb-4 mt-3">
+          Разместить заказ
+        </button>
+        <p class="text-3xl font-bold text-gray-900">Вся работа</p>
       </v-col>
     </v-row>
 

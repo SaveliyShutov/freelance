@@ -1,18 +1,25 @@
 <script setup>
 let drawer = ref(false)
+let router = useRouter()
 </script>
 
 <template>
   <v-app>
     <v-app-bar color="white" elevation="0">
       <v-container class="px-4">
-        <div class="d-flex align-center justify-space-between w-100">
-          <NuxtLink to="/" class="text-2xl font-bold text-indigo-600 text-decoration-none">
-             Nirby - работа рядом
-          </NuxtLink>
+        <v-row class="d-flex align-center">
+          <v-col @click="router.push(`/`)" class="hidden md:flex text-2xl" cols="5">
+            <div class="d-flex gap-1"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
+          </v-col>
+          <v-col @click="router.push(`/`)" class="md:hidden flex ml-3 flex-col" cols="6">
+            <a class="text-2xl font-bold text-indigo-600 text-decoration-none h-[20px] leading-2">Nirby</a>
+            <p class="text-m font-bold text-indigo-600 text-decoration-none h-[20px] leading-3 mt-3">работа рядом</p>
+          </v-col>
 
           <!-- Desktop and Tablet Navigation -->
-          <div class="d-none d-sm-flex gap-6">
+          <v-spacer>
+          </v-spacer>
+          <v-col class="hidden md:flex gap-3 justify-end" cols="7">
             <NuxtLink to="/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
@@ -25,23 +32,25 @@ let drawer = ref(false)
             <NuxtLink to="/sign" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Войти
             </NuxtLink>
-          </div>
-
-          <!-- Mobile Navigation Button (xs only) -->
-          <v-app-bar-nav-icon
-            class="d-sm-none"
-            @click="drawer = !drawer"
-          ></v-app-bar-nav-icon>
-        </div>
+          </v-col>
+          
+          <v-col class="md:hidden flex gap-3 justify-end" cols="4">
+            <!-- Mobile Navigation Button (xs only) -->
+            <v-app-bar-nav-icon
+              class="md:hidden flex gap-6"
+              @click="drawer = !drawer"
+            ></v-app-bar-nav-icon>
+          </v-col>
+        </v-row>
       </v-container>
     </v-app-bar>
 
-    <!-- Mobile Navigation Drawer (xs only) -->
+    <!-- Mobile Navigation Drawer (xs) -->
     <v-navigation-drawer
       v-model="drawer"
       location="right"
       temporary
-      class="d-sm-none mobile-drawer"
+      class="md:hidden flex mobile-drawer"
     >
       <v-list>
         <v-list-item

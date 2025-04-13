@@ -170,23 +170,40 @@ const projects = computed(() => {
         <v-row no-gutters>
           <v-col cols="12">
             <div class="py-16">
-              <v-row align="center" justify="center">
-                <v-col cols="12" md="8" class="text-center">
-                  <h1 class="text-white text-h1 font-weight-black mb-6" style="font-family: 'Montserrat', sans-serif;">
+              <!-- Desktop and Tablet main text -->
+              <v-row align="center" justify="center" class="">
+                <v-col class="items-center hidden md:flex flex-col">
+                  <p class="text-white text-8xl font-weight-black mb-6 text-center max-w-3xl" style="font-family: 'Montserrat', sans-serif;">
                     {{ currentRole === 'worker' ? 'Найдите прибыльную подработку' : 'Найдите людей для вашей задачи' }}
-                  </h1>
-                  <p class="text-white text-h5 font-weight-regular mb-8">
+                  </p>
+                  <p class="text-white text-2xl font-weight-regular mb-8">
                     {{ currentRole === 'worker'
                       ? 'Деньги 200 метров от вас'
                       : 'Считайте что работа уже сделана' }}
                   </p>
                   <NuxtLink to="/sign">
-                    <v-btn size="x-large" color="white" class="text-primary font-weight-bold px-8 text-body-1">
+                    <v-btn  color="white" size="x-large" class="text-primary font-weight-bold px-8 text-body-1">
+                      {{ currentRole === 'worker' ? 'Найти работу' : 'Найти работника' }}
+                    </v-btn>
+                  </NuxtLink>
+                </v-col>
+                <v-col class="text-center md:hidden flex flex-col">
+                  <p class="text-white text-4xl font-weight-black mb-6" style="font-family: 'Montserrat', sans-serif;">
+                    {{ currentRole === 'worker' ? 'Найдите прибыльную подработку' : 'Найдите людей для вашей задачи' }}
+                  </p>
+                  <p class="text-white text-lg font-weight-regular mb-8">
+                    {{ currentRole === 'worker'
+                      ? 'Деньги 200 метров от вас'
+                      : 'Считайте что работа уже сделана' }}
+                  </p>
+                  <NuxtLink to="/sign">
+                    <v-btn size="large" color="white" class="text-primary font-weight-bold px-8 text-body-1">
                       {{ currentRole === 'worker' ? 'Найти работу' : 'Найти работника' }}
                     </v-btn>
                   </NuxtLink>
                 </v-col>
               </v-row>
+              <!-- Mobile main text -->
             </div>
           </v-col>
         </v-row>
