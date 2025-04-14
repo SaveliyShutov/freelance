@@ -4,7 +4,7 @@ let router = useRouter()
 </script>
 
 <template>
-  <v-app>
+  <v-app class="min-h-screen">
     <v-app-bar color="white" elevation="0">
       <v-container class="px-4">
         <v-row class="d-flex align-center">

@@ -82,8 +82,7 @@ await orderStore.getAll()
           </v-row> -->
 
           <div class="space-y-6">
-            <div v-for="order in orders" :key="order.id"
-              class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <div v-for="order in orders" :key="order.id" class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
               <WorkCard @click="router.push(`/order/${order._id}`)" :order="order" />
             </div>
           </div>

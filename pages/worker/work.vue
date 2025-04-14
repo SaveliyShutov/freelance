@@ -2,32 +2,37 @@
 definePageMeta({
   middleware: ["worker"],
 })
-
 let router = useRouter()
+let orderStore = useOrder()
 
-const filters = ref({
-  town: '',
-  date: ''
-})
+// const filters = ref({
+//   town: '',
+//   date: ''
+// })
 
-const sortBy = ref('date')
+// const sortBy = ref('date')
 
-const towns = ['Пермь']
+// const towns = ['Пермь']
 
-const jobs = ref([
-  {
-    id: 1,
-    title: 'Уборка снега',
-    organization: 'ООО Жек',
-    postedDate: '2024-04-05',
-    postedTime: '09:30 AM',
-    workingHours: '08.00-12.00',
-    duration: '6 часов',
-    town: 'Пермь, ул. петропавловская д 21',
-    description: '',
-    salaryRange: '500'
-  }
-])
+// const jobs = ref([
+//   {
+//     id: 1,
+//     title: 'Уборка снега',
+//     organization: 'ООО Жек',
+//     postedDate: '2024-04-05',
+//     postedTime: '09:30 AM',
+//     workingHours: '08.00-12.00',
+//     duration: '6 часов',
+//     town: 'Пермь, ул. петропавловская д 21',
+//     description: '',
+//     salaryRange: '500'
+//   }
+// ])
+
+let { orders } = storeToRefs(orderStore)
+
+await orderStore.getAll()
+
 </script>
 
 <template>
@@ -35,7 +40,8 @@ const jobs = ref([
     <v-row>
       <v-col cols="12" class="flex flex-row align-center justify-between">
         <h1 class="text-4xl font-bold text-gray-900 my-8">Вся работа</h1>
-        <button @click="router.push('/create-order')" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+        <button @click="router.push('/create-order')"
+          class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
           Разместить заказ
         </button>
       </v-col>
@@ -44,8 +50,7 @@ const jobs = ref([
     <v-row>
       <v-col cols="12">
         <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
-          <!-- Filters and Sorting -->
-          <v-row class="mb-6">
+          <!-- <v-row class="mb-6">
             <v-col cols="12" md="4">
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Город</label>
@@ -74,11 +79,12 @@ const jobs = ref([
                 </select>
               </div>
             </v-col>
-          </v-row>
+          </v-row> -->
 
           <div class="space-y-6">
-            <div v-for="job in jobs" :key="job" class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
-              <WorkCard @click="router.push(`/order/${job.id}`)" :job="job" />
+            <div v-for="order in orders" :key="order.id"
+              class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+              <WorkCard @click="router.push(`/order/${order._id}`)" :order="order" />
             </div>
           </div>
         </div>

@@ -110,29 +110,43 @@ const submit = handleSubmit(async values => {
       <v-col cols="12">
         <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <v-form class="mt-6 w-100" @submit="submit">
-            <v-text-field :error-messages="title.errors.value" type="title" variant="outlined"
-              v-model="title.value.value" label="Введите название работы"></v-text-field>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Введите название работы</label>
+            <v-text-field base-color="#9e9e9e" color="primary" :error-messages="title.errors.value" type="title"
+              variant="outlined" v-model="title.value.value"></v-text-field>
 
-            <v-combobox :error-messages="type.errors.value" type="type" label="Вид работы" variant="outlined"
-              :items="jobTypes" v-model="type.value.value"></v-combobox>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Вид работы</label>
+            <v-combobox base-color="#9e9e9e" color="primary" :error-messages="type.errors.value" type="type"
+              variant="outlined" :items="jobTypes" v-model="type.value.value"></v-combobox>
 
-            <v-textarea :error-messages="description.errors.value" type="description" variant="outlined"
-              v-model="description.value.value" label="Введите описание работы"></v-textarea>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Введите описание работы</label>
+            <v-textarea base-color="#9e9e9e" color="primary" :error-messages="description.errors.value"
+              type="description" variant="outlined" v-model="description.value.value"></v-textarea>
 
             <div class="w-100 flex justify-between">
-              <v-text-field :error-messages="address.errors.value" class="mr-2 w-50"
-                label="Место работы, адрес (Пермь, ул. Ленина 45)" v-model="address.value.value" type="address"
-                variant="outlined" density="compact" />
-
-              <v-text-field :error-messages="budget.errors.value" class="ml-2 w-50" label="Бюджет"
-                v-model="budget.value.value" type="budget" variant="outlined" density="compact" />
+              <div class="w-50 mr-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Введите место работы, адрес</label>
+                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="address.errors.value" class="w-100"
+                  placeholder="Пермь, ул. Ленина 45" v-model="address.value.value" type="address" variant="outlined"
+                  density="compact" />
+              </div>
+              <div class="w-50 ml-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Введите описание работы</label>
+                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="budget.errors.value" class="w-100"
+                  label="Бюджет" v-model="budget.value.value" type="budget" variant="outlined" density="compact" />
+              </div>
             </div>
             <div class="w-100 flex justify-between">
-              <v-text-field :error-messages="date.errors.value" class="mr-2 w-50" label="Дата начала работ"
-                v-model="date.value.value" type="date" variant="outlined" density="compact" />
+              <div class="w-50 mr-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Дата начала работ</label>
+                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="date.errors.value" class="w-100"
+                  v-model="date.value.value" type="date" variant="outlined" density="compact" />
+              </div>
 
-              <v-text-field :error-messages="hours.errors.value" class="ml-2 w-50" label="Время работы (сколько часов)"
-                v-model="hours.value.value" type="hours" variant="outlined" density="compact" />
+              <div class="w-50 ml-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Время работы (сколько часов)</label>
+                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="hours.errors.value" class="w-100"
+                  v-model="hours.value.value" type="hours" variant="outlined" density="compact" />
+              </div>
             </div>
 
             <v-col cols="12" class="text-right">

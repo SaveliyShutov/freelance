@@ -1,5 +1,5 @@
 <script setup>
-import UserDropdownCard from '~/components/UserDropdownCard.vue';
+import UserDropdownCard from '~/components/WorkerDropdownCard.vue';
 
 const userStore = useAuth()
 let drawer = ref(false);
@@ -13,12 +13,13 @@ onMounted(() => {
 
 </script>
 <template>
-  <v-app>
+  <v-app class="min-h-screen">
     <v-app-bar color="white" elevation="0">
       <v-container class="px-4">
         <v-row class="d-flex align-center">
           <v-col @click="router.push(`/`)" class="hidden md:flex text-2xl" cols="5">
-            <div class="d-flex gap-1"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
+            <div class="d-flex gap-1"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
+                class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
           </v-col>
           <v-col @click="router.push(`/`)" class="md:hidden flex ml-3 flex-col" cols="6">
             <a class="text-2xl font-bold text-indigo-600 text-decoration-none h-[20px] leading-2">Nirby</a>
@@ -29,17 +30,17 @@ onMounted(() => {
           <v-spacer>
           </v-spacer>
           <v-col class="hidden md:flex gap-3 justify-end items-center" cols="7">
-            <NuxtLink to="/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+            <NuxtLink to="/employer/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
-            <NuxtLink to="/create-order" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+            <NuxtLink to="/employer/create-order" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Разместить обявление
             </NuxtLink>
-            <NuxtLink to="/requests" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+            <NuxtLink to="/employer/requests" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Мои заказы
             </NuxtLink>
             <div>
-              <UserDropdownCard />
+              <EmployerDropdownCard />
             </div>
           </v-col>
 
@@ -59,22 +60,20 @@ onMounted(() => {
           <v-list-item>
             <UserDropdownCard />
           </v-list-item>
-          <v-list-item to="/work" class="text-gray-600">
+          <v-list-item to="/employer/work" class="text-gray-600">
             Работа
           </v-list-item>
-          <v-list-item to="/create-order" class="text-gray-600">
+          <v-list-item to="/employer/create-order" class="text-gray-600">
             Разместить обявление
           </v-list-item>
-          <v-list-item to="/requests" class="text-gray-600">
+          <v-list-item to="/employer/requests" class="text-gray-600">
             Мои заказы
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
     </div>
 
-
-
-    <div class="bg-gray-50 mt-16">
+    <div class="bg-gray-50 mt-16 pb-28 md:pb-20">
       <slot />
     </div>
 
