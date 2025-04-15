@@ -18,10 +18,10 @@ const logout = () => {
         <template #activator="{ props }">
           <v-btn v-bind="props" variant="text" class="px-1 py-2 d-flex align-center gap-2">
             <v-avatar v-if="userStore.user?.employer_avatar" class="border" :image="userStore.user?.employer_avatar" />
-            <v-avatar v-else class="border">{{ userStore.user?.employer_name[0] }}</v-avatar>
-            <div class="text-left">
-              <p class="text-sm">{{ userStore.user?.employer_name }}</p>
-              <p class="text-xs font-bold -mt-1">{{ userStore.currentRole }}</p>
+            <v-avatar v-else class="border text-lg">{{ userStore.user?.employer_name[0] }}</v-avatar>
+            <div class="ml-2 text-left">
+              <p class="normal-case">{{ userStore.user?.employer_name }}</p>
+              <p class="text-xs -mt-1 normal-case">заказчик</p>
             </div>
             <v-icon icon="mdi-menu-down" class="text-gray-600" />
           </v-btn>
