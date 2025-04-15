@@ -49,6 +49,7 @@ export const useOrder = defineStore('order', () => {
 
   return {
     orders,
+    my_orders_with_applications,
     getAll,
     createOrder,
     getById,
