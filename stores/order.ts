@@ -5,16 +5,31 @@ import { useAuth } from './auth';
 
 import type { Order } from "../types/order.interface"
 import type { Application } from "../types/application.interface"
+import type { OrderWithApplication } from "../types/orderWithApplication.interface"
 
 
 export const useOrder = defineStore('order', () => {
-  let orders = ref<Order[]>()
+  let orders = ref<Order[]>([])
+  let my_orders_with_applications = ref<OrderWithApplication[]>([])
+  let my_applications = ref<Application[]>([])
 
   async function getAll() {
     if (orders.value && orders.value?.length > 0) return null
     let res = await OrderApi.getAll()
     orders.value = res.data?.value
 
+    return res
+  }
+
+  async function getOrdersWithApplications() {
+    if (my_orders_with_applications.value && my_orders_with_applications.value?.length > 0) return null
+
+    let user = useAuth()?.user;
+    if (!user?.employer_orders) return [];
+
+    let myOrders = user.employer_orders;
+    let res = await OrderApi.getOrdersWithApplications(myOrders)
+    my_orders_with_applications.value = res.data?.value
     return res
   }
 
@@ -37,6 +52,7 @@ export const useOrder = defineStore('order', () => {
     getAll,
     createOrder,
     getById,
-    createApplication
+    createApplication,
+    getOrdersWithApplications
   }
 })
