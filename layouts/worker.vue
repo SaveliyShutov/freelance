@@ -29,7 +29,7 @@ onMounted(() => {
           <!-- Desktop and Tablet Navigation -->
           <v-spacer>
           </v-spacer>
-          <v-col class="hidden md:flex gap-3 justify-end items-center" cols="7">
+          <v-col class="hidden md:flex gap-1 lg:gap-2 xl:gap-3 justify-end items-center text-xs lg:text-sm xl:text-base" cols="7">
             <NuxtLink to="/worker/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
@@ -54,8 +54,8 @@ onMounted(() => {
     </v-app-bar>
 
     <!-- Mobile Navigation Drawer (xs) -->
-    <div v-if="drawer" class="md:hidden flex">
-      <v-navigation-drawer v-model="drawer" location="right" temporary class="md:hidden flex">
+    <div v-if="drawer">
+      <v-navigation-drawer v-model="drawer" location="right" temporary>
         <v-list class="">
           <v-list-item>
             <UserDropdownCard />

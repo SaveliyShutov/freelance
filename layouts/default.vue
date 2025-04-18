@@ -9,7 +9,8 @@ let router = useRouter()
       <v-container class="px-4">
         <v-row class="d-flex align-center">
           <v-col @click="router.push(`/`)" class="hidden md:flex text-2xl" cols="5">
-            <div class="d-flex gap-1"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
+            <div class="d-flex gap-1"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
+                class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
           </v-col>
           <v-col @click="router.push(`/`)" class="md:hidden flex ml-3 flex-col" cols="6">
             <a class="text-2xl font-bold text-indigo-600 text-decoration-none h-[20px] leading-2">Nirby</a>
@@ -19,7 +20,7 @@ let router = useRouter()
           <!-- Desktop and Tablet Navigation -->
           <v-spacer>
           </v-spacer>
-          <v-col class="hidden md:flex gap-3 justify-end" cols="7">
+          <v-col class="hidden md:flex gap-3 justify-end text-xs lg:text-sm xl:text-base" cols="7">
             <NuxtLink to="/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
@@ -33,52 +34,34 @@ let router = useRouter()
               Войти
             </NuxtLink>
           </v-col>
-          
+
           <v-col class="md:hidden flex gap-3 justify-end" cols="4">
             <!-- Mobile Navigation Button (xs only) -->
-            <v-app-bar-nav-icon
-              class="md:hidden flex gap-6"
-              @click="drawer = !drawer"
-            ></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon class="md:hidden flex gap-6" @click="drawer = !drawer"></v-app-bar-nav-icon>
           </v-col>
         </v-row>
       </v-container>
     </v-app-bar>
 
     <!-- Mobile Navigation Drawer (xs) -->
-    <v-navigation-drawer
-      v-model="drawer"
-      location="right"
-      temporary
-      class="md:hidden flex mobile-drawer"
-    >
-      <v-list>
-        <v-list-item
-          to="/work"
-          class="text-gray-600"
-        >
-          Работа
-        </v-list-item>
-        <v-list-item
-          to="/create-order"
-          class="text-gray-600"
-        >
-          Разместить обявление
-        </v-list-item>
-        <v-list-item
-          to="/requests"
-          class="text-gray-600"
-        >
-          Мои заказы | Заявки
-        </v-list-item>
-        <v-list-item
-          to="/sign"
-          class="text-gray-600"
-        >
-          Войти
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+    <div v-if="drawer">
+      <v-navigation-drawer v-model="drawer" location="right" temporary>
+        <v-list>
+          <v-list-item to="/work" class="text-gray-600">
+            Работа
+          </v-list-item>
+          <v-list-item to="/create-order" class="text-gray-600">
+            Разместить обявление
+          </v-list-item>
+          <v-list-item to="/requests" class="text-gray-600">
+            Мои заказы | Заявки
+          </v-list-item>
+          <v-list-item to="/sign" class="text-gray-600">
+            Войти
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    </div>
 
     <v-main class="bg-gray-50">
       <slot />
