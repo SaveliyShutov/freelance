@@ -31,7 +31,7 @@ const logout = () => {
           <v-list-item @click="toggleRole">
             <v-list-item-title>
               <v-icon start class="text-indigo-600">mdi-swap-horizontal</v-icon>
-              Сменить роль на {{ currentRole === 'worker' ? 'Worker' : 'Employer' }}
+              Сменить роль на {{ currentRole === 'employer' ? 'Employer' : 'Worker' }}
             </v-list-item-title>
           </v-list-item>
 
