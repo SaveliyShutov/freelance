@@ -8,18 +8,16 @@ let router = useRouter()
     <v-app-bar color="white" elevation="0">
       <v-container class="px-4">
         <v-row class="d-flex align-center">
-          <v-col @click="router.push(`/`)" class="hidden md:flex text-2xl" cols="5">
+          <v-col @click="router.push(`/`)" class="hidden lg:flex text-2xl" cols="5">
             <div class="d-flex gap-1"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
                 class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
           </v-col>
-          <v-col @click="router.push(`/`)" class="md:hidden flex ml-3 flex-col" cols="6">
+          <v-col @click="router.push(`/`)" class="lg:hidden flex ml-3 flex-col" md:cols="6">
             <a class="text-2xl font-bold text-indigo-600 text-decoration-none h-[20px] leading-2">Nirby</a>
             <p class="text-m font-bold text-indigo-600 text-decoration-none h-[20px] leading-3 mt-3">работа рядом</p>
           </v-col>
 
           <!-- Desktop and Tablet Navigation -->
-          <v-spacer>
-          </v-spacer>
           <v-col class="hidden md:flex gap-3 justify-end text-xs lg:text-sm xl:text-base" cols="7">
             <NuxtLink to="/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
