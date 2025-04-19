@@ -33,6 +33,18 @@ export const useOrder = defineStore('order', () => {
     return res
   }
 
+  async function getWorkerApplicationsWithOrders() {
+    if (my_applications.value && my_applications.value?.length > 0) return null
+
+    let user = useAuth()?.user;
+    if (!user?.worker_applications) return [];
+
+    let myApplications = user.worker_applications;
+    let res = await OrderApi.getWorkerApplicationsWithOrders(myApplications)
+    my_applications.value = res.data?.value
+    return res
+  }
+
   async function acceptApplication(application_id: string) {
     let res = await OrderApi.acceptApplication(application_id)
 
@@ -62,12 +74,14 @@ export const useOrder = defineStore('order', () => {
   return {
     orders,
     my_orders_with_applications,
+    my_applications,
     getAll,
     createOrder,
     getById,
     createApplication,
     getOrdersWithApplications,
     acceptApplication,
-    declineApplication
+    declineApplication,
+    getWorkerApplicationsWithOrders
   }
 })

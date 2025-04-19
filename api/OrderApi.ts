@@ -12,6 +12,14 @@ export default {
       },
     })
   },
+  getWorkerApplicationsWithOrders(userApplications: string[]): Promise<any> {
+    return useApiFetch(`/order/get-applications-with-orders`, {
+      method: 'POST',
+      body: {
+        userApplications
+      },
+    })
+  },
   acceptApplication(application_id: string): Promise<any> {
     return useApiFetch(`/order/accept-application?application_id=${application_id}`, { method: 'GET' })
   },
