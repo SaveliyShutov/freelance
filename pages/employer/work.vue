@@ -38,7 +38,7 @@ await orderStore.getAll()
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" class="flex flex-row align-center justify-between">
+      <v-col cols="12" class="flex text- flex-row align-center justify-between">
         <h1 class="text-4xl font-bold text-gray-900 my-8">Вся работа</h1>
         <button @click="router.push('/employer/create-order')"
           class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">

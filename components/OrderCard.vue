@@ -1,5 +1,18 @@
 <script setup>
-const { order } = defineProps(['order'])
+const { order } = defineProps(["order"]);
+const emit = defineEmits(["acceptApplication", "declineApplication"])
+const orderStore = useOrder();
+
+async function accept(application_id) {
+  emit("acceptApplication", application_id)
+}
+
+async function decline(application_id) {
+  let res = await orderStore.declineApplication(application_id);
+  if (res?.data.value) {
+    console.log(res.data.value);
+  }
+}
 </script>
 <template>
   <v-row>
@@ -33,12 +46,19 @@ const { order } = defineProps(['order'])
     </v-col>
     <v-col>
       <p class="text-xl font-bold text-gray-900">Заявки</p>
-      <div v-if="order.applications.length" v-for="application in order.applications" :key="application.id" class="bg-gray-50 p-4 rounded-lg">
+      <div
+        v-if="order.applications.length"
+        v-for="application in order.applications"
+        :key="application.id"
+        class="bg-gray-50 p-4 rounded-lg"
+      >
         <v-row>
           <v-col cols="12" md="6">
             <div class="flex items-center gap-4">
               <!-- Avatar -->
-              <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
+              <div
+                class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center"
+              >
                 <span class="text-xl font-semibold text-indigo-600">
                   {{ application.initials.charAt(0) }}
                 </span>
@@ -51,19 +71,44 @@ const { order } = defineProps(['order'])
               </div>
             </div>
           </v-col>
-          <v-col cols="12" md="6" class="flex items-center justify-end gap-2">
-            <button class="bg-green-500 text-white px-4 py-1.5 rounded hover:bg-green-600">
+          <v-col
+            v-if="application?.status == 'в расмотрении'"
+            cols="12"
+            md="6"
+            class="flex items-center justify-end gap-2"
+          >
+            <button
+              @click="accept(application._id)"
+              class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold"
+            >
               Принять
             </button>
-            <button class="bg-red-500 text-white px-4 py-1.5 rounded hover:bg-red-600">
+            <button
+              @click="decline(application._id)"
+              class="text-black border px-6 py-2 rounded-md hover:bg-gray-200 transition-colors font-bold"
+            >
               Отказать
             </button>
           </v-col>
+          <v-col
+            v-if="application?.status == 'одобрено'"
+            cols="12"
+            md="6"
+            class="flex items-center font-bold justify-end gap-2 text-green-500"
+          >
+            {{ application.status }}
+          </v-col>
+          <v-col
+            v-if="application?.status == 'отказано'"
+            cols="12"
+            md="6"
+            class="flex items-center font-bold justify-end gap-2 text-red-500"
+          >
+            {{ application.status }}
+          </v-col>
         </v-row>
       </div>
-      <div v-else>
-      Нет заявок
-      </div>
+      <div v-else>Нет заявок</div>
     </v-col>
   </v-row>
 </template>

@@ -33,6 +33,18 @@ export const useOrder = defineStore('order', () => {
     return res
   }
 
+  async function acceptApplication(application_id: string) {
+    let res = await OrderApi.acceptApplication(application_id)
+
+    return res
+  }
+
+  async function declineApplication(application_id: string) {
+    let res = await OrderApi.declineApplication(application_id)
+
+    return res
+  }
+
   async function getById(order_id: string) {
     let res = await OrderApi.getById(order_id)
 
@@ -54,6 +66,8 @@ export const useOrder = defineStore('order', () => {
     createOrder,
     getById,
     createApplication,
-    getOrdersWithApplications
+    getOrdersWithApplications,
+    acceptApplication,
+    declineApplication
   }
 })
