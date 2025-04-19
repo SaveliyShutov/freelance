@@ -21,8 +21,8 @@ const logout = () => {
             <v-avatar v-if="userStore.user?.worker_avatar" class="border" :image="userStore.user?.worker_avatar" />
             <v-avatar v-else class="border">{{ userStore.user?.worker_name[0] }}</v-avatar>
             <div class="text-left">
-              <p class="text-sm">{{ userStore.user?.worker_name }}</p>
-              <p class="text-xs font-bold -mt-1">исполнитель</p>
+              <p class="text-xs lg:text-sm xl:text-base">{{ userStore.user?.worker_name }}</p>
+              <p class="font-bold -mt-1 text-xs lg:text-sm xl:text-base">исполнитель</p>
             </div>
             <v-icon icon="mdi-menu-down" class="text-gray-600" />
           </v-btn>
