@@ -1,8 +1,7 @@
 <script setup>
 definePageMeta({
-  middleware: ["worker"],
+  middleware: ["employer"],
 })
-
 const email = ref('')
 const password = ref('')
 const phone = ref('')
@@ -23,13 +22,13 @@ const handleSubmit = () => {
       <v-col cols="12" sm="8" md="6" lg="4">
         <div class="space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <div>
-            <h2 class="text-center text-3xl font-extrabold text-gray-900">{{ isSignUp ? 'Войти' : 'Создать аккаунт' }}
+            <h2 class="text-center text-3xl font-extrabold text-gray-900">{{ isSignUp ? 'Войти как исполнитель' : 'Создать аккаунт исполнителя' }}
             </h2>
             <p class="mt-2 text-center text-sm text-gray-600">
               или
               <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"
                 @click.prevent="isSignUp = !isSignUp">
-                {{ isSignUp ? 'создать новый акканут' : 'войти в акканут' }}
+                {{ isSignUp ? 'Создать аккаунт исполнителя' : 'Войти как исполнитель' }}
               </a>
             </p>
           </div>

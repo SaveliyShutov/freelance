@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
+import { toast } from "vue3-toastify"
 
 const router = useRouter()
 const auth = useAuth()
@@ -31,13 +32,13 @@ const login = handleSubmit(async values => {
   loading.value = false
   if (res?.status?.value == "success") {
     if (localStorage.getItem('role')) {
-      router.push(`/${localStorage.getItem('role')}`)
-    }
-    if (auth.user?.employer_name) {
-      router.push(`/employer`)
-    }
-    if (auth.user?.worker_name) {
-      router.push(`/worker`)
+      toast("Вы вошли в аккаунт!", {
+        type: "success",
+        autoClose: 1000,
+        onClose: () => {
+          router.push(`/${localStorage.getItem('role')}`)
+        },
+      })
     }
   }
 })

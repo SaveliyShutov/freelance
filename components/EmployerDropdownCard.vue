@@ -1,14 +1,16 @@
 <script setup>
 let currentRole = ref('Клиент')
 const userStore = useAuth()
+const router = useRouter();
 
 const toggleRole = () => {
   currentRole.value = currentRole.value === 'Клиент' ? 'Фрилансер' : 'Клиент'
   console.log(currentRole.value)
 }
 
-const logout = () => {
-  // Твоя логика выхода
+async function logout(){
+  router.push(``)
+  userStore.logout()
 }
 </script>
 

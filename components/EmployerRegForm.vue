@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate'
 import _ from 'lodash'
+import { toast } from "vue3-toastify"
+const router = useRouter()
 
 let auth = useAuth()
 
@@ -53,6 +55,13 @@ let show_password = ref(false)
 const submit = handleSubmit(async values => {
   localStorage.setItem('role', 'employer')
   loading.value = true
+  toast("Вы успешно зарегестрировались как заказчик!", {
+    type: "success",
+    autoClose: 1000,
+    onClose: () => {
+      router.push(`/${localStorage.getItem('role')}`)
+    },
+  })
 
   let toSend = { ...values}
   await auth.registration(toSend)
