@@ -137,7 +137,7 @@ const projects = computed(() => {
   <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white w-full -z-10">
     <!-- Role Switcher -->
     <div class="fixed top-4 right-4 z-50 bg-white rounded-full shadow-lg p-1 transition-all duration-300 w-30" :class="[
-      showRoleSwitcher ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
+      showRoleSwitcher ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-0'
     ]">
       <div class="flex gap-1">
         <button @click="currentRole = 'worker'" :class="[
@@ -359,12 +359,12 @@ const projects = computed(() => {
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
             <NuxtLink to="/sign"
-              class="group bg-white text-indigo-600 px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium hover:bg-indigo-50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-flex items-center justify-center gap-2">
+              class="text-decoration-none group bg-white text-indigo-600 px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium hover:bg-indigo-50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-flex items-center justify-center gap-2">
               Войти
               <span class="group-hover:translate-x-1 transition-transform duration-300">→</span>
             </NuxtLink>
             <NuxtLink to="/reg"
-              class="group bg-indigo-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium hover:bg-indigo-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-flex items-center justify-center gap-2">
+              class="text-decoration-none group bg-indigo-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium hover:bg-indigo-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-flex items-center justify-center gap-2">
               Регистрация
               <span class="group-hover:translate-x-1 transition-transform duration-300">→</span>
             </NuxtLink>

@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { toast } from "vue3-toastify"
 import { useField, useForm } from 'vee-validate'
 import type { Order } from '~/types/order.interface'
 
 let orderStore = useOrder()
 let auth = useAuth()
+let router = useRouter()
 
 definePageMeta({
   middleware: ["employer"],
@@ -90,13 +92,26 @@ const submit = handleSubmit(async values => {
   let toSend: Order;
   if (auth.user?.employer_name) {
     toSend = { ...values, employer_id: auth.user._id, employer_name: auth.user.employer_name }
-    await orderStore.createOrder(toSend)
-
-  } else {
-    auth.checkAuth()
+    let res = await orderStore.createOrder(toSend)
+    if (res.status.value == "success") {
+      loading.value = false
+      toast("Объявление размещено", {
+        type: "success",
+        autoClose: 500,
+        onClose: () => {
+          router.push(`/employer/work`)
+        },
+      })
+    } else {
+      toast("Ошибка при создании", {
+        type: "error",
+        autoClose: 2000,
+        onClose: () => {
+          window.location.reload()
+        },
+      })
+    }
   }
-
-  loading.value = false
 })
 </script>
 <template>
@@ -114,7 +129,7 @@ const submit = handleSubmit(async values => {
             <v-text-field base-color="#9e9e9e" color="primary" :error-messages="title.errors.value" type="title"
               variant="outlined" v-model="title.value.value"></v-text-field>
 
-            <label class="block text-sm font-medium text-gray-700 mb-1">Вид работы</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Вид деятельности</label>
             <v-combobox base-color="#9e9e9e" color="primary" :error-messages="type.errors.value" type="type"
               variant="outlined" :items="jobTypes" v-model="type.value.value"></v-combobox>
 
@@ -130,7 +145,7 @@ const submit = handleSubmit(async values => {
                   density="compact" />
               </div>
               <div class="w-50 ml-2">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Введите описание работы</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Сколько заплатите?</label>
                 <v-text-field base-color="#9e9e9e" color="primary" :error-messages="budget.errors.value" class="w-100"
                   label="Бюджет" v-model="budget.value.value" type="budget" variant="outlined" density="compact" />
               </div>
@@ -143,14 +158,14 @@ const submit = handleSubmit(async values => {
               </div>
 
               <div class="w-50 ml-2">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Время работы (сколько часов)</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Время выполнения (в часах)</label>
                 <v-text-field base-color="#9e9e9e" color="primary" :error-messages="hours.errors.value" class="w-100"
                   v-model="hours.value.value" type="hours" variant="outlined" density="compact" />
               </div>
             </div>
 
             <v-col cols="12" class="text-right">
-              <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading">
+              <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading" @click="router.push(`/employer/work`)">
                 Разместить
               </v-btn>
             </v-col>
