@@ -1,31 +1,19 @@
 <script setup>
 definePageMeta({
   middleware: ["worker"],
-})
+});
 
-const jobs = ref([
-  {
-    id: 1,
-    title: 'Уборка снега',
-    organization: 'ООО Жек',
-    postedDate: '2024-04-05',
-    postedTime: '09:30 AM',
-    workingHours: '08.00-12.00',
-    duration: '6 часов',
-    town: 'Пермь, ул. петропавловская д 21',
-    description: '',
-    salaryRange: '500',
-    applications: [
-      {
-        id: 1,
-        workerName: 'John Doe',
-        status: 'Pending',
-        avatar: 'https://ui-avatars.com/api/?name=John+Doe&background=c7d2fe&color=4f46e5',
-        rating: 4.5
-      },
-    ]
-  }
-])
+const orderStore = useOrder();
+
+let applications = ref();
+
+let { my_applications } = storeToRefs(orderStore);
+
+await orderStore.getWorkerApplicationsWithOrders();
+
+if (my_applications?.value) {
+  applications.value = my_applications.value;
+}
 </script>
 <template>
   <v-container>
@@ -39,8 +27,13 @@ const jobs = ref([
       <v-col cols="12">
         <div class="space-y-8">
           <div class="space-y-6">
-            <div v-for="job in jobs" :key="job.id" class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
-              <ApplicationCard :job="job" />
+            <div
+              v-for="application in applications"
+              :key="application._id"
+              class="bg-white p-10 rounded-xl shadow-lg border border-gray-100"
+            >
+              <!-- {{ application }} -->
+              <ApplicationCard :application="application" />
             </div>
           </div>
         </div>

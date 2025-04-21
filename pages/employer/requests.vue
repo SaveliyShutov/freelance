@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
   middleware: ["employer"],
 });
@@ -13,6 +13,20 @@ await orderStore.getOrdersWithApplications();
 
 if (my_orders_with_applications?.value) {
   orders.value = my_orders_with_applications.value;
+}
+
+async function acceptApplication(application_id: string) {
+  let res = await orderStore.acceptApplication(application_id);
+  if (res.data.value) {
+    console.log(res.data.value);
+  }
+}
+
+async function declineApplication(application_id: string) {
+  let res = await orderStore.declineApplication(application_id);
+  if (res.data.value) {
+    console.log(res.data.value);
+  }
 }
 </script>
 <template>
@@ -31,7 +45,11 @@ if (my_orders_with_applications?.value) {
               :key="order.id"
               class="bg-white p-10 rounded-xl shadow-lg border border-gray-100"
             >
-              <OrderCard :order="order" />
+              <OrderCard
+                @acceptApplication="acceptApplication"
+                @declineApplication="declineApplication"
+                :order="order"
+              />
             </div>
           </div>
         </div>
