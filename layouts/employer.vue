@@ -18,7 +18,7 @@ onMounted(() => {
       <v-container class="px-4">
         <v-row class="d-flex align-center">
           <v-col @click="router.push(`/`)" class="hidden lg:flex text-2xl" cols="5">
-            <div class="d-flex gap-1"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
+            <div class="d-flex gap-1 cursor-pointer"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
                 class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
           </v-col>
           <v-col @click="router.push(`/`)" class="lg:hidden flex ml-3 flex-col" md:cols="6">

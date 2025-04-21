@@ -1,5 +1,14 @@
 <script setup lang="ts">
-const authStore = useAuth()
+import { useField, useForm } from 'vee-validate'
+import type { Order } from '~/types/order.interface'
+
+let orderStore = useOrder()
+let auth = useAuth()
+let router = useRouter()
+
+definePageMeta({
+  middleware: ["employer"],
+})
 
 const jobTypes = [
   'Доставка',
@@ -13,27 +22,69 @@ const jobTypes = [
   'Другое'
 ]
 
-const type = ref('')
-const description = ref('')
-const location = ref('')
-const budget = ref('')
-const date = ref('')
-const hours = ref('')
-const title = ref('')
+const { meta, handleSubmit, handleReset, validate } = useForm<{
+  title: string,
+  type: string,
+  address: string,
+  description: string,
+  budget: number,
+  date: string,
+  hours: number,
 
+}>({
+  initialValues: {
+    title: '',
+    type: '',
+    address: '',
+    description: '',
+    date: '',
+    hours: 0,
+  },
+  validationSchema: {
+    title(value: string) {
+      if (value?.length === 0) return 'введите название работы'
+      if (value?.length < 2) return 'слишком короткое название'
+      if (value?.length > 500) return 'слишком длинное название'
 
-const submitForm = () => {
-  console.log({
-    title: title.value,
-    type: type.value,
-    description: description.value,
-    location: location.value,
-    budget: budget.value,
-    date: date.value,
-    hours: hours.value
-  })
-}
+      return true
+    },
+    type(value: string) {
+      if (value?.length === 0) return 'выбирете тип работы'
+      return true
+    },
+    address(value: string) {
+      if (value?.length === 0) return 'введите адрес'
+      if (value?.length < 2) return 'слишком короткий адрес'
+      if (value?.length > 500) return 'слишком длинный адрес'
+      return true
+    },
+    date(value: string) {
+      if (value?.length === 0) return 'введите дату'
+      return true
+    },
+    description(value: string) {
+      if (value?.length === 0) return 'введите описание'
+      if (value?.length < 2) return 'слишком короткое описание'
+      if (value?.length > 5000) return 'слишком длинное описание'
+      return true
+    },
+    hours(value: number) {
+      if (!value) return 'введите колличество часов'
+      return true
+    },
+  },
+})
 
+let title = useField<string>('title')
+let type = useField<string>('type')
+let address = useField<string>('address')
+let budget = useField<number>('budget')
+let date = useField<string>('date')
+let hours = useField<number>('hours')
+let description = useField<string>('description')
+
+let loading = ref(false)
+let show_password = ref(false)
 </script>
 <template>
   <v-container>
@@ -45,75 +96,52 @@ const submitForm = () => {
     <v-row justify="center">
       <v-col cols="12">
         <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
-          <form @submit.prevent="submitForm">
-            <v-row>
-              <v-col cols="12">
-                <div class="flex items-center gap-1">
-                  <i class="mdi mdi-briefcase text-indigo-600"></i>
-                  <label class="block text-sm font-medium text-gray-700">Вид работы</label>
-                </div>
-                <select v-model="type" required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]">
-                  <option value="" disabled>Выберите вид работы</option>
-                  <option v-for="type in jobTypes" :key="type" :value="type">
-                    {{ type }}
-                  </option>
-                </select>
-              </v-col>
+          <v-form class="mt-6 w-100">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Введите название работы</label>
+            <v-text-field base-color="#9e9e9e" color="primary" :error-messages="title.errors.value" type="title"
+              variant="outlined" v-model="title.value.value"></v-text-field>
 
-              <v-col cols="12">
-                <div class="flex items-center gap-1">
-                  <i class="mdi mdi-pickaxe text-indigo-600"></i>
-                  <label class="block text-sm font-medium text-gray-700">Введите описание работы</label>
-                </div>
-                <textarea v-model="description" required rows="4" placeholder="А вот здесь поподробнее"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]"></textarea>
-              </v-col>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Вид деятельности</label>
+            <v-combobox base-color="#9e9e9e" color="primary" :error-messages="type.errors.value" type="type"
+              variant="outlined" :items="jobTypes" v-model="type.value.value"></v-combobox>
 
-              <v-col cols="12" md="6">
-                <div class="flex items-center gap-1">
-                  <i class="mdi mdi-map-marker text-indigo-600"></i>
-                  <label class="block text-sm font-medium text-gray-700">Локация</label>
-                </div>
-                <input type="text" v-model="location" required placeholder="Город, адрес"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]" />
-              </v-col>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Введите описание работы</label>
+            <v-textarea base-color="#9e9e9e" color="primary" :error-messages="description.errors.value"
+              type="description" variant="outlined" v-model="description.value.value"></v-textarea>
 
-              <v-col cols="12" md="6">
-                <div class="flex items-center gap-1">
-                  <i class="mdi mdi-cash-multiple text-indigo-600"></i>
-                  <label class="block text-sm font-medium text-gray-700">Бюджет (₽)</label>
-                </div>
-                <input type="number" v-model="budget" required min="100" step="50" placeholder="А заплатите сколько?"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]" />
-              </v-col>
+            <div class="w-100 flex justify-between">
+              <div class="w-50 mr-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Введите место работы, адрес</label>
+                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="address.errors.value" class="w-100"
+                  placeholder="Пермь, ул. Ленина 45" v-model="address.value.value" type="address" variant="outlined"
+                  density="compact" />
+              </div>
+              <div class="w-50 ml-2">
+                <label class="block t ext-sm font-medium text-gray-700 mb-1">Сколько заплатите?</label>
+                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="budget.errors.value" class="w-100"
+                  label="Бюджет" v-model="budget.value.value" type="budget" variant="outlined" density="compact" />
+              </div>
+            </div>
+            <div class="w-100 flex justify-between">
+              <div class="w-50 mr-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Дата начала работ</label>
+                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="date.errors.value" class="w-100"
+                  v-model="date.value.value" type="date" variant="outlined" density="compact" />
+              </div>
 
-              <v-col cols="12" md="6">
-                <div class="flex items-center gap-1">
-                  <i class="mdi mdi-calendar-range text-indigo-600"></i>
-                  <label class="block text-sm font-medium text-gray-700">Дата выполнения</label>
-                </div>
-                <input type="date" v-model="date" required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]" />
-              </v-col>
+              <div class="w-50 ml-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Время выполнения (в часах)</label>
+                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="hours.errors.value" class="w-100"
+                  v-model="hours.value.value" type="hours" variant="outlined" density="compact" />
+              </div>
+            </div>
 
-              <v-col cols="12" md="6">
-                <div class="flex items-center gap-1">
-                  <i class="mdi mdi-timer-sand-full text-indigo-600"></i>
-                  <label class="block text-sm font-medium text-gray-700">Время работы</label>
-                </div>
-                <input type="number" v-model="hours" min="1" required placeholder="(в часах)"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#473CD2] focus:border-[#473CD2]" />
-              </v-col>
-
-              <v-col cols="12" class="text-right">
-                <button type="submit"
-                  class="px-8 py-2 bg-[#473CD2] text-white rounded-md hover:bg-[#3730A3] transition-colors duration-200">
-                  Разместить
-                </button>
-              </v-col>
-            </v-row>
-          </form>
+            <v-col cols="12" class="text-right">
+              <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading" @click = "router.push('/reg')">
+                Разместить
+              </v-btn>
+            </v-col>
+          </v-form>
         </div>
       </v-col>
     </v-row>
