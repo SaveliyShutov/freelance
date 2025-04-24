@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate'
 import _ from 'lodash'
-
+import { toast } from "vue3-toastify"
+const router = useRouter()
 let auth = useAuth()
 
 const { meta, handleSubmit, handleReset, validate } = useForm<{
@@ -69,6 +70,13 @@ let show_password = ref(false)
 const submit = handleSubmit(async values => {
   localStorage.setItem('role', 'worker')
   loading.value = true
+  toast("Вы успешно зарегестрировались как исполнитель!", {
+    type: "success",
+    autoClose: 1000,
+    onClose: () => {
+      router.push(`/${localStorage.getItem('role')}`)
+    },
+  })
 
   let toSend = { ...values }
   await auth.registration(toSend)
@@ -81,11 +89,13 @@ const submit = handleSubmit(async values => {
     <v-text-field required label="Имя" type="worker_name" placeholder="Иван" v-model="worker_name.value.value"
       :error-messages="worker_name.errors.value" variant="outlined" density="compact" class="w-100" />
 
-    <v-text-field required label="Фамилия" type="worker_surname" placeholder="Иванов" v-model="worker_surname.value.value"
-      :error-messages="worker_surname.errors.value" variant="outlined" density="compact" class="w-100" />
+    <v-text-field required label="Фамилия" type="worker_surname" placeholder="Иванов"
+      v-model="worker_surname.value.value" :error-messages="worker_surname.errors.value" variant="outlined"
+      density="compact" class="w-100" />
 
-    <v-text-field required label="Телефон" type="worker_phone" placeholder="89226252872" v-model="worker_phone.value.value"
-      :error-messages="worker_phone.errors.value" variant="outlined" density="compact" class="w-100" />
+    <v-text-field required label="Телефон" type="worker_phone" placeholder="89226252872"
+      v-model="worker_phone.value.value" :error-messages="worker_phone.errors.value" variant="outlined"
+      density="compact" class="w-100" />
 
     <v-text-field required label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
       :error-messages="email.errors.value" variant="outlined" density="compact" class="w-100 mt-1" />

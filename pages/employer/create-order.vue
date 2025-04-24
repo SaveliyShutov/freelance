@@ -118,7 +118,7 @@ const submit = handleSubmit(async values => {
   <v-container>
     <v-row>
       <v-col cols="12" class="flex flex-row align-center justify-between">
-        <h1 class="text-4xl font-bold text-gray-900 my-8 m  b-8">Создание объявления</h1>
+        <h1 class="text-4xl font-bold text-gray-900 my-8 m b-8">Создание объявления</h1>
       </v-col>
     </v-row>
     <v-row justify="center">
