@@ -31,7 +31,7 @@ onMounted(() => {
             <NuxtLink to="/worker/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
-            <NuxtLink to="/worker/create-order" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+            <NuxtLink to="/worker/sign-employer" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Разместить обявление
             </NuxtLink>
             <NuxtLink to="/worker/requests" class="text-gray-600 hover:text-indigo-600 text-decoration-none">

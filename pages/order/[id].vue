@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import worker from '~/middleware/worker'
+
 const router = useRouter()
 const route = useRoute()
 const orderStore = useOrder()
 
 let order = ref()
 let res = await orderStore.getById(route.params.id.toString())
+
+const currentRole = ref('worker')
 
 if (res) {
   order.value = res.data.value
@@ -33,10 +37,18 @@ if (res) {
                 <i class="mdi mdi-map-marker text-indigo-600"></i>
                 <p class="font-semibold">{{ order.address }}</p>
               </div>
-              <button @click="router.push(`/apply/${order._id}`)"
-                class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
-                Откликнуться
-              </button>
+              <div v-if="currentRole === 'worker'">
+                <button @click="router.push(`/apply/${order._id}`)"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+                  Откликнуться
+                </button>
+              </div>
+              <div v-else>
+                <button @click="router.push(`/employer/sing-worker`)"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+                  Откликнуться
+                </button>
+              </div>
             </div>
             <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
               <div class="flex items-center gap-2">
