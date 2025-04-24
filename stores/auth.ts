@@ -140,6 +140,7 @@ export const useAuth = defineStore('auth', () => {
   return {
     // variables
     user,
+    currentRole,
     registration,
     login,
     checkAuth,
