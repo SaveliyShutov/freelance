@@ -18,7 +18,8 @@ onMounted(() => {
       <v-container class="px-4">
         <v-row class="d-flex align-center">
           <v-col @click="router.push(`/`)" class="hidden lg:flex text-2xl" cols="5">
-            <div class="d-flex gap-1 cursor-pointer"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
+            <div class="d-flex gap-1 cursor-pointer"><a
+                class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
                 class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
           </v-col>
           <v-col @click="router.push(`/`)" class="lg:hidden flex ml-3 flex-col" md:cols="6">
@@ -55,18 +56,26 @@ onMounted(() => {
     <!-- Mobile Navigation Drawer (xs) -->
     <div v-if="drawer" class="md:hidden flex">
       <v-navigation-drawer v-model="drawer" location="right" temporary class="md:hidden flex">
-        <v-list class="">
-          <v-list-item>
-            <EmployerDropdownCard />
+        <v-list class="text-gray-600 ">
+          <v-list-item class="border-b pl-5 pb-4">
+            <div class="font-medium">{{ userStore.user?.employer_name }}</div>
+            <div class="text-xs">заказчик</div>
           </v-list-item>
-          <v-list-item to="/employer/work" class="text-gray-600">
+          <v-divider inset></v-divider>
+          <v-list-item to="/employer/work" class="">
             Работа
           </v-list-item>
-          <v-list-item to="/employer/create-order" class="text-gray-600">
+          <v-list-item to="/employer/create-order" class="">
             Разместить обявление
           </v-list-item>
-          <v-list-item to="/employer/requests" class="text-gray-600">
+          <v-list-item to="/employer/requests" class="">
             Мои заказы
+          </v-list-item>
+          <v-list-item to="/sign" class="">
+            Войти как исполнитель
+          </v-list-item>
+          <v-list-item href="#" class="items-center flex px-4 py-2 text-red-600">
+            <v-icon start class="text-red-600">mdi-logout</v-icon>Выйти
           </v-list-item>
         </v-list>
       </v-navigation-drawer>

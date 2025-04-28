@@ -54,24 +54,29 @@ onMounted(() => {
     <!-- Mobile Navigation Drawer (xs) -->
     <div v-if="drawer">
       <v-navigation-drawer v-model="drawer" location="right" temporary>
-        <v-list class="">
-          <v-list-item>
-            <UserDropdownCard />
+        <v-list class="text-gray-600">
+          <v-list-item class="border-b pl-5 pb-4">
+            <div class="font-medium">{{ userStore.user?.worker_name }} {{ userStore.user?.worker_surname }}</div>
+            <div class="text-xs">исполнитель</div>
           </v-list-item>
-          <v-list-item to="/worker/work" class="text-gray-600">
+          <v-list-item to="/worker/work" class="">
             Работа
           </v-list-item>
-          <v-list-item to="/worker/create-order" class="text-gray-600">
+          <v-list-item to="/worker/create-order" class="">
             Разместить обявление
           </v-list-item>
-          <v-list-item to="/worker/requests" class="text-gray-600">
+          <v-list-item to="/worker/requests" class="">
             Заявки
+          </v-list-item>
+          <v-list-item to="/sign" class="">
+            Войти как заказчик
+          </v-list-item>
+          <v-list-item href="#" class="items-center flex px-4 py-2 text-red-600">
+            <v-icon start class="text-red-600">mdi-logout</v-icon>Выйти
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
     </div>
-
-
 
     <div class="bg-gray-50 mt-16">
       <slot />

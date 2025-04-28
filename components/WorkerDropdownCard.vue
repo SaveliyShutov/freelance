@@ -27,7 +27,7 @@ let dialog = ref();
             </div>
             <ul class="py-2 text-sm text-gray-700">
               <NuxtLink
-                to="/"
+                to="/sign"
                 class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none"
               >
                 Войти как заказчик
@@ -41,7 +41,6 @@ let dialog = ref();
           </div>
         </v-list>
       </v-menu>
-      <!-- </div> -->
     </v-col>
   </v-row>
 </template>
