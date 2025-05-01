@@ -6,9 +6,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     if (authStore.user?.worker_name) {
       return true;
     }
-    if (localStorage.getItem('role') == 'worker') {
-      return true;
-    }
   }
   return abortNavigation();
 })

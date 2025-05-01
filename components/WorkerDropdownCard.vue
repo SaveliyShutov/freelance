@@ -1,8 +1,20 @@
 <script setup lang="ts">
-let currentRole = ref("Заказчик");
 const userStore = useAuth();
 const router = useRouter();
 let dialog = ref();
+
+async function logOut() {
+  let res = await userStore.logout();
+  if (res.status.value == "success") {
+    router.push("/");
+  }
+}
+
+function changeRole() {
+  userStore.currentRole = "employer";
+  localStorage.setItem("currentRole", "employer");
+  router.push("/employer/work");
+}
 </script>
 
 <template>
@@ -22,18 +34,26 @@ let dialog = ref();
         <v-list>
           <div class="z-10 bg-white divide-y divide-gray-200 rounded-lg w-44">
             <div class="px-4 py-3 text-sm text-gray-900">
-              <div class="font-medium">{{ userStore.user?.worker_name }} {{ userStore.user?.worker_surname }}</div>
-              <div class="truncate">исполнитель</div>
+              <div class="font-medium">{{ userStore.user?.worker_name }}</div>
+              <div class="truncate">Исполнитель</div>
             </div>
             <ul class="py-2 text-sm text-gray-700">
               <NuxtLink
-                to="/"
+                v-if="!userStore.user?.employer_name"
+                to="/worker/sign-employer"
+                class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none"
+              >
+                Войти как заказчик
+              </NuxtLink>
+              <NuxtLink
+                v-else
+                @click="changeRole()"
                 class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none"
               >
                 Войти как заказчик
               </NuxtLink>
             </ul>
-            <div class="py-2 hover:text-red-300 cursor-pointer">
+            <div @click="logOut()" class="py-2 hover:text-red-300 cursor-pointer">
               <p href="#" class="items-center flex px-4 py-2 text-sm text-red-600">
                 <v-icon start class="text-red-600">mdi-logout</v-icon>Выйти
               </p>

@@ -10,13 +10,11 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   employer_name: string;
   employer_shortDescription: string;
   employer_description: string;
-  email: string;
-  password: string;
 }>({
   initialValues: {
     employer_name: "",
-    email: "",
-    password: "",
+    employer_description: '',
+    employer_shortDescription: '',
   },
   validationSchema: {
     employer_name(value: string) {
@@ -26,16 +24,17 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
 
       return true;
     },
-    email(value: string) {
-      if (value?.length === 0) return "введите почту";
-      if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value)) return "неправильно ведено";
+    employer_description(value: string) {
+      if (value?.length === 0) return "введите описание";
+      if (value?.length < 2) return "слишком короткое описание";
+      if (value?.length > 1000) return "слишком длинное описание";
 
       return true;
     },
-    password(value: string) {
-      if (value?.length === 0) return "введите пароль";
-      if (value?.length < 8) return "минимум 8 символов";
-      if (value?.length > 30) return "слишком длинный пароль";
+    employer_shortDescription(value: string) {
+      if (value?.length === 0) return "введите короткое описание";
+      if (value?.length < 2) return "слишком коротко";
+      if (value?.length > 500) return "слишком длинное";
 
       return true;
     },
@@ -43,35 +42,35 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
 });
 
 let employer_name = useField<string>("employer_name");
-let email = useField<string>("email");
 let employer_shortDescription = useField<string>("employer_shortDescription");
 let employer_description = useField<string>("employer_description");
-let password = useField<string>("password");
 
-let loading = ref(false);
 let show_password = ref(false);
+let loading = ref(false);
 
 const submit = handleSubmit(async (values) => {
-  localStorage.setItem("currentRole", "employer");
   loading.value = true;
+
   let toSend = { ...values };
-  let res = await auth.registration(toSend);
-
-  if (res) {
-    toast("Вы успешно зарегестрировались как заказчик!", {
-      type: "success",
-      autoClose: 200,
-      onClose: () => {
-        router.push(`/employer/work`);
-      },
-    });
-  } else {
-    toast("Ошибка при регистрации", {
-      type: "error",
-      autoClose: 200,
-    });
+  if (auth.user?._id) {
+    let res = await auth.updateUser(toSend, auth.user?._id);
+    if (res.status.value) {
+      localStorage.setItem("currentRole", "employer");
+      toast("Вы успешно зарегестрировались как исполнитель!", {
+        type: "success",
+        autoClose: 200,
+        onClose: () => {
+          auth.currentRole = "employer";
+          router.push(`/employer/work`);
+        },
+      });
+    } else {
+      toast("Ошибка при регистрации", {
+        type: "error",
+        autoClose: 200,
+      });
+    }
   }
-
   loading.value = false;
 });
 </script>
@@ -108,41 +107,10 @@ const submit = handleSubmit(async (values) => {
       class="w-100"
     />
 
-    <v-text-field
-      required
-      label="Email"
-      type="email"
-      placeholder="vasya@ya.ru"
-      v-model="email.value.value"
-      :error-messages="email.errors.value"
-      variant="outlined"
-      density="compact"
-      class="w-100 mt-1"
-    />
-
-    <v-text-field
-      required
-      label="Пароль"
-      v-model="password.value.value"
-      :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-      @click:append-inner="show_password = !show_password"
-      :type="show_password ? 'text' : 'password'"
-      :error-messages="password.errorMessage.value"
-      variant="outlined"
-      density="compact"
-      class="w-100 mt-1"
-    />
-
     <div class="flex flex-col justify-center">
       <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading">
         Зарегистрироваться
       </v-btn>
-      <p class="mt-2 text-center text-sm text-gray-600">
-        или
-        <NuxtLink to="/sign" class="font-medium text-indigo-600 hover:text-indigo-500">
-          войти в аккаунт
-        </NuxtLink>
-      </p>
     </div>
   </v-form>
 </template>

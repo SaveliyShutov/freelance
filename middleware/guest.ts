@@ -1,16 +1,16 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
   let authStore = useAuth()
-  let isAuth = !!authStore.user
+  let isAuth = authStore.user
 
   if (isAuth) {
-    if (authStore?.user?.worker_name || localStorage.getItem('role') == 'worker') {
+    if (authStore?.user?.worker_name && authStore.currentRole == 'worker') {
       abortNavigation();
-      return navigateTo('/worker')
+      return navigateTo('/worker/work')
     }
 
-    if (authStore?.user?.employer_name || localStorage.getItem('role') == 'employer') {
+    if (authStore?.user?.employer_name && authStore.currentRole == 'employer') {
       abortNavigation();
-      return navigateTo('/employer')
+      return navigateTo('/employer/work')
     }
   }
   return true

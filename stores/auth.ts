@@ -30,9 +30,9 @@ export const useAuth = defineStore('auth', () => {
   //   worker_rating: '4.4',
   // }
 
-  async function registration(user: any): Promise<boolean> {
+  async function registration(userData: any): Promise<boolean> {
     try {
-      const response = await AuthAPI.registration(user)
+      const response = await AuthAPI.registration(userData)
       if (response.data.value) {
         user.value = response.data.value.user
       }
@@ -52,6 +52,18 @@ export const useAuth = defineStore('auth', () => {
     } catch {
       return false
     }
+  }
+
+  async function updateUser(newUser: any, userId: string) {
+    try {
+      let res = await AuthAPI.updateUser(newUser, userId);
+
+      if (res.status.value == 'success') {
+        user.value = res.data.value;
+      }
+
+      return res
+    } catch { }
   }
 
   async function checkAuth(): Promise<boolean> {
@@ -77,6 +89,7 @@ export const useAuth = defineStore('auth', () => {
     try {
       let res = await AuthAPI.logout()
 
+      currentRole.value = null
       user.value = null
       useRouter().push('/')
       return res
@@ -97,18 +110,6 @@ export const useAuth = defineStore('auth', () => {
 
   //     user.value = null
   //     useRouter().push('/')
-  //     return res
-  //   } catch { }
-  // }
-
-  // async function updateUser(newUser: any, userId: string) {
-  //   try {
-  //     let res = await AuthAPI.updateUser(newUser, userId);
-
-  //     if (res.status.value == 'success') {
-  //       user.value = res.data.value;
-  //     }
-
   //     return res
   //   } catch { }
   // }
@@ -145,6 +146,7 @@ export const useAuth = defineStore('auth', () => {
     login,
     checkAuth,
     logout,
+    updateUser,
     // functions
     //  registration, login, 
     // updateUser, sendResetLink, resetPassword, registerStudent,

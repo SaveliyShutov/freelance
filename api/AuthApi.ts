@@ -2,6 +2,9 @@ export default {
   registration(user: any): Promise<any> {
     return useApiFetch('/auth/registration', { method: 'POST', body: user })
   },
+  updateUser(user: any, userId: string): Promise<any> {
+    return useApiFetch('/auth/update', { method: 'POST', body: { user, userId } })
+  },
   login(email: string, password: string): Promise<any> {
     return useApiFetch('/auth/login', { method: 'POST', body: { email, password } })
   },
