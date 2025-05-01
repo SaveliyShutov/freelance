@@ -61,7 +61,6 @@ function changeRole() {
           </div>
         </v-list>
       </v-menu>
-      <!-- </div> -->
     </v-col>
   </v-row>
 </template>

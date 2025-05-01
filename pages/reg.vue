@@ -10,11 +10,15 @@ const currentRole = ref('worker')
         <div class="space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <div class="flex flex-col justify-center">
             <div>
-              <h2 class="text-4xl font-bold text-gray-900 text-center">Создать аккаунт {{ currentRole == 'worker' ?
+              <h2 class="text-2xl font-bold text-gray-900 text-center">Создать аккаунт {{ currentRole == 'worker' ?
                 'исполнителя' : 'заказчика' }}
               </h2>
             </div>
-            <div class="flex justify-center mt-4">
+            <div class="flex flex-row justify-center">
+              <img src="assets\workerImage.png" v-if="currentRole == 'worker'" class="w-44 h-44"/>
+              <img src="assets\employerImage.png" v-if="currentRole == 'employer'" class="w-40 h-40 ml-12 mb-3"/>
+            </div>
+            <div class="flex justify-center">
               <div class="bg-gray-200 rounded-lg p-1 inline-flex">
                 <button @click="currentRole = 'worker'" :class="[
                   'px-4 py-2 rounded-md text-lg font-medium transition-all duration-200',
