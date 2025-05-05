@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     ycAccessKeyId: process.env.YC_KEY_ID,
     ycSecretAccessKKey: process.env.YC_SECRET,
     public: {
+      YANDEX_METRIKA_ID: process.env.YANDEX_METRIKA_ID,
       apiBase: process.env.NUXT_PUBLIC_API_BASE,
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
     },
@@ -45,6 +46,10 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+
+  plugins: [
+    { src: '~/plugins/yandex-metrika.client.ts', mode: 'client' },
+  ],
 
   devServer: {
     port: 3011,
