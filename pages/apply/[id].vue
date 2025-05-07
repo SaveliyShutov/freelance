@@ -45,13 +45,33 @@ let show_password = ref(false)
 const submit = handleSubmit(async values => {
   loading.value = true
   let toSend: Application;
-  if (route.params.id) {
-    if (userStore.user?._id) {
-      toSend = { ...values, worker: userStore.user?._id, order: route.params.id.toString()}
-      await orderStore.createApplication(toSend)
-    } else {
-      userStore.checkAuth()
+  if (userStore.currentRole == 'worker') {
+    if (route.params.id) {
+      if (userStore.user?._id) {
+        toSend = { ...values, worker: userStore.user?._id, order: route.params.id.toString() }
+        let res = await orderStore.createApplication(toSend)
+        if (res?.status?.value == "success") {
+          toast("Отклик успешно отправлен, результат будет виден в моих заявках", {
+            type: "success",
+            autoClose: 400,
+            onClose: () => {
+              router.push(`/worker/work`);
+            },
+          });
+        }
+
+      } else {
+        userStore.checkAuth()
+      }
     }
+  } else if (userStore.currentRole == 'worker') {
+    toast("Смените роль на исполнителя", {
+      type: "error",
+      autoClose: 400,
+      onClose: () => {
+        router.push(`/worker/work`);
+      },
+    });
   }
 
   loading.value = false
@@ -67,7 +87,7 @@ const submit = handleSubmit(async values => {
     <v-row justify="center">
       <v-col cols="12">
         <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
-          <h1 class="text-4xl font-bold text-gray-900 mb-8">Оставьте заявку</h1>
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Оставьте заявку</h1>
 
           <v-form class="mt-6 w-100" @submit="submit">
             <v-row>

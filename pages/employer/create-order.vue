@@ -118,13 +118,13 @@ const submit = handleSubmit(async values => {
   <v-container>
     <v-row>
       <v-col cols="12" class="flex flex-row align-center justify-between">
-        <h1 class="text-4xl font-bold text-gray-900 my-8 m b-8">Создание объявления</h1>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 md:my-8 mb-4 md:mb-8">Создать объявление</h1>
       </v-col>
     </v-row>
     <v-row justify="center">
       <v-col cols="12">
-        <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
-          <v-form class="mt-6 w-100" @submit="submit">
+        <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
+          <v-form class="md:mt-6 w-100" @submit="submit">
             <label class="block text-sm font-medium text-gray-700 mb-1">Введите название работы</label>
             <v-text-field base-color="#9e9e9e" color="primary" :error-messages="title.errors.value" type="title"
               variant="outlined" v-model="title.value.value"></v-text-field>
@@ -137,35 +137,36 @@ const submit = handleSubmit(async values => {
             <v-textarea base-color="#9e9e9e" color="primary" :error-messages="description.errors.value"
               type="description" variant="outlined" v-model="description.value.value"></v-textarea>
 
-            <div class="w-100 flex justify-between">
-              <div class="w-50 mr-2">
+            <v-row>
+              <v-col cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Введите место работы, адрес</label>
                 <v-text-field base-color="#9e9e9e" color="primary" :error-messages="address.errors.value" class="w-100"
                   placeholder="Пермь, ул. Ленина 45" v-model="address.value.value" type="address" variant="outlined"
                   density="compact" />
-              </div>
-              <div class="w-50 ml-2">
+              </v-col>
+              <v-col cols="12" md="6" class="-mt-6 md:-mt-0">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Сколько заплатите?</label>
                 <v-text-field base-color="#9e9e9e" color="primary" :error-messages="budget.errors.value" class="w-100"
                   label="Бюджет" v-model="budget.value.value" type="budget" variant="outlined" density="compact" />
-              </div>
-            </div>
-            <div class="w-100 flex justify-between">
-              <div class="w-50 mr-2">
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Дата начала работ</label>
                 <v-text-field base-color="#9e9e9e" color="primary" :error-messages="date.errors.value" class="w-100"
                   v-model="date.value.value" type="date" variant="outlined" density="compact" />
-              </div>
+              </v-col>
 
-              <div class="w-50 ml-2">
+              <v-col cols="12" md="6" class="-mt-6 md:-mt-0">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Время выполнения (в часах)</label>
                 <v-text-field base-color="#9e9e9e" color="primary" :error-messages="hours.errors.value" class="w-100"
                   v-model="hours.value.value" type="hours" variant="outlined" density="compact" />
-              </div>
-            </div>
+              </v-col>
+            </v-row>
 
             <v-col cols="12" class="text-right">
-              <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading" @click="router.push(`/employer/work`)">
+              <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading"
+                @click="router.push(`/employer/work`)">
                 Разместить
               </v-btn>
             </v-col>

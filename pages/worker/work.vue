@@ -38,9 +38,9 @@ await orderStore.getAll()
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" class="flex flex-row align-center justify-between">
-        <h1 class="text-4xl font-bold text-gray-900 my-8">Вся работа</h1>
-        <button @click="router.push('/worker/sign-employer')"
+      <v-col cols="12" class="flex flex-col md:flex-row align-center justify-between mb-4">
+        <h1 class="text-4xl font-bold text-gray-900 my-4 md:my-8">Вся работа</h1>
+        <button @click="router.push('/worker/create-order')"
           class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
           Разместить заказ
         </button>
@@ -49,7 +49,7 @@ await orderStore.getAll()
 
     <v-row>
       <v-col cols="12">
-        <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
+        <div class="bg-white md:p-10 rounded-xl md:shadow-lg md:border md:border-gray-100">
           <!-- <v-row class="mb-6">
             <v-col cols="12" md="4">
               <div class="mb-4">
@@ -82,8 +82,7 @@ await orderStore.getAll()
           </v-row> -->
 
           <div class="space-y-6">
-            <div v-for="order in orders" :key="order.id"
-              class="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <div v-for="order in orderStore.orders" :key="order.id" class="border rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer">
               <WorkCard @click="router.push(`/order/${order._id}`)" :order="order" />
             </div>
           </div>

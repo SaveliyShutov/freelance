@@ -71,6 +71,9 @@ let loading = ref(false);
 let show_password = ref(false);
 
 const submit = handleSubmit(async (values) => {
+  const roleCookie = useCookie('currentRole')
+  roleCookie.value = 'employer'
+
   localStorage.setItem("currentRole", "employer");
   loading.value = true;
 
@@ -80,7 +83,7 @@ const submit = handleSubmit(async (values) => {
   if (res) {
     toast("Вы успешно зарегестрировались как исполнитель!", {
       type: "success",
-      autoClose: 200,
+      autoClose: 400,
       onClose: () => {
         router.push(`/worker/work`);
       },
@@ -88,7 +91,7 @@ const submit = handleSubmit(async (values) => {
   } else {
     toast("Ошибка при регистрации", {
       type: "error",
-      autoClose: 200,
+      autoClose: 400,
     });
   }
 
@@ -97,66 +100,27 @@ const submit = handleSubmit(async (values) => {
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field
-      required
-      label="Имя"
-      type="worker_name"
-      placeholder="Иван"
-      v-model="worker_name.value.value"
-      :error-messages="worker_name.errors.value"
-      variant="outlined"
-      density="compact"
-      class="w-100"
-    />
+    <v-text-field required label="Имя" type="worker_name" placeholder="Иван" v-model="worker_name.value.value"
+      :error-messages="worker_name.errors.value" variant="outlined" density="compact" class="w-100"
+      autocomplete="name" />
 
-    <v-text-field
-      required
-      label="Фамилия"
-      type="worker_surname"
-      placeholder="Иванов"
-      v-model="worker_surname.value.value"
-      :error-messages="worker_surname.errors.value"
-      variant="outlined"
-      density="compact"
-      class="w-100"
-    />
+    <v-text-field required label="Фамилия" type="worker_surname" placeholder="Иванов"
+      v-model="worker_surname.value.value" :error-messages="worker_surname.errors.value" variant="outlined"
+      density="compact" class="w-100" autocomplete="family-name" />
 
-    <v-text-field
-      required
-      label="Телефон"
-      type="worker_phone"
-      placeholder="89226252872"
-      v-model="worker_phone.value.value"
-      :error-messages="worker_phone.errors.value"
-      variant="outlined"
-      density="compact"
-      class="w-100"
-    />
+    <v-text-field required label="Телефон" type="worker_phone" placeholder="89226252872"
+      v-model="worker_phone.value.value" :error-messages="worker_phone.errors.value" variant="outlined"
+      density="compact" class="w-100" autocomplete="tel" />
 
-    <v-text-field
-      required
-      label="Email"
-      type="email"
-      placeholder="vasya@ya.ru"
-      v-model="email.value.value"
-      :error-messages="email.errors.value"
-      variant="outlined"
-      density="compact"
-      class="w-100 mt-1"
-    />
+    <v-text-field required label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
+      :error-messages="email.errors.value" variant="outlined" density="compact" class="w-100 mt-1"
+      autocomplete="email" />
 
-    <v-text-field
-      required
-      label="Пароль"
-      v-model="password.value.value"
+    <v-text-field required label="Пароль" v-model="password.value.value"
       :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-      @click:append-inner="show_password = !show_password"
-      :type="show_password ? 'text' : 'password'"
-      :error-messages="password.errorMessage.value"
-      variant="outlined"
-      density="compact"
-      class="w-100 mt-1"
-    />
+      @click:append-inner="show_password = !show_password" :type="show_password ? 'text' : 'password'"
+      :error-messages="password.errorMessage.value" variant="outlined" density="compact" class="w-100 mt-1"
+      autocomplete="new-password" />
 
     <div class="flex flex-col justify-center">
       <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading">

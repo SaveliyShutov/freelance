@@ -11,6 +11,8 @@ async function logOut() {
 }
 
 function changeRole() {
+  const roleCookie = useCookie('currentRole')
+  roleCookie.value = 'employer'
   userStore.currentRole = "employer";
   localStorage.setItem("currentRole", "employer");
   router.push("/employer/work");
@@ -22,14 +24,8 @@ function changeRole() {
     <v-col class="hidden md:flex px-0 md:px-10 align-center justify-between">
       <v-menu>
         <template v-slot:activator="{ props }">
-          <v-btn
-            density="compact"
-            class="mx-2"
-            icon="mdi mdi-account"
-            color="#4a5565"
-            variant="text"
-            v-bind="props"
-          ></v-btn>
+          <v-btn density="compact" class="mx-2" icon="mdi mdi-account" color="#4a5565" variant="text"
+            v-bind="props"></v-btn>
         </template>
         <v-list>
           <div class="z-10 bg-white divide-y divide-gray-200 rounded-lg w-44">
@@ -38,18 +34,12 @@ function changeRole() {
               <div class="truncate">Исполнитель</div>
             </div>
             <ul class="py-2 text-sm text-gray-700">
-              <NuxtLink
-                v-if="!userStore.user?.employer_name"
-                to="/worker/sign-employer"
-                class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none"
-              >
+              <NuxtLink v-if="!userStore.user?.employer_name" to="/worker/sign-employer"
+                class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none">
                 Войти как заказчик
               </NuxtLink>
-              <NuxtLink
-                v-else
-                @click="changeRole()"
-                class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none"
-              >
+              <NuxtLink v-else @click="changeRole()"
+                class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none">
                 Войти как заказчик
               </NuxtLink>
             </ul>

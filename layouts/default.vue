@@ -61,7 +61,7 @@ let router = useRouter()
       </v-navigation-drawer>
     </div>
 
-    <v-main class="bg-gray-50">
+    <v-main class="bg-gray-50 pb-28 md:pb-20">
       <slot />
     </v-main>
 

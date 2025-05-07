@@ -55,6 +55,9 @@ const submit = handleSubmit(async (values) => {
   if (auth.user?._id) {
     let res = await auth.updateUser(toSend, auth.user?._id);
     if (res.status.value) {
+      const roleCookie = useCookie('currentRole')
+      roleCookie.value = 'employer'
+
       localStorage.setItem("currentRole", "employer");
       toast("Вы успешно зарегестрировались как исполнитель!", {
         type: "success",
@@ -76,36 +79,15 @@ const submit = handleSubmit(async (values) => {
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field
-      required
-      label="Названии компании"
-      type="name"
-      placeholder="ООО ТУР"
-      v-model="employer_name.value.value"
-      :error-messages="employer_name.errors.value"
-      variant="outlined"
-      density="compact"
-      class="w-100"
-    />
+    <v-text-field required label="Названии компании" type="name" placeholder="ООО ТУР"
+      v-model="employer_name.value.value" :error-messages="employer_name.errors.value" variant="outlined"
+      density="compact" class="w-100" />
 
-    <v-text-field
-      label="Короткое описание компании (необязательно)"
-      v-model="employer_shortDescription.value.value"
-      type="shortDescription"
-      variant="outlined"
-      density="compact"
-      class="w-100"
-    />
+    <v-text-field label="Короткое описание компании (необязательно)" v-model="employer_shortDescription.value.value"
+      type="shortDescription" variant="outlined" density="compact" class="w-100" />
 
-    <v-textarea
-      label="О компании (необязательно)"
-      v-model="employer_description.value.value"
-      type="description"
-      placeholder=""
-      variant="outlined"
-      density="compact"
-      class="w-100"
-    />
+    <v-textarea label="О компании (необязательно)" v-model="employer_description.value.value" type="description"
+      placeholder="" variant="outlined" density="compact" class="w-100" />
 
     <div class="flex flex-col justify-center">
       <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading">

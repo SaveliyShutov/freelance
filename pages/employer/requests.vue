@@ -4,16 +4,7 @@ definePageMeta({
 });
 
 const orderStore = useOrder();
-
-let orders = ref();
-
-let { my_orders_with_applications } = storeToRefs(orderStore);
-
 await orderStore.getOrdersWithApplications();
-
-if (my_orders_with_applications?.value) {
-  orders.value = my_orders_with_applications.value;
-}
 
 async function acceptApplication(application_id: string) {
   let res = await orderStore.acceptApplication(application_id);
@@ -33,7 +24,7 @@ async function declineApplication(application_id: string) {
   <v-container>
     <v-row>
       <v-col cols="12" class="flex flex-row align-center justify-between">
-        <h1 class="text-4xl font-bold text-gray-900 my-8">Мои заказы</h1>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 md:my-8 mb-4 md:mb-8">Мои заказы</h1>
       </v-col>
     </v-row>
     <v-row>
@@ -41,9 +32,9 @@ async function declineApplication(application_id: string) {
         <div class="space-y-8">
           <div class="space-y-6">
             <div
-              v-for="order in orders"
+              v-for="order in orderStore.my_orders_with_applications"
               :key="order.id"
-              class="bg-white p-10 rounded-xl shadow-lg border border-gray-100"
+              class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100"
             >
               <OrderCard
                 @acceptApplication="acceptApplication"

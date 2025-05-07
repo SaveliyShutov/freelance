@@ -2,15 +2,8 @@ export default defineNuxtRouteMiddleware(async () => {
   let authStore = useAuth()
   let isAuth = authStore.user
 
-  if (import.meta.client) {
-    const role = localStorage.getItem('currentRole')
-    if (role === 'employer') {
-      authStore.currentRole = 'employer'
-    }
-    if (role === 'worker') {
-      authStore.currentRole = 'worker'
-    }
-  }
+  const roleCookie = useCookie('currentRole')
+  authStore.currentRole = roleCookie.value || 'default'
 
   if (isAuth && authStore?.user?.employer_name && authStore.currentRole === 'employer') {
     return setPageLayout('employer')

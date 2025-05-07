@@ -52,6 +52,9 @@ let loading = ref(false);
 let show_password = ref(false);
 
 const submit = handleSubmit(async (values) => {
+  const roleCookie = useCookie('currentRole')
+  roleCookie.value = 'employer'
+
   localStorage.setItem("currentRole", "employer");
   loading.value = true;
   let toSend = { ...values };
@@ -77,61 +80,25 @@ const submit = handleSubmit(async (values) => {
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field
-      required
-      label="Названии компании"
-      type="name"
-      placeholder="ООО ТУР"
-      v-model="employer_name.value.value"
-      :error-messages="employer_name.errors.value"
-      variant="outlined"
-      density="compact"
-      class="w-100"
-    />
+    <v-text-field required label="Названии компании" type="name" placeholder="ООО ТУР"
+      v-model="employer_name.value.value" :error-messages="employer_name.errors.value" variant="outlined"
+      density="compact" class="w-100" autocomplete="organization" />
 
-    <v-text-field
-      label="Короткое описание компании (необязательно)"
-      v-model="employer_shortDescription.value.value"
-      type="shortDescription"
-      variant="outlined"
-      density="compact"
-      class="w-100"
-    />
+    <v-text-field label="Короткое описание компании (необязательно)" v-model="employer_shortDescription.value.value"
+      type="shortDescription" variant="outlined" density="compact" class="w-100" />
 
-    <v-textarea
-      label="О компании (необязательно)"
-      v-model="employer_description.value.value"
-      type="description"
-      placeholder=""
-      variant="outlined"
-      density="compact"
-      class="w-100"
-    />
+    <v-textarea label="О компании (необязательно)" v-model="employer_description.value.value" type="description"
+      placeholder="" variant="outlined" density="compact" class="w-100" />
 
-    <v-text-field
-      required
-      label="Email"
-      type="email"
-      placeholder="vasya@ya.ru"
-      v-model="email.value.value"
-      :error-messages="email.errors.value"
-      variant="outlined"
-      density="compact"
-      class="w-100 mt-1"
-    />
+    <v-text-field required label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
+      :error-messages="email.errors.value" variant="outlined" density="compact" class="w-100 mt-1"
+      autocomplete="email" />
 
-    <v-text-field
-      required
-      label="Пароль"
-      v-model="password.value.value"
+    <v-text-field required label="Пароль" v-model="password.value.value"
       :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-      @click:append-inner="show_password = !show_password"
-      :type="show_password ? 'text' : 'password'"
-      :error-messages="password.errorMessage.value"
-      variant="outlined"
-      density="compact"
-      class="w-100 mt-1"
-    />
+      @click:append-inner="show_password = !show_password" :type="show_password ? 'text' : 'password'"
+      :error-messages="password.errorMessage.value" variant="outlined" density="compact" class="w-100 mt-1"
+      autocomplete="new-password" />
 
     <div class="flex flex-col justify-center">
       <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading">
