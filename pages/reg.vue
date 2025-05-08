@@ -10,9 +10,7 @@ const currentRole = ref("worker");
   <v-container class="min-h-screen flex justify-center">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6">
-        <div
-          class="space-y-8 bg-white p-6 md:p-10 ma-5 mb-15 rounded-xl shadow-lg border border-gray-100"
-        >
+        <div class="space-y-8 bg-white p-6 md:p-10 ma-5 mb-15 rounded-xl shadow-lg border border-gray-100">
           <div class="flex flex-col justify-center">
             <div>
               <h2 class="text-2xl font-bold text-gray-900 text-center">
@@ -22,39 +20,32 @@ const currentRole = ref("worker");
             </div>
             <ClientOnly>
               <div class="flex flex-row justify-center">
-                <img
-                  v-if="currentRole === 'worker'"
-                  :src="workerImage"
-                  class="w-44 h-44"
-                />
-                <img
-                  v-if="currentRole === 'employer'"
-                  :src="employerImage"
-                  class="w-40 h-40 ml-12 mb-3"
-                /></div
-            ></ClientOnly>
+                <img v-if="currentRole === 'worker'" :src="workerImage" class="w-28 h-28" />
+                <img v-if="currentRole === 'employer'" :src="employerImage" class="w-28 h-28 ml-10" />
+              </div>
+            </ClientOnly>
+            <p class="text-center mt-2 text-green-600">
+              + {{ currentRole == "worker" ? "может откликаться на заказы" : "может создавать заказы" }}
+            </p>
+            <p class="text-center mb-2  text-red-600">
+              - {{ currentRole == "worker" ? "не может создавать заказы" : "не может откликаться на заказы" }}
+            </p>
             <div class="flex justify-center">
               <div class="bg-gray-200 rounded-lg p-1 inline-flex">
-                <button
-                  @click="currentRole = 'worker'"
-                  :class="[
-                    'px-4 py-2 rounded-md text-lg font-medium transition-all duration-200',
-                    currentRole === 'worker'
-                      ? 'bg-white text-indigo-600 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900',
-                  ]"
-                >
+                <button @click="currentRole = 'worker'" :class="[
+                  'px-4 py-2 rounded-md text-lg font-medium transition-all duration-200',
+                  currentRole === 'worker'
+                    ? 'bg-white text-indigo-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900',
+                ]">
                   исполнителя
                 </button>
-                <button
-                  @click="currentRole = 'employer'"
-                  :class="[
-                    'px-4 py-2 rounded-md text-lg font-medium transition-all duration-200',
-                    currentRole === 'employer'
-                      ? 'bg-white text-indigo-600 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900',
-                  ]"
-                >
+                <button @click="currentRole = 'employer'" :class="[
+                  'px-4 py-2 rounded-md text-lg font-medium transition-all duration-200',
+                  currentRole === 'employer'
+                    ? 'bg-white text-indigo-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900',
+                ]">
                   заказчика
                 </button>
               </div>

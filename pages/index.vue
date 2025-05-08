@@ -1,5 +1,5 @@
 <script setup>
-const currentRole = ref("worker"); // Default role is worker
+const currentRole = ref("worker");
 const showRoleSwitcher = ref(false);
 
 onMounted(() => {
@@ -135,53 +135,36 @@ const projects = computed(() => {
 </script>
 
 <template>
-  <div
-    class="min-h-screen overflow-x-hidden bg-gradient-to-b from-gray-50 to-white w-full"
-  >
+  <div class="min-h-screen overflow-x-hidden bg-gradient-to-b from-gray-50 to-white w-full">
     <div v-if="showRoleSwitcher"
-      class="fixed top-4 right-4 z-50 bg-white rounded-full shadow-lg p-1 transition-all duration-300 w-30"
-      :class="[
+      class="fixed top-4 right-4 z-50 bg-white rounded-full shadow-lg p-1 transition-all duration-300 w-30" :class="[
         showRoleSwitcher ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-0',
-      ]"
-    >
+      ]">
       <div class="flex gap-1">
-        <button
-          @click="currentRole = 'worker'"
-          :class="[
-            'px-4 py-2 rounded-full transition-all duration-300',
-            currentRole === 'worker' ? 'bg-primary text-white' : 'hover:bg-gray-100',
-          ]"
-        >
+        <button @click="currentRole = 'worker'" :class="[
+          'px-4 py-2 rounded-full transition-all duration-300',
+          currentRole === 'worker' ? 'bg-primary text-white' : 'hover:bg-gray-100',
+        ]">
           Исполнитель
         </button>
-        <button
-          @click="currentRole = 'employer'"
-          :class="[
-            'px-4 py-2 rounded-full transition-all duration-300',
-            currentRole === 'employer' ? 'bg-primary text-white' : 'hover:bg-gray-100',
-          ]"
-        >
+        <button @click="currentRole = 'employer'" :class="[
+          'px-4 py-2 rounded-full transition-all duration-300',
+          currentRole === 'employer' ? 'bg-primary text-white' : 'hover:bg-gray-100',
+        ]">
           Заказчик
         </button>
       </div>
     </div>
 
-    <section
-      class="relative bg-gradient-to-r from-indigo-600 to-indigo-800 text-white py-16 md:py-32 overflow-hidden"
-    >
-      <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute inset-0"></div>
-      </div>
+    <section class="relative bg-gradient-to-r from-indigo-600 to-indigo-800 text-white py-16 md:py-32 overflow-hidden">
       <div class="relative">
         <v-row no-gutters>
           <v-col cols="12">
             <div class="py-16">
               <v-row align="center" justify="center" class="">
                 <v-col class="items-center hidden md:flex flex-col">
-                  <p
-                    class="text-white text-8xl font-weight-black mb-6 text-center max-w-3xl"
-                    style="font-family: 'Montserrat', sans-serif"
-                  >
+                  <p class="text-white text-8xl font-weight-black mb-6 text-center max-w-3xl"
+                    style="font-family: 'Montserrat', sans-serif">
                     {{
                       currentRole === "worker"
                         ? "Найдите прибыльную подработку"
@@ -196,20 +179,13 @@ const projects = computed(() => {
                     }}
                   </p>
                   <NuxtLink to="/reg">
-                    <v-btn
-                      color="white"
-                      size="x-large"
-                      class="text-primary font-weight-bold px-8 text-body-1"
-                    >
+                    <v-btn color="white" size="x-large" class="text-primary font-weight-bold px-8 text-body-1">
                       {{ currentRole === "worker" ? "Найти работу" : "Найти работника" }}
                     </v-btn>
                   </NuxtLink>
                 </v-col>
                 <v-col class="text-center md:hidden flex flex-col">
-                  <p
-                    class="text-white text-4xl font-weight-black mb-6"
-                    style="font-family: 'Montserrat', sans-serif"
-                  >
+                  <p class="text-white text-4xl font-weight-black mb-6" style="font-family: 'Montserrat', sans-serif">
                     {{
                       currentRole === "worker"
                         ? "Найдите прибыльную подработку"
@@ -224,11 +200,7 @@ const projects = computed(() => {
                     }}
                   </p>
                   <NuxtLink to="/sign">
-                    <v-btn
-                      size="large"
-                      color="white"
-                      class="text-primary font-weight-bold px-8 text-body-1"
-                    >
+                    <v-btn size="large" color="white" class="text-primary font-weight-bold px-8 text-body-1">
                       {{ currentRole === "worker" ? "Найти работу" : "Найти работника" }}
                     </v-btn>
                   </NuxtLink>
@@ -243,10 +215,7 @@ const projects = computed(() => {
     <section class="py-16 md:py-24">
       <v-row align="center" justify="center">
         <v-col cols="12" md="10" class="text-center">
-          <h2
-            class="text-h2 font-weight-black mb-12 text-primary"
-            style="font-family: 'Montserrat', sans-serif"
-          >
+          <h2 class="text-h2 font-weight-black mb-12 text-primary" style="font-family: 'Montserrat', sans-serif">
             О Нас
           </h2>
           <v-row>
@@ -290,23 +259,14 @@ const projects = computed(() => {
     <section class="py-16 md:py-24 bg-gradient-to-b from-gray-100 to-white">
       <v-row align="center" justify="center">
         <v-col cols="12" md="10" class="text-center">
-          <h2
-            class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 md:mb-16 px-4"
-          >
+          <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 md:mb-16 px-4">
             Преимущества
           </h2>
           <v-row>
-            <v-col
-              v-for="(advantage, index) in advantages"
-              :key="index"
-              cols="12"
-              md="4"
-              class="px-6"
-            >
+            <v-col v-for="(advantage, index) in advantages" :key="index" cols="12" md="4" class="px-6">
               <div
                 class="bg-white p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-indigo-50 h-full"
-                :style="`transition-delay: ${index * 100}ms`"
-              >
+                :style="`transition-delay: ${index * 100}ms`">
                 <div class="text-4xl md:text-5xl mb-4 md:mb-6">{{ advantage.icon }}</div>
                 <h3 class="text-xl md:text-2xl font-semibold mb-3 md:mb-4">
                   {{ advantage.title }}
@@ -374,44 +334,27 @@ const projects = computed(() => {
       </v-row>
     </section> -->
 
-    <section
-      class="py-16 md:py-24 bg-gradient-to-b from-gray-100 to-white"
-      v-if="currentRole === 'worker'"
-    >
+    <section class="py-16 md:py-24 bg-gradient-to-b from-gray-100 to-white" v-if="currentRole === 'worker'">
       <v-row align="center" justify="center">
         <v-col cols="12" md="10" class="text-center">
-          <h2
-            class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 md:mb-16 px-4"
-          >
+          <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 md:mb-16 px-4">
             {{ currentRole === "worker" ? "Доступные проекты" : "" }}
           </h2>
           <v-row>
-            <v-col
-              v-for="project in projects"
-              :key="project.id"
-              cols="12"
-              sm="6"
-              md="4"
-              class="px-4"
-            >
+            <v-col v-for="project in projects" :key="project.id" cols="12" sm="6" md="4" class="px-4">
               <div
-                class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 h-full"
-              >
+                class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 h-full">
                 <div class="p-6 md:p-8">
                   <h3
-                    class="text-xl md:text-2xl font-semibold mb-3 md:mb-4 group-hover:text-indigo-600 transition-colors"
-                  >
+                    class="text-xl md:text-2xl font-semibold mb-3 md:mb-4 group-hover:text-indigo-600 transition-colors">
                     {{ project.title }}
                   </h3>
                   <p class="text-base md:text-lg text-gray-600 mb-4 md:mb-6">
                     {{ project.description }}
                   </p>
                   <div class="flex flex-wrap gap-2 mb-4">
-                    <span
-                      v-for="tag in project.tags"
-                      :key="tag"
-                      class="px-3 py-1.5 bg-indigo-50 text-indigo-800 rounded-full text-sm font-medium group-hover:bg-indigo-100 transition-colors"
-                    >
+                    <span v-for="tag in project.tags" :key="tag"
+                      class="px-3 py-1.5 bg-indigo-50 text-indigo-800 rounded-full text-sm font-medium group-hover:bg-indigo-100 transition-colors">
                       {{ tag }}
                     </span>
                   </div>
@@ -430,9 +373,7 @@ const projects = computed(() => {
       </v-row>
     </section>
 
-    <section
-      class="py-16 md:py-24 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white relative overflow-hidden"
-    >
+    <section class="py-16 md:py-24 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white relative overflow-hidden">
       <v-container class="relative">
         <div class="text-center max-w-3xl mx-auto px-4">
           <h2 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8">
@@ -448,23 +389,15 @@ const projects = computed(() => {
             }}
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
-            <NuxtLink
-              to="/sign"
-              class="text-decoration-none group bg-white text-indigo-600 px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium hover:bg-indigo-50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-flex items-center justify-center gap-2"
-            >
+            <NuxtLink to="/sign"
+              class="text-decoration-none group bg-white text-indigo-600 px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium hover:bg-indigo-50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-flex items-center justify-center gap-2">
               Войти
-              <span class="group-hover:translate-x-1 transition-transform duration-300"
-                >→</span
-              >
+              <span class="group-hover:translate-x-1 transition-transform duration-300">→</span>
             </NuxtLink>
-            <NuxtLink
-              to="/reg"
-              class="text-decoration-none group bg-indigo-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium hover:bg-indigo-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-flex items-center justify-center gap-2"
-            >
+            <NuxtLink to="/reg"
+              class="text-decoration-none group bg-indigo-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium hover:bg-indigo-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-flex items-center justify-center gap-2">
               Регистрация
-              <span class="group-hover:translate-x-1 transition-transform duration-300"
-                >→</span
-              >
+              <span class="group-hover:translate-x-1 transition-transform duration-300">→</span>
             </NuxtLink>
           </div>
         </div>
