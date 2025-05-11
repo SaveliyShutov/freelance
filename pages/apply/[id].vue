@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { toast } from "vue3-toastify"
 import { useField, useForm } from 'vee-validate'
 import type { Application } from '~/types/application.interface'
 
 const userStore = useAuth()
 const orderStore = useOrder()
 const route = useRoute()
+const router = useRouter()
 
 const { meta, handleSubmit, handleReset, validate } = useForm<{
   phone: string,
@@ -24,8 +26,8 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
       return true
     },
     initials(value: string) {
-      if (value?.length === 0) return 'выбирете ФИО (или название организации)'
-      if (value?.length > 500) return 'слишком длинное фио'
+      if (value?.length === 0) return 'напишите ФИО (или название организации)'
+      if (value?.length > 500) return 'слишком длинное фио (или название организации)'
       return true
     },
     letter(value: string) {
@@ -42,9 +44,21 @@ let letter = useField<string>('letter')
 let loading = ref(false)
 let show_password = ref(false)
 
+onMounted(() => {
+  if (userStore.user?.worker_phone && userStore.user?.worker_name && userStore.user.worker_surname) {
+    phone.value.value = userStore.user?.worker_phone
+    initials.value.value = userStore.user?.worker_name + ' ' + userStore.user.worker_surname
+  }
+})
+
 const submit = handleSubmit(async values => {
   loading.value = true
   let toSend: Application;
+  
+  phone.value.value = phone.value.value.trim()
+  initials.value.value = initials.value.value.trim()
+  letter.value.value = letter.value.value.trim()
+
   if (userStore.currentRole == 'worker') {
     if (route.params.id) {
       if (userStore.user?._id) {
@@ -53,8 +67,9 @@ const submit = handleSubmit(async values => {
         if (res?.status?.value == "success") {
           toast("Отклик успешно отправлен, результат будет виден в моих заявках", {
             type: "success",
-            autoClose: 400,
+            autoClose: 1000,
             onClose: () => {
+              orderStore.my_applications.push(toSend)
               router.push(`/worker/work`);
             },
           });
@@ -64,13 +79,10 @@ const submit = handleSubmit(async values => {
         userStore.checkAuth()
       }
     }
-  } else if (userStore.currentRole == 'worker') {
+  } else if (userStore.currentRole == 'employer') {
     toast("Смените роль на исполнителя", {
       type: "error",
-      autoClose: 400,
-      onClose: () => {
-        router.push(`/worker/work`);
-      },
+      autoClose: 1000,
     });
   }
 
@@ -98,13 +110,13 @@ const submit = handleSubmit(async values => {
                   class="w-100" />
               </v-col>
 
-              <v-col cols="12" md="6">
+              <v-col class="-mt-6 md:-mt-0" cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">ФИО</label>
                 <v-text-field base-color="#9e9e9e" color="primary" required type="phone"
                   placeholder="Иванов Иван Иванович" v-model="initials.value.value"
                   :error-messages="initials.errors.value" variant="outlined" density="compact" class="w-100" />
               </v-col>
-              <v-col cols="12">
+              <v-col class="-mt-6 md:-mt-0" cols="12">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Отклик на заказ</label>
                 <v-textarea color="primary" base-color="#9e9e9e" v-model="letter.value.value"
                   :error-messages="letter.errors.value" type="letter"

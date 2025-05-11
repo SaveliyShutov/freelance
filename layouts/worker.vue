@@ -40,11 +40,8 @@ function changeRole() {
             <NuxtLink to="/worker/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
-            <NuxtLink to="/worker/sign-employer" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
-              Разместить обявление
-            </NuxtLink>
             <NuxtLink to="/worker/requests" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
-              Заявки
+              Мои заявки
             </NuxtLink>
             <div>
               <WorkerDropdownCard />
@@ -71,11 +68,8 @@ function changeRole() {
           <v-list-item to="/worker/work" class="">
             Работа
           </v-list-item>
-          <v-list-item to="/worker/sign-employer" class="">
-            Разместить обявление
-          </v-list-item>
           <v-list-item to="/worker/requests" class="">
-            Заявки
+            Мои заявки
           </v-list-item>
           <v-list-item  v-if="!userStore.user?.employer_name" to="/worker/sign-employer"
             class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none">

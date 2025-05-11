@@ -100,23 +100,23 @@ const submit = handleSubmit(async (values) => {
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field required label="Имя" type="worker_name" placeholder="Иван" v-model="worker_name.value.value"
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Имя" type="worker_name" placeholder="Иван" v-model="worker_name.value.value"
       :error-messages="worker_name.errors.value" variant="outlined" density="compact" class="w-100"
       autocomplete="name" />
 
-    <v-text-field required label="Фамилия" type="worker_surname" placeholder="Иванов"
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Фамилия" type="worker_surname" placeholder="Иванов"
       v-model="worker_surname.value.value" :error-messages="worker_surname.errors.value" variant="outlined"
       density="compact" class="w-100" autocomplete="family-name" />
 
-    <v-text-field required label="Телефон" type="worker_phone" placeholder="89226252872"
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Телефон" type="worker_phone" placeholder="89226252872"
       v-model="worker_phone.value.value" :error-messages="worker_phone.errors.value" variant="outlined"
       density="compact" class="w-100" autocomplete="tel" />
 
-    <v-text-field required label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
       :error-messages="email.errors.value" variant="outlined" density="compact" class="w-100 mt-1"
       autocomplete="email" />
 
-    <v-text-field required label="Пароль" v-model="password.value.value"
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Пароль" v-model="password.value.value"
       :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append-inner="show_password = !show_password" :type="show_password ? 'text' : 'password'"
       :error-messages="password.errorMessage.value" variant="outlined" density="compact" class="w-100 mt-1"

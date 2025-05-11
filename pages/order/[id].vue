@@ -44,7 +44,7 @@ if (res) {
                 <i class="mdi mdi-map-marker text-indigo-600"></i>
                 <p class="font-semibold">{{ order.address }}</p>
               </div>
-              <div v-if="userStore.currentRole === 'worker'">
+              <div v-if="userStore.currentRole === 'worker' || userStore.user?.worker_name">
                 <button @click="router.push(`/apply/${order._id}`)"
                   class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
                   Откликнуться

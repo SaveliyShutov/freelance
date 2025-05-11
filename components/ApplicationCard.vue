@@ -4,8 +4,8 @@ const { application } = defineProps(["application"]);
 const getStatusClass = (status) => {
   const classes = {
     "в расмотрении": "bg-yellow-100 text-yellow-800",
-    принят: "bg-green-100 text-green-800",
-    отклонен: "bg-red-100 text-red-800",
+    "одобрено": "bg-green-100 text-green-800",
+    "отклонен": "bg-red-100 text-red-800",
   };
   return classes[status] || "bg-gray-100 text-gray-800";
 };
@@ -53,7 +53,7 @@ const getStatusClass = (status) => {
                 class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center"
               >
                 <span class="text-xl font-semibold text-indigo-600">
-                  {{ application.initials.charAt(0) }}
+                  {{ application.initials[0] }}
                 </span>
               </div>
               <div>

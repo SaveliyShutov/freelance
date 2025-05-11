@@ -73,11 +73,11 @@ const login = handleSubmit(async (values) => {
             </p>
           </div>
           <v-form class="mt-6 w-100" @submit.prevent="login">
-            <v-text-field label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
+            <v-text-field base-color="#9e9e9e" color="primary" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
               :error-messages="email.errors.value" variant="outlined" density="compact" class="w-100 mt-1"
               autocomplete="email" />
 
-            <v-text-field label="Пароль" v-model="password.value.value"
+            <v-text-field base-color="#9e9e9e" color="primary" label="Пароль" v-model="password.value.value"
               :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
               @click:append-inner="show_password = !show_password" :type="show_password ? 'text' : 'password'"
               :error-messages="password.errorMessage.value" variant="outlined" density="compact" class="w-100 mt-1"

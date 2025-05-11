@@ -1,4 +1,6 @@
 <script setup>
+import sadPicture from "~/assets/mansad.png";
+
 definePageMeta({
   middleware: ["employer"],
 })
@@ -56,8 +58,13 @@ await orderStore.getAll()
           </v-row> -->
 
           <div class="space-y-6">
-            <div v-for="order in orderStore.orders" :key="order.id" class="border rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer">
+            <div v-if="orderStore.orders.length > 0" v-for="order in orderStore.orders" :key="order.id"
+              class="border rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer">
               <WorkCard @click="router.push(`/order/${order._id}`)" :order="order" />
+            </div>
+            <div v-else class="flex flex-col justify-center items-center text-center">
+              <p>Нет заказов. Будьте первым!</p>
+              <img :src="sadPicture" class="mt-2 w-64 h-64" />
             </div>
           </div>
         </div>

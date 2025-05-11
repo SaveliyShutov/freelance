@@ -6,6 +6,8 @@ const orderStore = useOrder();
 const currentPage = ref(1);
 const itemsPerPage = 8;
 
+const router = useRouter()
+
 const paginatedApplications = computed(() => {
   if (!order.applications) return [];
   const start = (currentPage.value - 1) * itemsPerPage;
@@ -31,7 +33,7 @@ async function decline(application_id) {
 </script>
 <template>
   <v-row>
-    <v-col cols="12" md="8">
+    <v-col cols="12" md="8" @click="router.push(`/order/${order._id}`)">
       <div class="mb-3">
         <h3 class="text-xl font-semibold text-gray-900">{{ order.title }}</h3>
         <p class="text-lg text-indigo-600">{{ order.employer_name }}</p>
@@ -54,7 +56,7 @@ async function decline(application_id) {
       </div>
     </v-col>
 
-    <v-col cols="12" md="4" class="flex flex-col justify-between">
+    <v-col @click="router.push(`/order/${order._id}`)" cols="12" md="4" class="flex flex-col justify-between">
       <div class="text-right mb-4">
         <p class="text-2xl font-bold">{{ order.budget }} ₽</p>
       </div>
@@ -87,8 +89,14 @@ async function decline(application_id) {
               </button>
             </v-col>
             <v-col v-if="application?.status == 'одобрено'" cols="12" md="6"
-              class="flex items-center font-bold justify-end gap-2 text-green-500">
-              {{ application.status }}
+              class="flex items-center font-bold justify-end gap-2">
+              <p>
+                {{ application.phone }}
+              </p>
+              <p class="text-green-500">
+                {{ application.status }}
+              </p>
+
             </v-col>
             <v-col v-if="application?.status == 'отказано'" cols="12" md="6"
               class="flex items-center font-bold justify-end gap-2 text-red-500">
