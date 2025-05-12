@@ -1,12 +1,14 @@
 import { defineStore } from "pinia"
 import OrderApi from '../api/OrderApi'
-
+import { toast } from "vue3-toastify"
 import { useAuth } from './auth';
 
 import type { Order } from "../types/order.interface"
 import type { Application } from "../types/application.interface"
 import type { OrderWithApplication } from "../types/orderWithApplication.interface"
 
+const userStore = useAuth();
+const router = useRouter();
 
 export const useOrder = defineStore('order', () => {
   let orders = ref<Order[]>([])
@@ -64,7 +66,17 @@ export const useOrder = defineStore('order', () => {
   }
 
   async function createOrder(order: Order) {
-    return await OrderApi.createOrder(order)
+    if (userStore.currentRole.value === "employer"){
+      return await OrderApi.createOrder(order)
+    }
+    toast("Для начала вам нужно зарегестрироваться как заказчик", {
+      type: "error",
+      autoClose: 2000,
+      onClose: () => {
+        router.push(`/sign`)
+      },
+    })
+    return
   }
 
   async function createApplication(application: Application) {
