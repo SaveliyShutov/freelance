@@ -69,7 +69,6 @@ const submit = handleSubmit(async values => {
             type: "success",
             autoClose: 1000,
             onClose: () => {
-              orderStore.my_applications.push(toSend)
               router.push(`/worker/work`);
             },
           });

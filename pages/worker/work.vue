@@ -2,10 +2,10 @@
 import sadPicture from "~/assets/mansad.png";
 import { toast } from "vue3-toastify";
 
-
 definePageMeta({
   middleware: ["worker"],
 })
+
 let router = useRouter()
 let orderStore = useOrder()
 

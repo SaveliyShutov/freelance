@@ -72,9 +72,9 @@ let show_password = ref(false);
 
 const submit = handleSubmit(async (values) => {
   const roleCookie = useCookie('currentRole')
-  roleCookie.value = 'employer'
+  roleCookie.value = 'worker'
 
-  localStorage.setItem("currentRole", "employer");
+  localStorage.setItem("currentRole", "worker");
   loading.value = true;
 
   let toSend = { ...values };
