@@ -30,13 +30,13 @@ export const useAuth = defineStore('auth', () => {
   //   worker_rating: '4.4',
   // }
 
-  async function registration(userData: any): Promise<boolean> {
+  async function registration(userData: any) {
     try {
       const response = await AuthAPI.registration(userData)
       if (response.data.value) {
         user.value = response.data.value.user
       }
-      return true
+      return response
     } catch {
       return false
     }

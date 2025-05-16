@@ -58,41 +58,31 @@ const submit = handleSubmit(async (values) => {
   localStorage.setItem("currentRole", "employer");
   loading.value = true;
   let toSend = { ...values };
-  let res = await auth.registration(toSend);
+  let res = await auth.registration(toSend)
 
-  if (res) {
-    toast("Вы успешно зарегестрировались как заказчик!", {
-      type: "success",
-      autoClose: 200,
-      onClose: () => {
-        router.push(`/employer/work`);
-      },
-    });
-  } else {
-    toast("Ошибка при регистрации", {
-      type: "error",
-      autoClose: 200,
-    });
+  if (res?.status?.value == "success") {
+    router.push(`/employer/work`);
   }
-
   loading.value = false;
 });
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field base-color="#9e9e9e" color="primary" required label="Названии компании" type="name" placeholder="ООО ТУР"
-      v-model="employer_name.value.value" :error-messages="employer_name.errors.value" variant="outlined"
-      density="compact" class="w-100" autocomplete="organization" />
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Названии компании" type="name"
+      placeholder="ООО ТУР" v-model="employer_name.value.value" :error-messages="employer_name.errors.value"
+      variant="outlined" density="compact" class="w-100" autocomplete="organization" />
 
-    <v-text-field base-color="#9e9e9e" color="primary" label="Короткое описание компании (необязательно)" v-model="employer_shortDescription.value.value"
-      type="shortDescription" variant="outlined" density="compact" class="w-100" />
+    <v-text-field base-color="#9e9e9e" color="primary" label="Короткое описание компании (необязательно)"
+      v-model="employer_shortDescription.value.value" type="shortDescription" variant="outlined" density="compact"
+      class="w-100" />
 
-    <v-textarea base-color="#9e9e9e" color="primary" label="О компании (необязательно)" v-model="employer_description.value.value" type="description"
-      placeholder="" variant="outlined" density="compact" class="w-100" />
+    <v-textarea base-color="#9e9e9e" color="primary" label="О компании (необязательно)"
+      v-model="employer_description.value.value" type="description" placeholder="" variant="outlined" density="compact"
+      class="w-100" />
 
-    <v-text-field base-color="#9e9e9e" color="primary" required label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
-      :error-messages="email.errors.value" variant="outlined" density="compact" class="w-100 mt-1"
-      autocomplete="email" />
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Email" type="email" placeholder="vasya@ya.ru"
+      v-model="email.value.value" :error-messages="email.errors.value" variant="outlined" density="compact"
+      class="w-100 mt-1" autocomplete="email" />
 
     <v-text-field base-color="#9e9e9e" color="primary" required label="Пароль" v-model="password.value.value"
       :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"

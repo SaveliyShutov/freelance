@@ -30,10 +30,11 @@ const login = handleSubmit(async (values) => {
   loading.value = true;
 
   let res = await auth.login(values.email, values.password);
+
   if (auth.user?.employer_name) {
     const roleCookie = useCookie('currentRole')
     roleCookie.value = 'employer'
-    
+
     localStorage.setItem("currentRole", "employer");
     currentRole.value = 'employer'
   } else {
@@ -44,18 +45,12 @@ const login = handleSubmit(async (values) => {
     currentRole.value = 'worker'
   }
 
-  loading.value = false;
   if (res?.status?.value == "success") {
     if (localStorage.getItem("currentRole")) {
-      toast("Вы вошли в аккаунт!", {
-        type: "success",
-        autoClose: 100,
-        onClose: () => {
-          router.push(`/${localStorage.getItem("currentRole")}/work`);
-        },
-      });
+      router.push(`/${localStorage.getItem("currentRole")}/work`);
     }
   }
+  loading.value = false;
 });
 </script>
 <template>
@@ -73,9 +68,9 @@ const login = handleSubmit(async (values) => {
             </p>
           </div>
           <v-form class="mt-6 w-100" @submit.prevent="login">
-            <v-text-field base-color="#9e9e9e" color="primary" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
-              :error-messages="email.errors.value" variant="outlined" density="compact" class="w-100 mt-1"
-              autocomplete="email" />
+            <v-text-field base-color="#9e9e9e" color="primary" type="email" placeholder="vasya@ya.ru"
+              v-model="email.value.value" :error-messages="email.errors.value" variant="outlined" density="compact"
+              class="w-100 mt-1" autocomplete="email" />
 
             <v-text-field base-color="#9e9e9e" color="primary" label="Пароль" v-model="password.value.value"
               :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
@@ -83,11 +78,10 @@ const login = handleSubmit(async (values) => {
               :error-messages="password.errorMessage.value" variant="outlined" density="compact" class="w-100 mt-1"
               autocomplete="current-password" />
 
-            <div>
-              <button type="submit" :disabled="!meta.valid" :loading="loading"
-                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <div class="flex justify-center">
+              <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading">
                 Войти
-              </button>
+              </v-btn>
             </div>
           </v-form>
         </div>

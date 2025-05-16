@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware(async () => {
   let authStore = useAuth()
-  let isAuth = authStore.user
+  let isAuth = authStore?.user
 
   const roleCookie = useCookie('currentRole')
   authStore.currentRole = roleCookie.value || 'default'

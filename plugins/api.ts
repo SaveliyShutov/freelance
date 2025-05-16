@@ -1,3 +1,5 @@
+import { toast } from "vue3-toastify";
+
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig()
 
@@ -12,9 +14,22 @@ export default defineNuxtPlugin(() => {
     },
     onResponseError({ response }) {
       // if (response._data.message) {
-        // if (process.client)
-        //   toast(response._data.message, { type: 'error' })
+      // if (process.client)
+      //   toast(response._data.message, { type: 'error' })
       // }
+      if (response.status === 400) {
+        console.log()
+        toast(response?._data?.message, {
+          type: "error",
+          autoClose: 1000,
+        });
+      }
+      if (response.status === 429) {
+        toast("Слишком много попыток. Попробуйте через 5 минут.", {
+          type: "error",
+          autoClose: 1000,
+        });
+      }
       if (response.status === 401) {
         useState('authRedirect').value = useRoute().path
         navigateTo('/')
