@@ -1,7 +1,4 @@
 <script setup lang="ts">
-
-const currentRole = ref('worker')
-
 </script>
 <template>
   <v-container class="min-h-screen flex justify-center py-12">
@@ -10,10 +7,12 @@ const currentRole = ref('worker')
         <div class="space-y-8 bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <div class="flex flex-col justify-center">
             <div>
-              <h2 class="text-4xl font-bold text-gray-900 text-center">Создать аккаунт заказчика
+              <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center">Добавить аккаунт заказчика
               </h2>
+              <p class="text-center">для создания заказов вам необходимо создать аккаунт заказчика
+              </p>
             </div>
-            <EmployerRegForm />
+            <WorkerAddEmployerForm />
           </div>
         </div>
       </v-col>

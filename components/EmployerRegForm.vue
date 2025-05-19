@@ -1,92 +1,94 @@
 <script setup lang="ts">
-import { useField, useForm } from 'vee-validate'
-import _ from 'lodash'
-import { toast } from "vue3-toastify"
-const router = useRouter()
+import { useField, useForm } from "vee-validate";
+import _ from "lodash";
+import { toast } from "vue3-toastify";
+const router = useRouter();
 
-let auth = useAuth()
+let auth = useAuth();
 
 const { meta, handleSubmit, handleReset, validate } = useForm<{
-  employer_name: string,
-  employer_shortDescription: string,
-  employer_description: string,
-  email: string,
-  password: string,
+  employer_name: string;
+  employer_shortDescription: string;
+  employer_description: string;
+  email: string;
+  password: string;
 }>({
   initialValues: {
-    employer_name: '',
-    email: '',
-    password: '',
+    employer_name: "",
+    email: "",
+    password: "",
   },
   validationSchema: {
     employer_name(value: string) {
-      if (value?.length === 0) return 'введите имя'
-      if (value?.length < 2) return 'слишком короткое имя'
-      if (value?.length > 22) return 'слишком длинное имя'
+      if (value?.length === 0) return "введите имя";
+      if (value?.length < 2) return "слишком короткое имя";
+      if (value?.length > 22) return "слишком длинное имя";
 
-      return true
+      return true;
     },
     email(value: string) {
-      if (value?.length === 0) return 'введите почту'
-      if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value))
-        return 'неправильно ведено'
+      if (value?.length === 0) return "введите почту";
+      if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value)) return "неправильно ведено";
 
-      return true
+      return true;
     },
     password(value: string) {
-      if (value?.length === 0) return 'введите пароль'
-      if (value?.length < 8) return 'минимум 8 символов'
-      if (value?.length > 30) return 'слишком длинный пароль'
+      if (value?.length === 0) return "введите пароль";
+      if (value?.length < 8) return "минимум 8 символов";
+      if (value?.length > 30) return "слишком длинный пароль";
 
-      return true
+      return true;
     },
   },
-})
+});
 
-let employer_name = useField<string>('employer_name')
-let email = useField<string>('email')
-let employer_shortDescription = useField<string>('employer_shortDescription')
-let employer_description = useField<string>('employer_description')
-let password = useField<string>('password')
+let employer_name = useField<string>("employer_name");
+let email = useField<string>("email");
+let employer_shortDescription = useField<string>("employer_shortDescription");
+let employer_description = useField<string>("employer_description");
+let password = useField<string>("password");
 
-let loading = ref(false)
-let show_password = ref(false)
+let loading = ref(false);
+let show_password = ref(false);
 
-const submit = handleSubmit(async values => {
-  localStorage.setItem('role', 'employer')
-  loading.value = true
-  toast("Вы успешно зарегестрировались как заказчик!", {
-    type: "success",
-    autoClose: 1000,
-    onClose: () => {
-      router.push(`/${localStorage.getItem('role')}`)
-    },
-  })
+const submit = handleSubmit(async (values) => {
+  const roleCookie = useCookie('currentRole')
+  roleCookie.value = 'employer'
 
-  let toSend = { ...values}
-  await auth.registration(toSend)
+  localStorage.setItem("currentRole", "employer");
+  loading.value = true;
+  let toSend = { ...values };
+  let res = await auth.registration(toSend)
 
-  loading.value = false
-})
+  if (res?.status?.value == "success") {
+    router.push(`/employer/work`);
+  }
+  loading.value = false;
+});
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field required label="Названии компании" type="name" placeholder="ООО ТУР" v-model="employer_name.value.value"
-      :error-messages="employer_name.errors.value" variant="outlined" density="compact" class="w-100" />
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Названии компании" type="name"
+      placeholder="ООО ТУР" v-model="employer_name.value.value" :error-messages="employer_name.errors.value"
+      variant="outlined" density="compact" class="w-100" autocomplete="organization" />
 
-    <v-text-field label="Короткое описание компании (необязательно)" v-model="employer_shortDescription.value.value" type="shortDescription" variant="outlined" density="compact"
+    <v-text-field base-color="#9e9e9e" color="primary" label="Короткое описание компании (необязательно)"
+      v-model="employer_shortDescription.value.value" type="shortDescription" variant="outlined" density="compact"
       class="w-100" />
 
-    <v-textarea label="О компании (необязательно)" v-model="employer_description.value.value" type="description" placeholder="" variant="outlined" density="compact"
+    <v-textarea base-color="#9e9e9e" color="primary" label="О компании (необязательно)"
+      v-model="employer_description.value.value" type="description" placeholder="" variant="outlined" density="compact"
       class="w-100" />
 
-    <v-text-field required label="Email" type="email" placeholder="vasya@ya.ru" v-model="email.value.value"
-      :error-messages="email.errors.value" variant="outlined" density="compact" class="w-100 mt-1" />
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Email" type="email" placeholder="vasya@ya.ru"
+      v-model="email.value.value" :error-messages="email.errors.value" variant="outlined" density="compact"
+      class="w-100 mt-1" autocomplete="email" />
 
-    <v-text-field required label="Пароль" v-model="password.value.value"
+    <v-text-field base-color="#9e9e9e" color="primary" required label="Пароль" v-model="password.value.value"
       :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append-inner="show_password = !show_password" :type="show_password ? 'text' : 'password'"
-      :error-messages="password.errorMessage.value" variant="outlined" density="compact" class="w-100 mt-1" />
+      :error-messages="password.errorMessage.value" variant="outlined" density="compact" class="w-100 mt-1"
+      autocomplete="new-password" />
 
     <div class="flex flex-col justify-center">
       <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading">

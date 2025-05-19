@@ -7,14 +7,15 @@ let router = useRouter()
   <v-app class="min-h-screen">
     <v-app-bar color="white" elevation="0">
       <v-container class="px-4">
-        <v-row class="d-flex align-center">
-          <v-col @click="router.push(`/`)" class="hidden lg:flex text-2xl" cols="5">
-            <div class="d-flex gap-1"><a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
-                class="font-bold text-indigo-600 text-decoration-none h-[35px]"> - работа рядом</a></div>
+        <v-row class="flex align-center">
+          <v-col @click="router.push(`/`)" class="hidden md:flex text-2xl cursor-pointer" cols="5">
+            <a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
+              class="font-bold text-indigo-600 text-decoration-none h-[35px]">
+              - работа рядом</a>
           </v-col>
-          <v-col @click="router.push(`/`)" class="lg:hidden flex ml-3 flex-col" md:cols="6">
+          <v-col @click="router.push(`/`)" class="md:hidden flex-col cursor-pointer" md:cols="6">
             <a class="text-2xl font-bold text-indigo-600 text-decoration-none h-[20px] leading-2">Nirby</a>
-            <p class="text-m font-bold text-indigo-600 text-decoration-none h-[20px] leading-3 mt-3">работа рядом</p>
+            <p class="text-m font-semibold text-indigo-600 text-decoration-none h-[20px] leading-3">работа рядом</p>
           </v-col>
 
           <!-- Desktop and Tablet Navigation -->
@@ -22,11 +23,8 @@ let router = useRouter()
             <NuxtLink to="/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
-            <NuxtLink to="/create-order" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
-              Разместить обявление
-            </NuxtLink>
-            <NuxtLink to="/requests" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
-              Мои заказы | заявки
+            <NuxtLink to="/reg" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+              Зарегистрироваться
             </NuxtLink>
             <NuxtLink to="/sign" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Войти
@@ -34,25 +32,20 @@ let router = useRouter()
           </v-col>
 
           <v-col class="md:hidden flex gap-3 justify-end" cols="4">
-            <!-- Mobile Navigation Button (xs only) -->
             <v-app-bar-nav-icon class="md:hidden flex gap-6" @click="drawer = !drawer"></v-app-bar-nav-icon>
           </v-col>
         </v-row>
       </v-container>
     </v-app-bar>
 
-    <!-- Mobile Navigation Drawer (xs) -->
     <div v-if="drawer">
       <v-navigation-drawer v-model="drawer" location="right" temporary>
         <v-list>
           <v-list-item to="/work" class="text-gray-600">
             Работа
           </v-list-item>
-          <v-list-item to="/create-order" class="text-gray-600">
-            Разместить обявление
-          </v-list-item>
-          <v-list-item to="/requests" class="text-gray-600">
-            Мои заказы | Заявки
+          <v-list-item to="/reg" class="text-gray-600">
+            Зарегистрироваться
           </v-list-item>
           <v-list-item to="/sign" class="text-gray-600">
             Войти
@@ -61,9 +54,9 @@ let router = useRouter()
       </v-navigation-drawer>
     </div>
 
-    <v-main class="bg-gray-50">
+    <div class="bg-gray-50 mt-16 pb-28 md:pb-20">
       <slot />
-    </v-main>
+    </div>
 
     <Footer />
   </v-app>

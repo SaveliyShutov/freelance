@@ -10,7 +10,7 @@ const router = useRouter();
         <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <div class="p-8 text-center">
             <div class="mx-auto w-48 h-48 rounded-full overflow-hidden ring-4 ring-indigo-600/10 mb-6">
-              <img src="assets\maaaks.png" alt="" class="w-full h-full" />
+              <!-- <img src="assets\maaaks.png" alt="" class="w-full h-full" /> -->
             </div>
             <div class="flex flex-col items-center">
               <h1 class="text-2xl font-bold text-gray-800">{{ userstore.user.name }} {{ userstore.user.surname }}</h1>

@@ -3,17 +3,11 @@ definePageMeta({
   middleware: ["worker"],
 });
 
+let router = useRouter()
+
 const orderStore = useOrder();
 
-let applications = ref();
-
-let { my_applications } = storeToRefs(orderStore);
-
 await orderStore.getWorkerApplicationsWithOrders();
-
-if (my_applications?.value) {
-  applications.value = my_applications.value;
-}
 </script>
 <template>
   <v-container>
@@ -28,12 +22,11 @@ if (my_applications?.value) {
         <div class="space-y-8">
           <div class="space-y-6">
             <div
-              v-for="application in applications"
+              v-for="application in orderStore.my_applications"
               :key="application._id"
               class="bg-white p-10 rounded-xl shadow-lg border border-gray-100"
             >
-              <!-- {{ application }} -->
-              <ApplicationCard :application="application" />
+              <ApplicationCard @click="router.push(`/order/${application.order._id}`)" :application="application" />
             </div>
           </div>
         </div>
