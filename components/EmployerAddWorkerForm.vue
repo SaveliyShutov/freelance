@@ -62,7 +62,7 @@ const submit = handleSubmit(async (values) => {
       localStorage.setItem("currentRole", "worker");
       toast("Вы успешно зарегестрировались как испольнитель!", {
         type: "success",
-        autoClose: 400,
+        autoClose: 2000,
         onClose: () => {
           auth.currentRole = "worker";
           router.push(`/worker/work`);
@@ -71,7 +71,7 @@ const submit = handleSubmit(async (values) => {
     } else {
       toast("Ошибка при регистрации, попробуйте еще раз", {
         type: "error",
-        autoClose: 400,
+        autoClose: 2000,
       });
     }
   }

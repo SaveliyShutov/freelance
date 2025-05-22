@@ -21,13 +21,13 @@ export default defineNuxtPlugin(() => {
         console.log()
         toast(response?._data?.message, {
           type: "error",
-          autoClose: 1000,
+          autoClose: 2000,
         });
       }
       if (response.status === 429) {
         toast("Слишком много попыток. Попробуйте через 5 минут.", {
           type: "error",
-          autoClose: 1000,
+          autoClose: 2000,
         });
       }
       if (response.status === 401) {

@@ -61,7 +61,7 @@ const submit = handleSubmit(async (values) => {
       localStorage.setItem("currentRole", "employer");
       toast("Вы успешно зарегестрировались как исполнитель!", {
         type: "success",
-        autoClose: 200,
+        autoClose: 2000,
         onClose: () => {
           auth.currentRole = "employer";
           router.push(`/employer/work`);
@@ -70,7 +70,7 @@ const submit = handleSubmit(async (values) => {
     } else {
       toast("Ошибка при регистрации", {
         type: "error",
-        autoClose: 200,
+        autoClose: 2000,
       });
     }
   }
@@ -83,10 +83,10 @@ const submit = handleSubmit(async (values) => {
       v-model="employer_name.value.value" :error-messages="employer_name.errors.value" variant="outlined"
       density="compact" class="w-100" />
 
-    <v-text-field label="Короткое описание компании (необязательно)" v-model="employer_shortDescription.value.value"
+    <v-text-field label="Короткое описание компании" v-model="employer_shortDescription.value.value"
       type="shortDescription" variant="outlined" density="compact" class="w-100" />
 
-    <v-textarea label="О компании (необязательно)" v-model="employer_description.value.value" type="description"
+    <v-textarea label="О компании" v-model="employer_description.value.value" type="description"
       placeholder="" variant="outlined" density="compact" class="w-100" />
 
     <div class="flex flex-col justify-center">
