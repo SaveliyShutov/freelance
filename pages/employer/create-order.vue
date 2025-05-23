@@ -24,9 +24,7 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
 }>({
   initialValues: {
     title: '',
-    type: '',
     address: '',
-    description: '',
     date: '',
     budget: 0,
     hours: 0,
@@ -65,8 +63,6 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
       return true
     },
     description(value: string) {
-      if (value?.length === 0) return 'введите описание'
-      if (value?.length < 2) return 'слишком короткое описание'
       if (value?.length > 2500) return 'слишком длинное описание'
       return true
     },
@@ -158,7 +154,7 @@ const flatJobList = Array.from(
             <label class="block text-sm font-medium text-gray-700 mb-1">Введите название работы</label>
             <v-text-field placeholder="Мойка окон" base-color="#9e9e9e" color="primary"
               :error-messages="title.errors.value" type="text" variant="outlined"
-              v-model="title.value.value"></v-text-field>
+              v-model="title.value.value"></v-text-field> 
 
             <label class="block text-sm font-medium text-gray-700 mb-1">Вид деятельности (напишите или выберите из
               списка)</label>
