@@ -14,13 +14,13 @@ definePageMeta({
 
 const { meta, handleSubmit, handleReset, validate } = useForm<{
   title: string,
-  type: string,
+  type?: string,
   address: string,
-  description: string,
+  description?: string,
   budget: number,
   date: string,
   hours: number,
-  
+
 }>({
   initialValues: {
     title: '',
