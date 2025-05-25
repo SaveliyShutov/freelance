@@ -20,7 +20,7 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   budget: number,
   date: string,
   hours: number,
-
+  
 }>({
   initialValues: {
     title: '',
