@@ -66,7 +66,7 @@
       <v-row v-else>
         <v-col cols="12" class="text-center">
           <p class="text-indigo-600">Please register to access employer profile features</p>
-          <v-btn color="indigo" to="/register">
+          <v-btn color="indigo" to="/reg">
             Register Now
           </v-btn>
         </v-col>

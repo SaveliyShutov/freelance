@@ -1,11 +1,6 @@
 <script setup>
 const route = useRoute()
-const userType = ref('worker')
-
-onMounted(() => {
-  // Here you can fetch user type based on the route ID
-  console.log('Profile ID:', route.params.id)
-})
+const userStore = useAuth()
 </script>
 
 <template>
@@ -13,15 +8,16 @@ onMounted(() => {
     <v-row>
       <v-col cols="12">
         <div class="ml-4">
-          <v-btn-toggle v-model="userType" mandatory color="indigo">
-            <v-btn value="worker" color="indigo-800">Работник</v-btn>
-            <v-btn value="employer" color="indigo-800">Заказчик</v-btn>
+          <v-btn-toggle v-model="userStore.currentRole" mandatory color="indigo">
+            <v-btn value="worker" color="indigo-800">Исполнитель</v-btn>
+            <v-btn  value="employer" color="indigo-800">Заказчик</v-btn>
           </v-btn-toggle>
         </div>
+        <ProfileWorker v-if="userStore.currentRole === 'worker'" />
+        <ProfileEmployer v-if="userStore.currentRole === 'employer'" />
       </v-col>
     </v-row>
 
-    <ProfileWorker v-if="userType === 'worker'" />
-    <ProfileEmployer v-if="userType === 'employer'" />
+    
   </v-container>
 </template>
