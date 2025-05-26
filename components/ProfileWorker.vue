@@ -9,7 +9,7 @@ const fieldLabels = {
     email: 'Email',
     phone: 'Номер телефона',
     password: 'Пароль',
-    city: 'Ваше местоположение'
+    location: 'Ваше местоположение'
 }
 
 const editableFields = {
@@ -17,7 +17,7 @@ const editableFields = {
     email: '',
     phone: '',
     password: '',
-    city: ''
+    location: ''
 }
 
 const startEdit = (field) => {
@@ -50,15 +50,12 @@ const changePassword = async () => {
     // Implement password change logic here
     console.log('Changing password...')
 }
-
-// Simulated user data fetch - replace with actual API call
 onMounted(() => {
-    // Temporary mock data
     userData.value = {
         name: 'Иван Громов',
         email: 'john@example.com',
         phone: '+79024549166',
-        city: 'с.Россия, г.Пермь',
+        location: 'с.Россия, г.Пермь',
         password: 'Qwerty123',
         avatar: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg',
         about: 'Здесь вы можете что-нибудь написать, чтобы зарекомендовать себя.:)',
@@ -89,20 +86,22 @@ onMounted(() => {
                     <v-avatar size="150" color="grey-lighten-2" class="elevation-3">
                         <v-img :src="userData.avatar" alt="Profile avatar"></v-img>
                     </v-avatar>
-                    <h2 class="text-indigo-600 font-bold mt-4 mb-2">Профиль работника</h2>
-                    <v-card class="pa-4">
-                        <div class="d-flex justify-space-between align-center mb-3">
-                            <h3 class="text-indigo-600">About Me</h3>
-                            <v-btn v-if="!editingAbout" variant="plain" class="text-indigo-800"
-                                @click="editingAbout = true">Edit</v-btn>
-                            <div v-else>
-                                <v-btn text color="grey" class="mr-2" @click="cancelEdit('about')">Cancel</v-btn>
-                                <v-btn color="indigo" @click="saveEdit('about')">Save</v-btn>
-                            </div>
+                    <div class="mt-3"><p>{{ userData.name }}</p></div>
+                    <div class="mb-2"><p>{{ userData.location }}</p></div>
+                    <div class="border-2 rounded-md border-indigo-400 mx-12 py-3"><p class="text-indigo-600 font-bold">Профиль работника</p></div>
+                </v-card>
+                <v-card class="pa-4 mt-8">
+                    <div class="d-flex justify-space-between align-center mb-3">
+                        <h3 class="text-indigo-600">About Me</h3>
+                        <v-btn v-if="!editingAbout" variant="plain" class="text-indigo-800"
+                            @click="editingAbout = true">Edit</v-btn>
+                        <div v-else>
+                            <v-btn text color="grey" class="mr-2" @click="cancelEdit('about')">Cancel</v-btn>
+                            <v-btn color="indigo" @click="saveEdit('about')">Save</v-btn>
                         </div>
-                        <p v-if="!editingAbout" class="text-body-1">{{ userData.about }}</p>
-                        <v-textarea v-else v-model="editData.about" color="indigo" variant="outlined"></v-textarea>
-                    </v-card>
+                    </div>
+                    <p v-if="!editingAbout" class="text-body-1">{{ userData.about }}</p>
+                    <v-textarea v-else v-model="editData.about" color="indigo" variant="outlined"></v-textarea>
                 </v-card>
             </v-col>
             <v-col cols="4">
