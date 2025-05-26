@@ -67,7 +67,7 @@ const submit = handleSubmit(async values => {
         if (res?.status?.value == "success") {
           toast("Отклик успешно отправлен, результат будет виден в моих заявках", {
             type: "success",
-            autoClose: 1000,
+            autoClose: 2000,
             onClose: () => {
               router.push(`/worker/work`);
             },
@@ -81,7 +81,7 @@ const submit = handleSubmit(async values => {
   } else if (userStore.currentRole == 'employer') {
     toast("Смените роль на исполнителя", {
       type: "error",
-      autoClose: 1000,
+      autoClose: 2000,
     });
   }
 

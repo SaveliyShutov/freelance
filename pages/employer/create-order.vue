@@ -107,7 +107,7 @@ const submit = handleSubmit(async values => {
       loading.value = false
       toast("Объявление размещено", {
         type: "success",
-        autoClose: 500,
+        autoClose: 2000,
         onClose: () => {
           router.push(`/employer/work`)
         },

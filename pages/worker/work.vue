@@ -17,7 +17,7 @@ function workerCreateOrder() {
   if (userStore.user.employer_name) {
     toast("Зарегистрируйтесь как заказчик или смените роль", {
       type: "error",
-      autoClose: 2500,
+      autoClose: 2000,
       onClose: () => {
       },
     })
