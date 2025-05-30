@@ -17,7 +17,7 @@ function changeRole() {
   roleCookie.value = 'worker'
   
   localStorage.setItem("currentRole", "worker");
-  router.push("/worker/work");
+  router.push("/worker");
 }
 
 </script>
@@ -26,12 +26,12 @@ function changeRole() {
     <v-app-bar color="white" elevation="0">
       <v-container class="px-4">
         <v-row class="flex align-center">
-          <v-col @click="router.push(`/`)" class="hidden md:flex text-2xl cursor-pointer" cols="5">
+          <v-col @click="router.push(`/landing`)" class="hidden md:flex text-2xl cursor-pointer" cols="5">
             <a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
               class="font-bold text-indigo-600 text-decoration-none h-[35px]">
               - работа рядом</a>
           </v-col>
-          <v-col @click="router.push(`/`)" class="md:hidden flex-col cursor-pointer" md:cols="6">
+          <v-col @click="router.push(`/landing`)" class="md:hidden flex-col cursor-pointer" md:cols="6">
             <a class="text-2xl font-bold text-indigo-600 text-decoration-none h-[20px] leading-2">Nirby</a>
             <p class="text-m font-semibold text-indigo-600 text-decoration-none h-[20px] leading-3">работа рядом</p>
           </v-col>
@@ -39,7 +39,7 @@ function changeRole() {
           <!-- Desktop and Tablet Navigation -->
           <v-col class="hidden md:flex gap-1 lg:gap-2 xl:gap-3 justify-end items-center text-xs lg:text-sm xl:text-base"
             cols="7">
-            <NuxtLink to="/employer/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+            <NuxtLink to="/employer" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
             <NuxtLink to="/employer/create-order" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
@@ -70,7 +70,7 @@ function changeRole() {
             <div class="text-sm">заказчик</div>
           </v-list-item>
           <v-divider inset></v-divider>
-          <v-list-item to="/employer/work" class=""> Работа </v-list-item>
+          <v-list-item to="/employer" class=""> Работа </v-list-item>
           <v-list-item to="/employer/create-order" class="">
             Разместить обявление
           </v-list-item>

@@ -16,7 +16,7 @@ function changeRole() {
   roleCookie.value = 'worker'
   
   localStorage.setItem("currentRole", "worker");
-  router.push("/worker/work");
+  router.push("/worker");
 }
 </script>
 
