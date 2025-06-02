@@ -47,7 +47,7 @@ const login = handleSubmit(async (values) => {
 
   if (res?.status?.value == "success") {
     if (localStorage.getItem("currentRole")) {
-      router.push(`/${localStorage.getItem("currentRole")}/work`);
+      router.push(`/${localStorage.getItem("currentRole")}`);
     }
   }
   loading.value = false;
