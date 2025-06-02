@@ -81,7 +81,7 @@ const submit = handleSubmit(async (values) => {
   let res = await auth.registration(toSend);
 
   if (res?.status?.value == "success") {
-    router.push(`/worker/work`);
+    router.push(`/worker`);
   }
 
   loading.value = false;

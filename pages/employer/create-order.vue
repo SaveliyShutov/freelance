@@ -105,7 +105,7 @@ const submit = handleSubmit(async values => {
         type: "success",
         autoClose: 2000,
         onClose: () => {
-          router.push(`/employer/work`)
+          router.push(`/employer`)
         },
       })
     } else {
@@ -199,7 +199,7 @@ const flatJobList = Array.from(
 
             <v-col cols="12" class="text-right">
               <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading"
-                @click="router.push(`/employer/work`)">
+                @click="router.push(`/employer`)">
                 Разместить
               </v-btn>
             </v-col>

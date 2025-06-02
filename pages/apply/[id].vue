@@ -69,7 +69,7 @@ const submit = handleSubmit(async values => {
             type: "success",
             autoClose: 2000,
             onClose: () => {
-              router.push(`/worker/work`);
+              router.push(`/worker`);
             },
           });
         }

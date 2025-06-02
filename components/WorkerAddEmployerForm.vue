@@ -64,7 +64,7 @@ const submit = handleSubmit(async (values) => {
         autoClose: 2000,
         onClose: () => {
           auth.currentRole = "employer";
-          router.push(`/employer/work`);
+          router.push(`/employer`);
         },
       });
     } else {

@@ -8,19 +8,19 @@ let router = useRouter()
     <v-app-bar color="white" elevation="0">
       <v-container class="px-4">
         <v-row class="flex align-center">
-          <v-col @click="router.push(`/`)" class="hidden md:flex text-2xl cursor-pointer" cols="5">
+          <v-col @click="router.push(`/landing`)" class="hidden md:flex text-2xl cursor-pointer" cols="5">
             <a class="font-bold text-indigo-600 text-decoration-none h-[35px]">Nirby</a><a
               class="font-bold text-indigo-600 text-decoration-none h-[35px]">
               - работа рядом</a>
           </v-col>
-          <v-col @click="router.push(`/`)" class="md:hidden flex-col cursor-pointer" md:cols="6">
+          <v-col @click="router.push(`/landing`)" class="md:hidden flex-col cursor-pointer" md:cols="6">
             <a class="text-2xl font-bold text-indigo-600 text-decoration-none h-[20px] leading-2">Nirby</a>
             <p class="text-m font-semibold text-indigo-600 text-decoration-none h-[20px] leading-3">работа рядом</p>
           </v-col>
 
           <!-- Desktop and Tablet Navigation -->
           <v-col class="hidden md:flex gap-3 justify-end text-xs lg:text-sm xl:text-base" cols="7">
-            <NuxtLink to="/work" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+            <NuxtLink to="/" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
             <NuxtLink to="/reg" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
@@ -41,7 +41,7 @@ let router = useRouter()
     <div v-if="drawer">
       <v-navigation-drawer v-model="drawer" location="right" temporary>
         <v-list>
-          <v-list-item to="/work" class="text-gray-600">
+          <v-list-item to="/" class="text-gray-600">
             Работа
           </v-list-item>
           <v-list-item to="/reg" class="text-gray-600">

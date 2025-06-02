@@ -1,86 +1,88 @@
-import { defineStore } from "pinia"
-import OrderApi from '../api/OrderApi'
-import { toast } from "vue3-toastify"
+import { defineStore } from "pinia";
+import OrderApi from '../api/OrderApi';
+import { toast } from "vue3-toastify";
+import { useRouter } from 'vue-router';
 import { useAuth } from './auth';
 
-import type { Order } from "../types/order.interface"
-import type { Application } from "../types/application.interface"
-import type { OrderWithApplication } from "../types/orderWithApplication.interface"
-
-const userStore = useAuth();
-const router = useRouter();
+import type { Order } from "../types/order.interface";
+import type { Application } from "../types/application.interface";
+import type { OrderWithApplication } from "../types/orderWithApplication.interface";
 
 export const useOrder = defineStore('order', () => {
-  let orders = ref<Order[]>([])
-  let my_orders_with_applications = ref<OrderWithApplication[]>([])
-  let my_applications = ref<Application[]>([])
+  const orders = ref<Order[]>([]);
+  const my_orders_with_applications = ref<OrderWithApplication[]>([]);
+  const my_applications = ref<Application[]>([]);
 
   async function getAll() {
-    if (orders.value && orders.value?.length > 0) return null
-    let res = await OrderApi.getAll()
-    orders.value = res.data?.value
-
-    return res
+    if (orders.value.length > 0) return null;
+    const res = await OrderApi.getAll();
+    if (res?.data) {
+      orders.value = res.data.value;
+    }
+    return res;
   }
 
   async function getOrdersWithApplications() {
-    if (my_orders_with_applications.value && my_orders_with_applications.value?.length > 0) return null
+    if (my_orders_with_applications.value.length > 0) return null;
 
-    let user = useAuth()?.user;
+    const userStore = useAuth();
+    const user = userStore?.user;
     if (!user?.employer_orders) return [];
 
-    let myOrders = user.employer_orders;
-    let res = await OrderApi.getOrdersWithApplications(myOrders)
-    my_orders_with_applications.value = res.data?.value
-    return res
+    const res = await OrderApi.getOrdersWithApplications(user.employer_orders);
+    if (res?.data) {
+      my_orders_with_applications.value = res.data.value;
+    }
+    return res;
   }
 
   async function getWorkerApplicationsWithOrders() {
-    if (my_applications.value && my_applications.value?.length > 0) return null
+    if (my_applications.value.length > 0) return null;
 
-    let user = useAuth()?.user;
+    const userStore = useAuth();
+    const user = userStore?.user;
     if (!user?.worker_applications) return [];
 
-    let myApplications = user.worker_applications;
-    let res = await OrderApi.getWorkerApplicationsWithOrders(myApplications)
-    my_applications.value = res.data?.value
-    return res
+    const res = await OrderApi.getWorkerApplicationsWithOrders(user.worker_applications);
+    if (res?.data) {
+      my_applications.value = res.data.value;
+    }
+    return res;
   }
 
   async function acceptApplication(application_id: string) {
-    let res = await OrderApi.acceptApplication(application_id)
-
-    return res
+    return await OrderApi.acceptApplication(application_id);
   }
 
   async function declineApplication(application_id: string) {
-    let res = await OrderApi.declineApplication(application_id)
-
-    return res
+    return await OrderApi.declineApplication(application_id);
   }
 
   async function getById(order_id: string) {
-    let res = await OrderApi.getById(order_id)
-
-    return res
+    return await OrderApi.getById(order_id);
   }
 
   async function createOrder(order: Order) {
-    if (userStore.currentRole.value === "employer"){
-      return await OrderApi.createOrder(order)
+    const userStore = useAuth();
+    const router = useRouter();
+
+    if (userStore.currentRole.value === "employer") {
+      return await OrderApi.createOrder(order);
     }
-    toast("Для начала вам нужно зарегестрироваться как заказчик", {
+
+    toast("Для начала вам нужно зарегистрироваться как заказчик", {
       type: "error",
       autoClose: 2000,
       onClose: () => {
-        router.push(`/sign`)
+        router.push(`/sign`);
       },
-    })
-    return
+    });
+
+    return;
   }
 
   async function createApplication(application: Application) {
-    return await OrderApi.createApplication(application)
+    return await OrderApi.createApplication(application);
   }
 
   return {
@@ -94,6 +96,6 @@ export const useOrder = defineStore('order', () => {
     getOrdersWithApplications,
     acceptApplication,
     declineApplication,
-    getWorkerApplicationsWithOrders
-  }
-})
+    getWorkerApplicationsWithOrders,
+  };
+});
