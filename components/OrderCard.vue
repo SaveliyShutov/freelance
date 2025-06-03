@@ -51,7 +51,7 @@ async function decline(application_id) {
         </div>
         <div class="flex items-center gap-2">
           <i class="mdi mdi-calendar-range text-indigo-600"></i>
-          <span> {{ new Date(application.order.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' })
+          <span> {{ new Date(order.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' })
             }}</span>
         </div>
       </div>

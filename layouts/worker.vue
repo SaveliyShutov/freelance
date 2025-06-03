@@ -61,7 +61,7 @@ function changeRole() {
     <div v-if="drawer">
       <v-navigation-drawer v-model="drawer" location="right" temporary>
         <v-list class="text-gray-600">
-          <v-list-item class="border-b pl-5 pb-4">
+          <v-list-item @click="router.push(`/profile/${userStore.user._id}`)" class="border-b pl-5 pb-4">
             <div class="text-xl font-medium">{{ userStore.user?.worker_name }} {{ userStore.user?.worker_surname }}</div>
             <div class="text-sm">исполнитель</div>
           </v-list-item>

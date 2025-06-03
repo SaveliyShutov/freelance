@@ -30,7 +30,7 @@ function changeRole() {
         </template>
         <v-list>
           <div v-if="userStore.user" class="z-10 bg-white divide-y divide-gray-200 rounded-lg w-44">
-            <div class="px-4 py-3 text-sm text-gray-900">
+            <div @click="router.push(`/profile/${userStore.user._id}`)" class="cursor-pointer px-4 py-3 text-sm text-gray-900">
               <div class="font-medium">{{ userStore.user?.employer_name }}</div>
               <div class="truncate">Заказчик</div>
             </div>

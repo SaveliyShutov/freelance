@@ -15,7 +15,7 @@ function changeRole() {
 
   const roleCookie = useCookie('currentRole')
   roleCookie.value = 'worker'
-  
+
   localStorage.setItem("currentRole", "worker");
   router.push("/worker");
 }
@@ -65,7 +65,8 @@ function changeRole() {
     <div v-if="drawer" class="md:hidden flex">
       <v-navigation-drawer v-model="drawer" location="right" temporary class="md:hidden flex">
         <v-list class="text-gray-600">
-          <v-list-item v-if="userStore.user" class="border-b pl-5 pb-4">
+          <v-list-item @click="router.push(`/profile/${userStore.user._id}`)" v-if="userStore.user"
+            class="border-b pl-5 pb-4">
             <div class="text-xl font-medium">{{ userStore.user?.employer_name }}</div>
             <div class="text-sm">заказчик</div>
           </v-list-item>
