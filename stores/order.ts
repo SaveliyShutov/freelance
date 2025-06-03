@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
 import OrderApi from '../api/OrderApi';
-import { toast } from "vue3-toastify";
-import { useRouter } from 'vue-router';
 import { useAuth } from './auth';
 
 import type { Order } from "../types/order.interface";
@@ -14,10 +12,10 @@ export const useOrder = defineStore('order', () => {
   const my_applications = ref<Application[]>([]);
 
   async function getAll() {
-    if (orders.value.length > 0) return null;
+    if (orders?.value?.length > 0) return null;
     const res = await OrderApi.getAll();
     if (res?.data) {
-      orders.value = res.data.value;
+      orders.value = res?.data?.value;
     }
     return res;
   }
@@ -29,9 +27,9 @@ export const useOrder = defineStore('order', () => {
     const user = userStore?.user;
     if (!user?.employer_orders) return [];
 
-    const res = await OrderApi.getOrdersWithApplications(user.employer_orders);
+    const res = await OrderApi.getOrdersWithApplications(user?.employer_orders);
     if (res?.data) {
-      my_orders_with_applications.value = res.data.value;
+      my_orders_with_applications.value = res?.data?.value;
     }
     return res;
   }
@@ -45,7 +43,7 @@ export const useOrder = defineStore('order', () => {
 
     const res = await OrderApi.getWorkerApplicationsWithOrders(user.worker_applications);
     if (res?.data) {
-      my_applications.value = res.data.value;
+      my_applications.value = res?.data?.value;
     }
     return res;
   }
@@ -63,22 +61,7 @@ export const useOrder = defineStore('order', () => {
   }
 
   async function createOrder(order: Order) {
-    const userStore = useAuth();
-    const router = useRouter();
-
-    if (userStore.currentRole.value === "employer") {
-      return await OrderApi.createOrder(order);
-    }
-
-    toast("Для начала вам нужно зарегистрироваться как заказчик", {
-      type: "error",
-      autoClose: 2000,
-      onClose: () => {
-        router.push(`/sign`);
-      },
-    });
-
-    return;
+    return await OrderApi.createOrder(order);
   }
 
   async function createApplication(application: Application) {

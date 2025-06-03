@@ -18,9 +18,9 @@ const { order } = defineProps(['order'])
           <i class="mdi mdi-clock-time-three text-indigo-600"></i>
           <span>{{ order.hours }} часов</span>
         </div>
-        <div class="flex items-center gap-2"> 
+        <div class="flex items-center gap-2">
           <i class="mdi mdi-calendar-range text-indigo-600"></i>
-          <span> {{ order.date }}</span>
+          <span> {{ new Date(order.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' }) }}</span>
         </div>
       </div>
     </v-col>

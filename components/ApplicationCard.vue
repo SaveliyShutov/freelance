@@ -31,7 +31,8 @@ const getStatusClass = (status) => {
         </div>
         <div class="flex items-center gap-2">
           <i class="mdi mdi-calendar-range text-indigo-600"></i>
-          <span>{{ application.order.date }}</span>
+          <span>{{ new Date(application.order.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' })
+            }}</span>
         </div>
       </div>
     </v-col>
@@ -49,9 +50,7 @@ const getStatusClass = (status) => {
           <v-col cols="12" md="6">
             <div class="flex items-center gap-4">
               <!-- Initials Avatar -->
-              <div
-                class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center"
-              >
+              <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
                 <span class="text-xl font-semibold text-indigo-600">
                   {{ application.initials[0] }}
                 </span>
@@ -63,10 +62,7 @@ const getStatusClass = (status) => {
             </div>
           </v-col>
           <v-col cols="12" md="6" class="flex items-center justify-end gap-2">
-            <span
-              :class="getStatusClass(application.status)"
-              class="px-3 py-1 rounded-full text-sm"
-            >
+            <span :class="getStatusClass(application.status)" class="px-3 py-1 rounded-full text-sm">
               {{ application.status }}
             </span>
           </v-col>

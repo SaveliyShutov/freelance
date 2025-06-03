@@ -18,7 +18,7 @@ export default defineNuxtPlugin(() => {
       //   toast(response._data.message, { type: 'error' })
       // }
       if (response.status === 400) {
-        console.log()
+        console.log(response?._data?.message)
         toast(response?._data?.message, {
           type: "error",
           autoClose: 2000,

@@ -33,7 +33,7 @@ export const useAuth = defineStore('auth', () => {
   async function registration(userData: any) {
     try {
       const response = await AuthAPI.registration(userData)
-      if (response.data.value) {
+      if (response?.data?.value) {
         user.value = response.data.value.user
       }
       return response
@@ -45,7 +45,7 @@ export const useAuth = defineStore('auth', () => {
   async function login(email: string, password: string) {
     try {
       const response = await AuthAPI.login(email, password)
-      if (response.data.value) {
+      if (response?.data?.value) {
         user.value = response.data.value.user
       }
       return response
@@ -58,7 +58,7 @@ export const useAuth = defineStore('auth', () => {
     try {
       let res = await AuthAPI.updateUser(newUser, userId);
 
-      if (res.status.value == 'success') {
+      if (res?.status?.value == 'success') {
         user.value = res.data.value;
       }
 
@@ -68,12 +68,12 @@ export const useAuth = defineStore('auth', () => {
 
   async function checkAuth(): Promise<boolean> {
     try {
-      if (user.value?._id) {
+      if (user?.value?._id) {
         return true
       }
       const response = await AuthAPI.refresh()
 
-      if (response.data.value?._id) {
+      if (response?.data.value?._id) {
         user.value = response.data.value
         return true
       } else {

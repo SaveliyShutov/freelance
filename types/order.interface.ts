@@ -4,7 +4,7 @@ export interface Order {
   type?: string,
   employer_id?: string, // employer._id
   employer_name?: string, // employer._id
-  date: string,
+  date: Date,
   hours: number,
   address: string,
   description?: string,

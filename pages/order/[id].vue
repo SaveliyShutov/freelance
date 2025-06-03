@@ -23,7 +23,8 @@ if (res) {
         <div class="bg-white p-3 md:p-10 rounded-xl shadow-lg border border-gray-100">
           <v-col cols="12" class="flex flex-col md:flex-row justify-between">
             <p class="text-2xl md:text-4xl font-bold text-gray-900">{{ order.title }}</p>
-            <p class="text-xl md:text-2xl font-medium md:font-bold text-gray-900">{{ order.budget }} ₽ / {{ order.hours }} часов</p>
+            <p class="text-xl md:text-2xl font-medium md:font-bold text-gray-900">{{ order.budget }} ₽ / {{ order.hours
+              }} часов</p>
           </v-col>
           <v-col cols="12">
             <p>{{ order.description }}</p>
@@ -36,7 +37,10 @@ if (res) {
               </div>
               <div class="flex items-center gap-2">
                 <i class="mdi mdi-calendar-range text-indigo-600"></i>
-                <p class="font-semibold"> {{ order.date }}</p>
+                <p class="font-semibold"> {{ new Date(order.date).toLocaleDateString('ru-RU', {
+                  day:
+                    '2-digit', month: 'long' })
+                  }}</p>
               </div>
             </div>
             <div class="flex flex-col md:flex-row justify-between">

@@ -95,11 +95,15 @@ let loading = ref(false)
 
 const submit = handleSubmit(async values => {
   loading.value = true
-  let toSend: Order;
+
   if (auth.user?.employer_name) {
-    toSend = { ...values, employer_id: auth.user._id, employer_name: auth.user.employer_name }
+    const cleanedDate = new Date(values.date + 'T00:00:00Z');
+    const dateInMilliseconds = cleanedDate.getTime();
+    let toSend: Order = { ...values, date: new Date(dateInMilliseconds), employer_id: auth.user._id, employer_name: auth.user.employer_name };
     let res = await orderStore.createOrder(toSend)
+
     if (res.status.value == "success") {
+      orderStore.orders.push(res.data.value)
       loading.value = false
       toast("Объявление размещено", {
         type: "success",
@@ -154,7 +158,7 @@ const flatJobList = Array.from(
             <label class="block text-sm font-medium text-gray-700 mb-1">Введите название работы</label>
             <v-text-field placeholder="Мойка окон" base-color="#9e9e9e" color="primary"
               :error-messages="title.errors.value" type="text" variant="outlined"
-              v-model="title.value.value"></v-text-field> 
+              v-model="title.value.value"></v-text-field>
 
             <label class="block text-sm font-medium text-gray-700 mb-1">Вид деятельности (напишите или выберите из
               списка)</label>
