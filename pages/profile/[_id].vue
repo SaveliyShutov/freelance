@@ -1,22 +1,33 @@
 <script setup>
 const route = useRoute()
 const userStore = useAuth()
+const currentRole = ref(userStore.currentRole)
 </script>
 
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12"> 
-        <div class="ml-4 -mb-2">
-          <v-btn-toggle v-model="userStore.currentRole" mandatory color="indigo">
-            <v-btn value="worker" color="indigo-800">Исполнитель</v-btn>
-            <v-btn value="employer" color="indigo-800">Заказчик</v-btn>
-          </v-btn-toggle>
+      <v-col cols="12">
+        <div class="bg-gray-200 rounded-lg p-1 inline-flex w-110">
+          <button @click="currentRole = 'worker'" :class="[
+            'px-3 pr-4 py-2 rounded-md text-lg font-medium transition-all duration-200',
+            currentRole === 'worker'
+              ? 'bg-white text-indigo-600 shadow-sm'
+              : 'text-gray-600 hover:text-gray-900',
+          ]">
+            Исполнитель
+          </button>
+          <button @click="currentRole = 'employer'" :class="[
+            'px-5 py-2 rounded-md text-lg font-medium transition-all duration-200',
+            currentRole === 'employer'
+              ? 'bg-white text-indigo-600 shadow-sm'
+              : 'text-gray-600 hover:text-gray-900',
+          ]">
+            Заказчик
+          </button>
         </div>
-        <v-col cols="4">
-        </v-col>
-        <ProfileWorker v-if="userStore.currentRole === 'worker'" />
-        <ProfileEmployer v-if="userStore.currentRole === 'employer'" />
+        <ProfileWorker v-if="currentRole === 'worker'" />
+        <ProfileEmployer v-if="currentRole === 'employer'" />
       </v-col>
     </v-row>
 
