@@ -1,14 +1,28 @@
-<script setup>
+<script setup lang="ts">
 const { application } = defineProps(["application"]);
 
-const getStatusClass = (status) => {
-  const classes = {
-    "в расмотрении": "bg-yellow-100 text-yellow-800",
-    "одобрено": "bg-green-100 text-green-800",
-    "отклонен": "bg-red-100 text-red-800",
+function getStatusClass(status: 'в расмотрении' | 'одобрено' | 'отклонен'): string {
+  const classes: Record<typeof status, string> = {
+    'в расмотрении': 'bg-yellow-100 text-yellow-800',
+    'одобрено': 'bg-green-100 text-green-800',
+    'отклонен': 'bg-red-100 text-red-800',
   };
-  return classes[status] || "bg-gray-100 text-gray-800";
-};
+
+  return classes[status];
+}
+
+function getHourWord(n: number) {
+  const lastDigit = n % 10;
+  const lastTwoDigits = n % 100;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+    return 'часов';
+  }
+
+  if (lastDigit === 1) return 'час';
+  if (lastDigit >= 2 && lastDigit <= 4) return 'часа';
+  return 'часов';
+}
 </script>
 
 <template>
@@ -27,12 +41,12 @@ const getStatusClass = (status) => {
       <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
         <div class="flex items-center gap-2">
           <i class="mdi mdi-clock-time-three text-indigo-600"></i>
-          <span>{{ application.order.hours }} ч.</span>
+          <span>{{ application.order.hours }} {{ getHourWord(application.order.hours) }}</span>
         </div>
         <div class="flex items-center gap-2">
           <i class="mdi mdi-calendar-range text-indigo-600"></i>
           <span>{{ new Date(application.order.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' })
-            }}</span>
+          }}</span>
         </div>
       </div>
     </v-col>
@@ -49,7 +63,7 @@ const getStatusClass = (status) => {
         <v-row>
           <v-col cols="12" md="6">
             <div class="flex items-center gap-4">
-              <!-- Initials Avatar -->
+
               <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
                 <span class="text-xl font-semibold text-indigo-600">
                   {{ application.initials[0] }}

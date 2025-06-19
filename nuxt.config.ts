@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
 
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify', '@vuepic/vue-datepicker'],
   },
   css: ['~/assets/css/main.css'],
   modules: [
@@ -38,6 +38,9 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    css: {
+      devSourcemap: false
+    },
     vue: {
       template: {
         transformAssetUrls,

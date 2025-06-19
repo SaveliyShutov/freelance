@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 import { toast } from "vue3-toastify"
 import { useField, useForm } from 'vee-validate'
 import type { Order } from '~/types/order.interface'
@@ -12,127 +14,146 @@ definePageMeta({
   middleware: ["employer"],
 })
 
-const { meta, handleSubmit, handleReset, validate } = useForm<{
+const time = ref();
+
+const { meta, handleSubmit } = useForm<{
   title: string,
   type?: string,
   address: string,
   description?: string,
-  budget: number,
   date: string,
+  paymentType: 'hourly' | 'shift',
   hours: number,
-
+  budget: number,
+  startTime: string,
 }>({
   initialValues: {
     title: '',
     address: '',
     date: '',
-    budget: 0,
     hours: 0,
+    budget: 0,
+    paymentType: 'hourly',
   },
   validationSchema: {
     title(value: string) {
-      if (value?.length === 0) return 'введите название работы'
-      if (value?.length < 2) return 'слишком короткое название'
-      if (value?.length > 150) return 'слишком длинное название'
-
-      return true
-    },
-    type(value: string) {
-      if (value?.length === 0) return 'выбирете тип работы'
+      if (!value) return 'введите название работы'
+      if (value.length < 2) return 'слишком короткое название'
+      if (value.length > 150) return 'слишком длинное название'
       return true
     },
     address(value: string) {
-      if (value?.length === 0) return 'введите адрес'
-      if (value?.length < 2) return 'слишком короткий адрес'
-      if (value?.length > 250) return 'слишком длинный адрес'
+      if (!value) return 'введите адрес'
+      if (value.length < 2) return 'слишком короткий адрес'
+      if (value.length > 250) return 'слишком длинный адрес'
       return true
     },
     date(value: string) {
-      if (value?.length === 0) return 'введите дату'
-      const enteredDate = new Date(value);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); // Устанавливаем время на начало дня
-
-      const maxDate = new Date();
-      maxDate.setFullYear(maxDate.getFullYear() + 10);
-      maxDate.setHours(0, 0, 0, 0); // Устанавливаем время на начало дня
-
-      if (enteredDate < today) return 'Дата не может быть раньше сегодняшнего дня';
-      if (enteredDate > maxDate) return 'Дата не может быть позже чем через 10 лет';
-
+      if (!value) return 'введите дату'
+      const entered = new Date(value)
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      const maxDate = new Date()
+      maxDate.setFullYear(today.getFullYear() + 10)
+      if (entered < today) return 'дата не может быть раньше сегодняшнего дня'
+      if (entered > maxDate) return 'дата не может быть позже чем через 10 лет'
       return true
     },
     description(value: string) {
-      if (value?.length > 2500) return 'слишком длинное описание'
+      if (value && value.length > 2500) return 'слишком длинное описание'
       return true
     },
-    hours(value: number) {
-      if (value <= 0) return 'введите реальное кол-во часов'
-      if (value >= 1000) return 'введите реальное кол-во часов'
-      if (isNaN(Number(value))) return 'должно быть числом без других символов';
-      if (!value) return 'введите колличество часов'
+    hours(value: number, { paymentType }: any) {
+      if (!value) return 'введите количество часов'
+      if (value <= 0 || value > 1000) return 'введите реальное количество часов'
       return true
     },
     budget(value: number) {
-      if (value >= 1000000000) return 'введите реальную сумму'
-      if (value <= 10) return 'введите реальную сумму'
-      if (isNaN(Number(value))) return 'должно быть числом без других символов';
-      if (!value) return 'введите бюджет'
+      if (!value) return 'введите сумму оплаты'
+      if (value <= 10 || value >= 1000000000) return 'введите реальную сумму'
       return true
     },
-  },
+    paymentType(value: string) {
+      if (!value) return 'выберите тип оплаты'
+      return true
+    }
+  }
 })
 
-let title = useField<string>('title')
-let type = useField<string>('type')
-let address = useField<string>('address')
-let budget = useField<number>('budget')
-let date = useField<string>('date')
-let hours = useField<number>('hours')
-let description = useField<string>('description')
+const startTime = useField<string>('startTime')
+const title = useField<string>('title')
+const type = useField<string>('type')
+const address = useField<string>('address')
+const date = useField<string>('date')
+const description = useField<string>('description')
+const hours = useField<number>('hours')
+const paymentType = useField<'hourly' | 'shift'>('paymentType')
+const budget = useField<number>('budget')
 
 let loading = ref(false)
 
+// Сохранение
 const submit = handleSubmit(async values => {
   loading.value = true
 
   if (auth.user?.employer_name) {
-    const cleanedDate = new Date(values.date + 'T00:00:00Z');
-    const dateInMilliseconds = cleanedDate.getTime();
-    let toSend: Order = { ...values, date: new Date(dateInMilliseconds), employer_id: auth.user._id, employer_name: auth.user.employer_name };
-    let res = await orderStore.createOrder(toSend)
+    let finalStartTime = '0';
 
-    if (res.status.value == "success") {
-      orderStore.orders.push(res.data.value)
-      loading.value = false
-      toast("Объявление размещено", {
-        type: "success",
+    if (time.value) {
+      const hh = String(time.value.hours).padStart(2, '0');
+      const mm = String(time.value.minutes).padStart(2, '0');
+      finalStartTime = `${hh}:${mm}`;
+    }
+
+    const cleanedDate = new Date(values.date + 'T00:00:00Z')
+
+    const finalBudget = values.paymentType === 'shift'
+      ? values.budget
+      : values.budget * values.hours
+
+    const toSend: Order = {
+      startTime: finalStartTime,
+      title: values.title,
+      type: values.type,
+      address: values.address,
+      description: values.description,
+      date: cleanedDate,
+      hours: values.hours,
+      budget: finalBudget,
+      paymentType: values.paymentType,
+      employer_id: auth.user._id,
+      employer_name: auth.user.employer_name
+    }
+
+    const res = await orderStore.createOrder(toSend)
+
+    if (res.status.value === 'success') {
+      await orderStore.getAll()
+      orderStore.orders.unshift(res.data.value)
+      toast('Объявление размещено', {
+        type: 'success',
         autoClose: 2000,
-        onClose: () => {
-          router.push(`/employer`)
-        },
+        onClose: () => router.push('/employer')
       })
     } else {
-      toast("Ошибка при создании", {
-        type: "error",
+      toast('Ошибка при создании', {
+        type: 'error',
         autoClose: 2000,
-        onClose: () => {
-          window.location.reload()
-        },
+        onClose: () => window.location.reload()
       })
     }
   }
 })
 
-// Получаем сегодняшнюю дату в формате YYYY-MM-DD
-const today = new Date()
-const todayStr = today.toISOString().split('T')[0]
+// Дата
+const todayStr = new Date().toISOString().split('T')[0]
+const maxDateStr = (() => {
+  const maxDate = new Date()
+  maxDate.setFullYear(maxDate.getFullYear() + 100)
+  return maxDate.toISOString().split('T')[0]
+})()
 
-// Вычисляем дату через 100 лет
-const maxDate = new Date()
-maxDate.setFullYear(maxDate.getFullYear() + 100)
-const maxDateStr = maxDate.toISOString().split('T')[0]
-
+// Категории
 const flatJobList = Array.from(
   new Set(
     jobTypes.flatMap(category =>
@@ -143,7 +164,19 @@ const flatJobList = Array.from(
     )
   )
 )
+const formattedTotalBudget = computed(() => {
+  const pType = paymentType.value.value
+  if (pType !== 'hourly') return null
+
+  const h = hours.value.value
+  const rate = budget.value.value
+  const total = Number(h) * Number(rate)
+
+  if (!h || !rate || isNaN(total) || total <= 0) return null
+  return total.toLocaleString('ru-RU') + ' ₽'
+})
 </script>
+
 <template>
   <v-container>
     <v-row>
@@ -155,61 +188,105 @@ const flatJobList = Array.from(
       <v-col cols="12">
         <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
           <v-form class="md:mt-6 w-100" @submit="submit">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Введите название работы</label>
-            <v-text-field placeholder="Мойка окон" base-color="#9e9e9e" color="primary"
-              :error-messages="title.errors.value" type="text" variant="outlined"
-              v-model="title.value.value"></v-text-field>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Название<span class="text-red-500 ml-0.5">
+                *</span></label>
+            <v-text-field placeholder="Ремонт кровли" base-color="#9e9e9e" color="primary" type="title"
+              variant="outlined" :error-messages="title.errors.value" v-model="title.value.value" />
 
-            <label class="block text-sm font-medium text-gray-700 mb-1">Вид деятельности (напишите или выберите из
-              списка)</label>
-            <v-autocomplete base-color="#9e9e9e" color="primary" :error-messages="type.errors.value"
-              :items="flatJobList" item-title="text" variant="outlined" v-model="type.value.value" item-value="value"
-              clearable solo></v-autocomplete>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Тип работы</label>
+            <v-autocomplete base-color="#9e9e9e" color="primary" type="title" variant="outlined" :items="flatJobList"
+              item-title="text" item-value="value" :error-messages="type.errors.value" v-model="type.value.value"
+              clearable solo />
 
-            <label class="block text-sm font-medium text-gray-700 mb-1">Введите описание работы</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Описание</label>
             <v-textarea
               placeholder="Нужен специалист для выполнения работы на месте — аккуратно, ответственно и в срок. Оплата по договорённости."
-              base-color="#9e9e9e" color="primary" :error-messages="description.errors.value" type="text"
-              variant="outlined" v-model="description.value.value"></v-textarea>
+              base-color="#9e9e9e" color="primary" type="title" variant="outlined"
+              :error-messages="description.errors.value" v-model="description.value.value" />
+
+            <label class="block text-sm font-medium text-gray-700 mb-1">Адрес <span
+                class="text-red-500 ml-0.5">*</span></label>
+            <v-text-field placeholder="Пермь, ул. Ленина 45" base-color="#9e9e9e" color="primary" type="title"
+              variant="outlined" :error-messages="address.errors.value" v-model="address.value.value" />
 
             <v-row>
               <v-col cols="12" md="6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Введите место работы, адрес</label>
-                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="address.errors.value" class="w-100"
-                  placeholder="Пермь, ул. Ленина 45" v-model="address.value.value" type="text" variant="outlined"
-                  density="compact" />
+                <label class="block text-sm font-medium text-gray-700 mb-1">Дата <span
+                    class="text-red-500 ml-0.5">*</span></label>
+                <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="date" :min="todayStr"
+                  :max="maxDateStr" :error-messages="date.errors.value" v-model="date.value.value" />
               </v-col>
-              <v-col cols="12" md="6" class="-mt-6 md:-mt-0">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Сколько заплатите? (в рублях)</label>
-                <v-text-field suffix="руб" base-color="#9e9e9e" color="primary" :error-messages="budget.errors.value"
-                  class="w-100" v-model="budget.value.value" placeholder="500" type="number" variant="outlined"
-                  density="compact" />
-              </v-col>
-            </v-row>
-            <v-row>
               <v-col cols="12" md="6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Дата начала работ</label>
-                <v-text-field :min="todayStr" :max="maxDateStr" base-color="#9e9e9e" color="primary"
-                  :error-messages="date.errors.value" class="w-100" v-model="date.value.value" type="date"
-                  variant="outlined" density="compact" />
-              </v-col>
-
-              <v-col cols="12" md="6" class="-mt-6 md:-mt-0">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Время выполнения (в часах)</label>
-                <v-text-field suffix="час-ов" base-color="#9e9e9e" color="primary" :error-messages="hours.errors.value"
-                  class="w-100" v-model="hours.value.value" type="number" variant="outlined" density="compact" />
+                <label class="block text-sm font-medium text-gray-700 mb-1">Выберете время начала работы</label>
+                <VueDatePicker placeholder="00:00" :ui="{
+                  input: 'h-14'
+                }" v-model="time" time-picker locale="ru" cancelText="Отмена" selectText="Принять" hide-input-icon />
               </v-col>
             </v-row>
+
+            <label class="block text-sm font-medium text-gray-700 mt-4 mb-1">Тип оплаты </label>
+            <v-radio-group inline v-model="paymentType.value.value" :error-messages="paymentType.errors.value">
+              <v-radio label="Почасовая" value="hourly" />
+              <v-radio label="Сменная" value="shift" />
+            </v-radio-group>
+
+            <v-row v-if="paymentType.value.value === 'hourly'">
+              <v-col cols="12" md="6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Количество часов<span
+                    class="text-red-500 ml-0.5">
+                    *</span></label>
+                <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="ч"
+                  v-model="hours.value.value" :error-messages="hours.errors.value" />
+              </v-col>
+              <v-col cols="12" md="6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Оплата за час<span
+                    class="text-red-500 ml-0.5">
+                    *</span></label>
+                <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="₽"
+                  v-model="budget.value.value" :error-messages="budget.errors.value" />
+              </v-col>
+            </v-row>
+
+            <v-row v-if="paymentType.value.value === 'shift'">
+              <v-col cols="12" md="6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Длительность смены (часы)<span
+                    class="text-red-500 ml-0.5">
+                    *</span></label>
+                <v-select base-color="#9e9e9e" color="primary" variant="outlined" :items="[6, 8, 12]"
+                  v-model="hours.value.value" :error-messages="hours.errors.value" suffix="ч" />
+              </v-col>
+              <v-col cols="12" md="6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Оплата за смену<span
+                    class="text-red-500 ml-0.5">
+                    *</span></label>
+                <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="₽"
+                  v-model="budget.value.value" :error-messages="budget.errors.value" />
+              </v-col>
+            </v-row>
+
+            <div v-if="formattedTotalBudget"
+              class="mt-1 mb-4 flex items-center gap-2 rounded-md bg-indigo-50 p-3 text-indigo-700 border border-indigo-200">
+              <span class="text-base font-medium">Итоговая оплата: {{ formattedTotalBudget }}</span>
+            </div>
 
             <v-col cols="12" class="text-right">
-              <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading"
-                @click="router.push(`/employer`)">
-                Разместить
-              </v-btn>
+              <v-btn type="submit" :disabled="!meta.valid" :loading="loading">Разместить</v-btn>
             </v-col>
+            <div class="text-sm text-gray-500 mt-4">
+              <span class="text-red-500">*</span> — обязательное поле
+            </div>
           </v-form>
         </div>
       </v-col>
     </v-row>
   </v-container>
 </template>
+
+<style scoped>
+.custom-datepicker-input {
+  height: 120px !important;
+  font-size: 16px;
+  background-color: red !important;
+  padding: 10px;
+}
+</style>

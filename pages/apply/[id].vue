@@ -65,6 +65,7 @@ const submit = handleSubmit(async values => {
         toSend = { ...values, worker: userStore.user?._id, order: route.params.id.toString() }
         let res = await orderStore.createApplication(toSend)
         if (res?.status?.value == "success") {
+          await orderStore.getWorkerApplicationsWithOrders()
           toast("Отклик успешно отправлен, результат будет виден в моих заявках", {
             type: "success",
             autoClose: 2000,
@@ -72,6 +73,8 @@ const submit = handleSubmit(async values => {
               router.push(`/worker`);
             },
           });
+        } else {
+          console.log(res?.status)
         }
 
       } else {
@@ -83,9 +86,8 @@ const submit = handleSubmit(async values => {
       type: "error",
       autoClose: 2000,
     });
+    loading.value = false
   }
-
-  loading.value = false
 })
 </script>
 <template>

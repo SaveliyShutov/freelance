@@ -13,14 +13,14 @@ await orderStore.getOrdersWithApplications();
 async function acceptApplication(application_id: string) {
   let res = await orderStore.acceptApplication(application_id);
   if (res.data.value) {
-    console.log(res.data.value);
+    await orderStore.getOrdersWithApplications()
   }
 }
 
 async function declineApplication(application_id: string) {
   let res = await orderStore.declineApplication(application_id);
   if (res.data.value) {
-    console.log(res.data.value);
+    await orderStore.getOrdersWithApplications()
   }
 }
 </script>
@@ -35,10 +35,10 @@ async function declineApplication(application_id: string) {
       <v-col cols="12">
         <div class="space-y-8">
           <div class="space-y-6">
-            <div v-if="orderStore.my_orders_with_applications.length > 0" v-for="order in orderStore.my_orders_with_applications"
-              :key="order._id" class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
-              <OrderCard @acceptApplication="acceptApplication" @declineApplication="declineApplication"
-                :order="order" />
+            <div v-if="orderStore.my_orders_with_applications.length > 0"
+              v-for="order in orderStore.my_orders_with_applications" :key="order._id"
+              class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
+              <OrderCard :order="order" />
             </div>
             <div v-else class="flex flex-col justify-center items-center text-center">
               <p>У вас нет активных заказов</p>
