@@ -14,8 +14,8 @@ let userStore = useAuth()
 await orderStore.getAll()
 
 function workerCreateOrder() {
-  if (userStore.user.employer_name) {
-    toast("Зарегистрируйтесь как заказчик или смените роль", {
+  if (userStore.currentRole = 'worker') {
+    toast("Зарегистрируйтесь как заказчкик или смените роль", {
       type: "error",
       autoClose: 2000,
       onClose: () => {
