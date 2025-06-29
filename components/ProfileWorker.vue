@@ -44,20 +44,80 @@ const cancelEdit = (field) => {
   }
 }
 
-const saveEdit = (field) => {
-  if (field === 'about') {
-    userStore.user.worker_description = editData.value.about
-    editingAbout.value = false
-  } else {
-    userStore.user[field] = editData.value[field]
-    editingFields.value[field] = false
+const saveEdit = async (field) => {
+  try {
+    // Создаем объект с измененными данными
+    const updateData = {
+      [field]: editData.value[field]
+    };
+
+    // Для некоторых полей используем другие названия на бэкенде
+    const fieldMappings = {
+      name: 'worker_name',
+      phone: 'worker_phone',
+      about: 'worker_description'
+    };
+    
+    const backendField = fieldMappings[field];
+    
+    // Отправляем изменения на сервер
+    const response = await userStore.updateUser(
+      { [backendField]: editData.value[field] },
+      userStore.user._id
+    );
+
+    if (response?.status?.value === 'success') {
+      // Обновляем локальные данные
+      if (field === 'about') {
+        userStore.user.worker_description = editData.value.about;
+        editingAbout.value = false;
+      } else {
+        userStore.user[field] = editData.value[field];
+        editingFields.value[field] = false;
+      }
+    } else {
+      throw new Error('Ошибка при обновлении данных');
+    }
+  } catch (error) {
+    console.error('Ошибка при сохранении:', error);
+    // Можно добавить уведомление пользователю об ошибке
   }
-  // Тут обычно отправляем данные на сервер
-}
+};
 
 const triggerFileInput = () => {
   fileInput.value.click();
 };
+
+// const handleFileUpload = async (event) => {
+//   const file = event.target.files[0];
+//   if (file) {
+//     if (file.size > 2 * 1024 * 1024) {
+//       alert('Максимальный размер файла - 2MB');
+//       return;
+//     }
+
+//     const reader = new FileReader();
+//     reader.onload = async (e) => {
+//       try {
+//         // Отправляем новый аватар на сервер
+//         const response = await userStore.updateUser(
+//           { worker_avatar: e.target.result },
+//           userStore.user._id
+//         );
+
+//         if (response?.status?.value === 'success') {
+//           userStore.user.worker_avatar = e.target.result;
+//         } else {
+//           throw new Error('Ошибка при обновлении аватара');
+//         }
+//       } catch (error) {
+//         console.error('Ошибка при загрузке аватара:', error);
+//         // Можно добавить уведомление пользователю об ошибке
+//       }
+//     };
+//     reader.readAsDataURL(file);
+//   }
+// };
 
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
