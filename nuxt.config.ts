@@ -1,10 +1,6 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
-  site: {
-    url: 'https://nirby.ru',
-    name: 'Nirby - работа рядом'
-  },
   devtools: { enabled: false },
 
   build: {
@@ -28,8 +24,10 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
-    ycAccessKeyId: process.env.YC_KEY_ID,
-    ycSecretAccessKKey: process.env.YC_SECRET,
+    site: {
+      url: 'https://nirby.ru',
+      name: 'Nirby - работа рядом'
+    },
     public: {
       YANDEX_METRIKA_ID: process.env.YANDEX_METRIKA_ID,
       apiBase: process.env.NUXT_PUBLIC_API_BASE,

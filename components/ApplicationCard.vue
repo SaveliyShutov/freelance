@@ -75,11 +75,11 @@ function getHourWord(n: number) {
               </div>
             </div>
           </v-col>
-          <v-col cols="12" md="6" class="flex items-center justify-end gap-2">
+          <!-- <v-col cols="12" md="6" class="flex items-center justify-end gap-2">
             <span :class="getStatusClass(application.status)" class="px-3 py-1 rounded-full text-sm">
               {{ application.status }}
             </span>
-          </v-col>
+          </v-col> -->
         </v-row>
         <div class="mt-4">
           <p class="text-sm text-gray-700">
