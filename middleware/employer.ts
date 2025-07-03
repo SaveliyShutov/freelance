@@ -6,6 +6,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     if (authStore?.user?.employer_name) {
       return true;
     }
+  } else {
+    abortNavigation();
+    return navigateTo('/')
   }
-  return abortNavigation();
 })
