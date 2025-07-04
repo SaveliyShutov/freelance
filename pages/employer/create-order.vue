@@ -21,7 +21,8 @@ const { meta, handleSubmit } = useForm<{
   type?: string,
   address: string,
   description?: string,
-  date: string,
+  date?: string,
+  dateType: 'date' | 'by agreement',
   paymentType: 'hourly' | 'shift',
   hours: number,
   budget: number,
@@ -30,7 +31,7 @@ const { meta, handleSubmit } = useForm<{
   initialValues: {
     title: '',
     address: '',
-    date: '',
+    dateType: 'date',
     hours: 0,
     budget: 0,
     paymentType: 'hourly',
@@ -48,24 +49,8 @@ const { meta, handleSubmit } = useForm<{
       if (value.length > 250) return 'слишком длинный адрес'
       return true
     },
-    date(value: string) {
-      if (!value) return 'введите дату'
-      const entered = new Date(value)
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
-      const maxDate = new Date()
-      maxDate.setFullYear(today.getFullYear() + 10)
-      if (entered < today) return 'дата не может быть раньше сегодняшнего дня'
-      if (entered > maxDate) return 'дата не может быть позже чем через 10 лет'
-      return true
-    },
     description(value: string) {
-      if (value && value.length > 2500) return 'слишком длинное описание'
-      return true
-    },
-    hours(value: number, { paymentType }: any) {
-      if (!value) return 'введите количество часов'
-      if (value <= 0 || value > 1000) return 'введите реальное количество часов'
+      if (value && value.length > 10000) return 'слишком длинное описание'
       return true
     },
     budget(value: number) {
@@ -76,7 +61,11 @@ const { meta, handleSubmit } = useForm<{
     paymentType(value: string) {
       if (!value) return 'выберите тип оплаты'
       return true
-    }
+    },
+    dateType(value: string) {
+      if (!value) return 'выберите тип оплаты'
+      return true
+    },
   }
 })
 
@@ -89,6 +78,7 @@ const description = useField<string>('description')
 const hours = useField<number>('hours')
 const paymentType = useField<'hourly' | 'shift'>('paymentType')
 const budget = useField<number>('budget')
+const dateType = useField<'date' | 'by agreement'>('dateType')
 
 let loading = ref(false)
 
@@ -105,8 +95,12 @@ const submit = handleSubmit(async values => {
       finalStartTime = `${hh}:${mm}`;
     }
 
-    const cleanedDate = new Date(values.date + 'T00:00:00Z')
-
+    let cleanedDate: any = values.date;
+    if (values.dateType === 'date') {
+      cleanedDate = new Date(values.date + 'T00:00:00Z')
+    } else {
+      cleanedDate = null;
+    }
     const finalBudget = values.paymentType === 'shift'
       ? values.budget
       : values.budget * values.hours
@@ -118,18 +112,20 @@ const submit = handleSubmit(async values => {
       address: values.address,
       description: values.description,
       date: cleanedDate,
+      dateType: values.dateType,
       hours: values.hours,
       budget: finalBudget,
       paymentType: values.paymentType,
       employer_id: auth.user._id,
-      employer_name: auth.user.employer_name
+      employer_name: auth.user.employer_name,
+      createdAt: new Date(new Date().setHours(0, 0, 0, 0))
     }
 
     const res = await orderStore.createOrder(toSend)
 
     if (res.status.value === 'success') {
       await orderStore.getAll()
-      orderStore.orders.unshift(res.data.value)
+      // orderStore.orders.unshift(res?.data?.value)
       toast('Объявление размещено', {
         type: 'success',
         autoClose: 2000,
@@ -190,15 +186,15 @@ const formattedTotalBudget = computed(() => {
           <v-form class="md:mt-6 w-100" @submit="submit">
             <label class="block text-sm font-medium text-gray-700 mb-1">Название<span class="text-red-500 ml-0.5">
                 *</span></label>
-            <v-text-field placeholder="Ремонт кровли" base-color="#9e9e9e" color="primary" type="title"
-              variant="outlined" :error-messages="title.errors.value" v-model="title.value.value" />
+            <v-text-field placeholder="Требуются разнорабочие на длительный срок" base-color="#9e9e9e" color="primary"
+              type="title" variant="outlined" :error-messages="title.errors.value" v-model="title.value.value" />
 
             <label class="block text-sm font-medium text-gray-700 mb-1">Тип работы</label>
             <v-autocomplete base-color="#9e9e9e" color="primary" type="title" variant="outlined" :items="flatJobList"
               item-title="text" item-value="value" :error-messages="type.errors.value" v-model="type.value.value"
               clearable solo />
 
-            <label class="block text-sm font-medium text-gray-700 mb-1">Описание</label>
+            <label>Описание</label>
             <v-textarea
               placeholder="Нужен специалист для выполнения работы на месте — аккуратно, ответственно и в срок. Оплата по договорённости."
               base-color="#9e9e9e" color="primary" type="title" variant="outlined"
@@ -210,17 +206,30 @@ const formattedTotalBudget = computed(() => {
               variant="outlined" :error-messages="address.errors.value" v-model="address.value.value" />
 
             <v-row>
-              <v-col cols="12" md="6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Дата <span
+              <v-col cols="12">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Дата начала работ <span
                     class="text-red-500 ml-0.5">*</span></label>
-                <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="date" :min="todayStr"
-                  :max="maxDateStr" :error-messages="date.errors.value" v-model="date.value.value" />
-              </v-col>
-              <v-col cols="12" md="6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Выберете время начала работы</label>
-                <VueDatePicker placeholder="00:00" :ui="{
-                  input: 'h-14'
-                }" v-model="time" time-picker locale="ru" cancelText="Отмена" selectText="Принять" hide-input-icon />
+                <v-radio-group v-model="dateType.value.value" inline>
+                  <v-radio label="Указать дату" value="date" />
+                  <v-radio label="Не указывать (по договорённости)" value="by agreement" />
+                </v-radio-group>
+                <div v-if="dateType.value.value === 'date'">
+                  <div class="flex flex-row gap-4">
+                    <div class="flex-1">
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Дата старта <span
+                          class="text-red-500 ml-0.5">*</span></label>
+                      <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="date" :min="todayStr"
+                        :max="maxDateStr" :error-messages="date.errors.value" v-model="date.value.value" />
+                    </div>
+                    <div class="flex-1">
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Время начала работы</label>
+                      <VueDatePicker placeholder="00:00" :ui="{
+                        input: 'h-14'
+                      }" v-model="time" time-picker locale="ru" cancelText="Отмена" selectText="Принять"
+                        hide-input-icon />
+                    </div>
+                  </div>
+                </div>
               </v-col>
             </v-row>
 
