@@ -32,30 +32,32 @@ const currentOrders = computed(() => {
   <v-container>
     <v-row class="mb-8">
       <v-col cols="12" class="flex flex-col md:flex-row align-center justify-between">
-        <div class="flex flex-col md:flex-row gap-4 items-start md:items-center">
-          <h1 class="text-4xl font-bold text-gray-900 my-4 md:my-8">Вся работа</h1>
-          <div class="flex gap-2 mt-2 md:mt-0">
-            <button :class="[
-              'px-4 py-1 rounded-full text-sm font-semibold',
-              activeTab === 'orders'
-                ? 'bg-indigo-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            ]" @click="activeTab = 'orders'">
-              Заказы
-            </button>
-            <button :class="[
-              'px-4 py-1 rounded-full text-sm font-semibold',
-              activeTab === 'vacancies'
-                ? 'bg-indigo-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            ]" @click="activeTab = 'vacancies'">
-              Вакансии
-            </button>
-          </div>
+        <div class="flex flex-row gap-2 items-center">
+          <h1 class="text-4xl font-bold text-gray-900 my-4 md:mt-8">Вся работа</h1>
+          <v-btn @click="router.push('/employer/create-order')" density="compact" icon="mdi-plus" color="primary" class="!mt-1 !flex sm:!hidden"></v-btn>
+        </div>
+
+        <div class="flex justify-center md:justify-start gap-2 mb-2 md:my-0">
+          <button :class="[
+            'px-4 py-1 rounded-full text-sm font-semibold',
+            activeTab === 'orders'
+              ? 'bg-indigo-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ]" @click="activeTab = 'orders'">
+            Заказы
+          </button>
+          <button :class="[
+            'px-4 py-1 rounded-full text-sm font-semibold',
+            activeTab === 'vacancies'
+              ? 'bg-indigo-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ]" @click="activeTab = 'vacancies'">
+            Вакансии
+          </button>
         </div>
 
         <button @click="router.push('/employer/create-order')"
-          class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+          class="hidden md:flex bg-indigo-600 text-white md:px-6 md:py-2  rounded-md hover:bg-indigo-700 transition-colors font-bold">
           Разместить заказ
         </button>
       </v-col>

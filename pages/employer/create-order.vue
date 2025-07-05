@@ -58,8 +58,14 @@ const { meta, handleSubmit } = useForm<{
       if (value <= 10 || value >= 1000000000) return 'введите реальную сумму'
       return true
     },
-    paymentType(value: string) {
+    paymentType(value: 'hourly' | 'shift', ctx: { form: any }) {
       if (!value) return 'выберите тип оплаты'
+
+      const hours = ctx.form.hours
+      if ((value === 'hourly' || value === 'shift') && !hours) {
+        return 'укажите количество часов'
+      }
+
       return true
     },
     dateType(value: string) {
@@ -211,7 +217,7 @@ const formattedTotalBudget = computed(() => {
                     class="text-red-500 ml-0.5">*</span></label>
                 <v-radio-group v-model="dateType.value.value" inline>
                   <v-radio label="Указать дату" value="date" />
-                  <v-radio label="Не указывать (по договорённости)" value="by agreement" />
+                  <v-radio label="Не указывать (для вакансий)" value="by agreement" />
                 </v-radio-group>
                 <div v-if="dateType.value.value === 'date'">
                   <div class="flex flex-row gap-4">
