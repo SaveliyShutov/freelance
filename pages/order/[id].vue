@@ -11,40 +11,47 @@ if (res) {
   order.value = res.data.value
 }
 
-// const employerInfo = {
-//   name: order.value?.employer_name ?? 'ООО «ПрофСтройСервисПермь»"',
-//   inn: '12345678905901234567',
-//   ogrn: '1215900001234',
-//   phone: '+7 (342) 288-78-19',
-//   email: 'info@company.ru',
-//   description: 'ООО «ПрофСтройСервисПермь» — компания с 10-летним опытом в сфере строительных и ремонтных работ. Мы предоставляем временную занятость для специалистов и студентов, а также гарантируем честные условия, своевременную оплату и надёжных заказчиков.',
-//   rating: 4.3
-// }
-
-function getHourWord(n: number) {
-  const lastDigit = n % 10;
-  const lastTwoDigits = n % 100;
-
-  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
-    return 'часов';
-  }
-
-  if (lastDigit === 1) return 'час';
-  if (lastDigit >= 2 && lastDigit <= 4) return 'часа';
-  return 'часов';
+function getHourWord(n: number): string {
+  const lastDigit = n % 10
+  const lastTwoDigits = n % 100
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return 'часов'
+  if (lastDigit === 1) return 'час'
+  if (lastDigit >= 2 && lastDigit <= 4) return 'часа'
+  return 'часов'
 }
 
 function getEndTime(start: string, duration: number): string {
-  const [h, m] = start.split(':').map(Number);
-  const startDate = new Date();
-  startDate.setHours(h, m, 0, 0);
-  startDate.setHours(startDate.getHours() + duration);
-
-  const hours = String(startDate.getHours()).padStart(2, '0');
-  const minutes = String(startDate.getMinutes()).padStart(2, '0');
-
-  return `${hours}:${minutes}`;
+  const [h, m] = start.split(':').map(s => parseInt(s, 10))
+  const totalMinutes = h * 60 + m + duration * 60
+  const minutesInDay = 24 * 60
+  const wrapped = totalMinutes % minutesInDay
+  const endH = Math.floor(wrapped / 60)
+  const endM = wrapped % 60
+  return `${String(endH).padStart(2, '0')}:${String(endM).padStart(2, '0')}`
 }
+
+function getEndDate(startDate: Date, start: string, duration: number): string {
+  const [h, m] = start.split(':').map(s => parseInt(s, 10))
+  const totalMinutes = h * 60 + m + duration * 60
+  const daysToAdd = Math.floor(totalMinutes / (24 * 60))
+  const endDate = new Date(startDate)
+  if (daysToAdd > 0) {
+    endDate.setDate(endDate.getDate() + daysToAdd)
+  }
+  return endDate.toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' })
+}
+
+const startDate = computed(() =>
+  new Date(order.value.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' })
+)
+
+const endDate = computed(() =>
+  getEndDate(order.value.date, order.value.startTime, order.value.hours)
+)
+
+const endTime = computed(() =>
+  getEndTime(order.value.startTime, order.value.hours)
+)
 </script>
 
 <template>
@@ -80,19 +87,33 @@ function getEndTime(start: string, duration: number): string {
           </v-col>
 
           <v-col cols="12">
-            <div class="flex flex-wrap gap-x-6 gap-y-2 mb-6">
-              <div class="flex items-center gap-2">
-                <i class="mdi mdi-clock-time-three text-indigo-600"></i>
-                <p class="font-semibold">{{ order.hours }} {{ getHourWord(order.hours) }}</p>
-              </div>
-              <div class="flex items-center gap-2">
-                <i class="mdi mdi-calendar-range text-indigo-600"></i>
-                <span v-if="order.startTime != '0'" class="font-semibold">
-                  {{ new Date(order.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' }) }}
-                  с {{ order.startTime }} до {{ getEndTime(order.startTime, order.hours) }}
-                </span>
-                <span v-else class="font-semibold">{{ new Date(order.date).toLocaleDateString('ru-RU',
-                  { day: '2-digit', month: 'long' }) }}</span>
+            <div class="flex flex-col mb-3">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-2">
+                  <i class="mdi mdi-calendar-range text-indigo-600"></i>
+                  <span v-if="order.startTime !== '0'" class="font-semibold">
+                    <template v-if="endDate !== startDate">
+                      {{ startDate }} - {{ endDate }}
+                    </template>
+                    <template v-else>
+                      {{ startDate }}
+                    </template>
+                  </span>
+                  <span v-else class="font-semibold">{{ startDate }}</span>
+                </div>
+                <div v-if="order.startTime !== '0'" class="flex flex-row items-center gap-2">
+                  <i class="mdi mdi-clock-outline text-indigo-600"></i>
+                  <span class="font-semibold">
+                    {{ order.startTime }} - {{ endTime }}
+                  </span>
+                  <div class="flex items-center gap-2" v-if="order.paymentType === 'shift'">
+                    <span>(Смена: {{ order.hours }} {{ getHourWord(order.hours) }})</span>
+                  </div>
+
+                  <div class="flex items-center gap-2" v-else>
+                    <span>({{ order.hours }} {{ getHourWord(order.hours) }})</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -116,7 +137,7 @@ function getEndTime(start: string, duration: number): string {
               </div>
             </div>
           </v-col>
-          
+
           <!-- Блок "О компании" -->
           <!-- <v-col cols="12">
             <div class="mt-6 border-t pt-6">

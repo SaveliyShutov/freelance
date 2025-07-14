@@ -1,5 +1,5 @@
 export interface Order {
-  startTime: string;
+  startTime?: string;
   _id?: string;
   title: string;
   type?: string;
@@ -13,4 +13,6 @@ export interface Order {
   paymentType: 'hourly' | 'shift';
   applications?: any[];
   images?: any[];
+  createdAt?: Date;
+  dateType?: 'date' | 'by agreement';
 }

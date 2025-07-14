@@ -6,16 +6,30 @@ definePageMeta({
   middleware: ["worker"],
 })
 
-let router = useRouter()
-let orderStore = useOrder()
+const router = useRouter()
+const orderStore = useOrder()
+const userStore = useAuth()
 
-let userStore = useAuth()
+const activeTab = ref('orders')
 
-await orderStore.getAll()
+const allOrders = ref([])
+const allVacancies = ref([])
+
+await orderStore.getAll().then(res => {
+  allOrders.value = [
+    ...(res?.data?.value?.futureAndToday || []),
+    ...(res?.data?.value?.yesterday || [])
+  ]
+  allVacancies.value = res.data?.value?.vacancies || []
+})
+
+const currentOrders = computed(() => {
+  return activeTab.value === 'orders' ? allOrders.value : allVacancies.value
+})
 
 function workerCreateOrder() {
-  if (userStore.user.employer_name) {
-    toast("Зарегистрируйтесь как заказчик или смените роль", {
+  if (userStore.currentRole = 'worker') {
+    toast("Зарегистрируйтесь как заказчкик или смените роль", {
       type: "error",
       autoClose: 2000,
       onClose: () => {
@@ -28,11 +42,34 @@ function workerCreateOrder() {
 
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="12" class="flex flex-col md:flex-row align-center justify-between mb-4">
-        <h1 class="text-4xl font-bold text-gray-900 my-4 md:my-8">Вся работа</h1>
+    <v-row class="mb-8">
+      <v-col cols="12" class="flex flex-col md:flex-row align-center justify-between">
+        <div class="flex flex-row gap-2 items-center">
+          <h1 class="text-4xl font-bold text-gray-900 my-4 md:mt-8">Вся работа</h1>
+          <v-btn @click="workerCreateOrder()" density="compact" icon="mdi-plus" color="primary"
+            class="!mt-1 !flex sm:!hidden"></v-btn>
+        </div>
+        <div class="flex justify-center md:justify-start gap-2 mb-2 md:my-0">
+          <button :class="[
+            'px-4 py-1 rounded-full text-sm font-semibold',
+            activeTab === 'orders'
+              ? 'bg-indigo-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ]" @click="activeTab = 'orders'">
+            Заказы
+          </button>
+          <button :class="[
+            'px-4 py-1 rounded-full text-sm font-semibold',
+            activeTab === 'vacancies'
+              ? 'bg-indigo-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ]" @click="activeTab = 'vacancies'">
+            Вакансии
+          </button>
+        </div>
+
         <button @click="workerCreateOrder()"
-          class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+          class="hidden md:flex bg-indigo-600 text-white md:px-6 md:py-2  rounded-md hover:bg-indigo-700 transition-colors font-bold">
           Разместить заказ
         </button>
       </v-col>
@@ -73,12 +110,13 @@ function workerCreateOrder() {
           </v-row> -->
 
           <div class="space-y-6">
-            <div v-if="orderStore.orders.length > 0" v-for="order in orderStore.orders" :key="order.id"
+            <div v-if="currentOrders.length > 0" v-for="order in currentOrders" :key="order._id"
               class="border rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer">
               <WorkCard @click="router.push(`/order/${order._id}`)" :order="order" />
             </div>
+
             <div v-else class="flex flex-col justify-center items-center text-center">
-              <p>Нет заказов. Будьте первым!</p>
+              <p>Нет {{ activeTab === 'orders' ? 'заказов' : 'вакансий' }}. Будьте первым!</p>
               <img :src="sadPicture" class="mt-2 w-64 h-64" />
             </div>
           </div>
