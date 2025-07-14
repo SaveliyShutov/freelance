@@ -149,7 +149,7 @@ const changePassword = async () => {
 
     <v-row v-if="userStore.user" class="flex-wrap">
       <v-col cols="12" sm="12" md="4" lg="4" class="order-1 md:order-none">
-        <v-card class="pa-4 mb-4 shadow-lg border border-gray-100">
+        <div class="pa-4 mb-4 shadow-lg border border-gray-100">
           <div class="flex flex-col items-center">
             <v-avatar size="120"
               class="elevation-3 !text-indigo-600 !border-2 !border-indigo-600 text-6xl cursor-pointer"
@@ -172,7 +172,7 @@ const changePassword = async () => {
                 {{ n <= userStore.user.employer_rating ? 'mdi-star' : 'mdi-star-outline' }} </v-icon>
             </div>
           </div>
-        </v-card>
+        </div>
 
         <v-card class="pa-4 mb-4 shadow-lg border border-gray-100">
           <div class="flex justify-between items-center mb-3">
