@@ -59,9 +59,9 @@ const saveEdit = async (field) => {
       about: 'employer_description',
       location: 'employer_address'
     };
-    
+
     const backendField = fieldMappings[field];
-    
+
     // Отправляем изменения на сервер
     const response = await userStore.updateUser(
       { [backendField]: editData.value[field] },
@@ -143,13 +143,9 @@ const changePassword = async () => {
 </script>
 <template>
   <v-container class="px-0 px-sm-4">
-    <div class="bg-indigo-600 border-2 text-center rounded-md border-indigo-600 mb-6 py-3">
-      <p class="text-white font-bold">Профиль заказчика</p>
-    </div>
-
     <v-row v-if="userStore.user" class="flex-wrap">
       <v-col cols="12" sm="12" md="4" lg="4" class="order-1 md:order-none">
-        <div class="pa-4 mb-4 shadow-lg border border-gray-100">
+        <div class="pr-4 pl-4 pt-3">
           <div class="flex flex-col items-center">
             <v-avatar size="120"
               class="elevation-3 !text-indigo-600 !border-2 !border-indigo-600 text-6xl cursor-pointer"
@@ -162,9 +158,10 @@ const changePassword = async () => {
             </v-avatar>
             <input ref="fileInput" type="file" accept="image/*" class="d-none" @change="handleFileUpload">
 
-            <div class="mt-3 text-center">
-              <p class="text-lg font-medium">{{ userStore.user.employer_name }}</p>
-              <p class="text-gray-600">{{ userStore.user.employer_address }}</p>
+            <div class="mt-2 text-center">
+              <p class="text-lg font-bold">{{ userStore.user.employer_name }}</p>
+              <!-- <p class="text-gray-600">{{ userStore.user.employer_address }}</p> -->
+              <p class="text-lg font-medium">Заказчик</p>
             </div>
 
             <div class="flex justify-center my-2">
@@ -174,10 +171,10 @@ const changePassword = async () => {
           </div>
         </div>
 
-        <v-card class="pa-4 mb-4 shadow-lg border border-gray-100">
-          <div class="flex justify-between items-center mb-3">
-            <h3 class="text-indigo-600 font-bold">Обо мне</h3>
-            <button v-if="!editingAbout" variant="plain" class="!text-indigo-600 hover:!text-blue-800"
+        <div class="pa-4 mb-1">
+          <div class="flex justify-between items-center">
+            <h3 class="text-indigo-700 font-bold text-lg">О заказчике</h3>
+            <button v-if="!editingAbout" variant="plain" class="!text-black hover:!text-blue-800"
               @click="() => { editingAbout = true; editData.about = userStore.user.employer_description }">Изменить</button>
             <div v-else class="flex">
               <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('about')">Отмена</button>
@@ -187,17 +184,206 @@ const changePassword = async () => {
           <p v-if="!editingAbout" class="text-body-1">{{ userStore.user.employer_description }}</p>
           <v-textarea v-else v-model="editData.about" @keyup.enter="saveEdit('about')" color="indigo" variant="outlined"
             rows="3" no-resize @keydown.enter.prevent></v-textarea>
-        </v-card>
+        </div>
+        <div class="pa-4 ">
+
+          <!-- Имя -->
+          <div class="mb-2">
+            <div class="flex flex-wrap items-center pt-2">
+              <h3 class="text-subtitle-1 text-indigo-700 font-weight-bold break-words">
+                Имя пользователя
+              </h3>
+            </div>
+
+            <div class="py-2 border-b-2 border-indigo-500 w-full flex">
+              <div v-if="editingFields.name" class="w-full">
+                <v-text-field :model-value="editData.name" @update:model-value="val => editData.name = val"
+                  @keyup.enter="saveEdit('name')" color="indigo" variant="outlined" density="comfortable" class="w-full"
+                  hide-details auto-grow></v-text-field>
+              </div>
+
+              <div v-else class="flex justify-between flex-wrap items-start w-full">
+                <p class="break-words max-w-full">
+                  {{ userStore.user.employer_name }}
+                </p>
+                <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('name')">
+                  Изменить
+                </button>
+              </div>
+
+              <div v-if="editingFields.name" class="flex mt-2">
+                <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('name')">Отмена</button>
+                <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('name')">Сохранить</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-2">
+            <div class="flex flex-wrap items-center pt-2">
+              <h3 class="text-subtitle-1 text-indigo-700 font-weight-bold break-words">Email</h3>
+            </div>
+
+            <div class="py-2 border-b-2 border-indigo-500 w-full flex">
+              <div v-if="editingFields.email" class="w-full">
+                <v-text-field :model-value="editData.email" @update:model-value="val => editData.email = val"
+                  @keyup.enter="saveEdit('email')" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details></v-text-field>
+              </div>
+
+              <div v-else class="flex justify-between flex-wrap items-start w-full">
+                <p class="break-words max-w-full">
+                  {{ userStore.user.email }}
+                </p>
+                <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('email')">
+                  Изменить
+                </button>
+              </div>
+
+              <div v-if="editingFields.email" class="flex mt-2">
+                <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('email')">
+                  Отмена
+                </button>
+                <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('email')">
+                  Сохранить
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Телефон -->
+          <div class="mb-2">
+            <div class="flex flex-wrap items-center pt-2">
+              <h3 class="text-subtitle-1 text-indigo-700 font-weight-bold break-words">Номер телефона</h3>
+            </div>
+
+            <div class="py-2 border-b-2 border-indigo-500 w-full flex">
+              <div v-if="editingFields.phone" class="w-full">
+                <v-text-field :model-value="editData.phone" @update:model-value="val => editData.phone = val"
+                  @keyup.enter="saveEdit('phone')" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details></v-text-field>
+              </div>
+
+              <div v-else class="flex justify-between flex-wrap items-start w-full">
+                <p class="break-words max-w-full">
+                  {{ userStore.user.employer_contacts }}
+                </p>
+                <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('phone')">
+                  Изменить
+                </button>
+              </div>
+
+              <div v-if="editingFields.phone" class="flex mt-2">
+                <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('phone')">
+                  Отмена
+                </button>
+                <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('phone')">
+                  Сохранить
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Пароль -->
+          <!-- <div class="mb-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Пароль</h3>
+                            <button v-if="!editingFields.password" variant="plain"
+                                class="!text-indigo-600 hover:!text-blue-800"
+                                @click="startEdit('password')">Изменить</button>
+                            <div v-else class="flex">
+                                <button class="!text-red-400 hover:!text-red-600 mr-2"
+                                    @click="cancelEdit('password')">Отмена</button>
+                                <button class="!text-blue-400 hover:!text-blue-600"
+                                    @click="saveEdit('password')">Сохранить</button>
+                            </div>
+                        </div>
+                        <div v-if="editingFields.password">
+                            <v-text-field :model-value="editData.password"
+                                @update:model-value="val => editData.password = val" @keyup.enter="saveEdit('password')"
+                                color="indigo" variant="outlined" density="comfortable" class="mt-1" :type="'text'"
+                                hide-details>
+                            </v-text-field>
+                        </div>
+                        <div v-else class="py-2 mb-3">
+                            {{ '*'.repeat(userStore.user. ? userStore.user.password.length : 8) }}
+                        </div>
+                    </div> -->
+
+          <!-- Локация -->
+          <div class="mb-2">
+            <div class="flex flex-wrap items-center pt-2">
+              <h3 class="text-subtitle-1 text-indigo-700 font-weight-bold break-words">Локация</h3>
+            </div>
+
+            <div class="py-2 border-b-2 border-indigo-500 w-full flex">
+              <div v-if="editingFields.location" class="w-full">
+                <v-text-field :model-value="editData.location" @update:model-value="val => editData.location = val"
+                  @keyup.enter="saveEdit('location')" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details></v-text-field>
+              </div>
+
+              <div v-else class="flex justify-between flex-wrap items-start w-full">
+                <p v-if="userStore.user.location != null" class="break-words max-w-full">
+                  {{ userStore.user.location }}
+                </p>
+                <p v-else class="break-words max-w-full">
+                  Пусто
+                </p>
+                <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('location')">
+                  Изменить
+                </button>
+              </div>
+
+              <div v-if="editingFields.location" class="flex mt-2">
+                <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('location')">
+                  Отмена
+                </button>
+                <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('location')">
+                  Сохранить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </v-col>
 
-      <v-col cols="12" sm="12" md="4" lg="4" class="order-2 md:order-none">
-        <v-card class="pa-4 mb-4 shadow-lg border border-gray-100">
+
+      <v-col cols="12" sm="12" md="8" lg="8" class="order-3 md:order-none">
+        <p class="text-4xl font-medium mb-6">{{ userStore.user.employer_name }}</p>
+        <div class="pa-4 mb-4 border-2 border-indigo-600 rounded-xl">
+          <h3 class="text-indigo-700 font-bold text-3xl">Размещенные заказы</h3>
+          <v-list>
+            <v-list-item v-if="orderStore.my_orders_with_applications.length > 0"
+              v-for="order in orderStore.my_orders_with_applications" :key="order._id" class="mb-2">
+              <v-list-item-title class="font-weight-medium">{{ order.title }}</v-list-item-title>
+              <v-list-item-subtitle>{{ order.description }}</v-list-item-subtitle>
+            </v-list-item>
+            <p v-else>
+              пусто, создайте еще заказы
+            </p>
+          </v-list>
+        </div>
+        <div class="pa-4 mb-4 border-2 border-indigo-600 rounded-xl">
+          <h3 class="text-indigo-700 font-bold text-3xl">Ваш рейтинг</h3>
+          <div class="flex items-center my-2">
+            <v-avatar size="50"
+              class="elevation-3 !text-indigo-600 !border-2 !border-indigo-600 text-xl cursor-pointer mr-3">
+              <v-img v-if="userStore.user.employer_avatar" :src="userStore.user.employer_avatar"></v-img>
+              <span v-else>{{ getInitial(userStore.user.employer_name) }}</span>
+            </v-avatar>
+            <v-icon v-for="n in 5" :key="n" color="amber" size="small">
+              {{ n <= userStore.user.employer_rating ? 'mdi-star' : 'mdi-star-outline' }} </v-icon>
+          </div>
+        </div>
+        <div class="pa-4 border-2 border-indigo-600 rounded-xl">
+          <h3 class="text-indigo-700 font-bold text-3xl mb-4">Контакты</h3>
 
           <!-- Имя -->
           <div class="mb-4">
             <div class="flex justify-between items-center">
               <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Имя пользователя</h3>
-              <button v-if="!editingFields.name" variant="plain" class="!text-indigo-600 hover:!text-blue-800"
+              <button v-if="!editingFields.name" variant="plain" class="!text-iblack hover:!text-blue-800"
                 @click="startEdit('name')">Изменить</button>
               <div v-else class="flex">
                 <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('name')">Отмена</button>
@@ -219,7 +405,7 @@ const changePassword = async () => {
           <div class="mb-4">
             <div class="flex justify-between items-center">
               <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Email</h3>
-              <button v-if="!editingFields.email" variant="plain" class="!text-indigo-600 hover:!text-blue-800"
+              <button v-if="!editingFields.email" variant="plain" class="!text-black hover:!text-blue-800"
                 @click="startEdit('email')">Изменить</button>
               <div v-else class="flex">
                 <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('email')">Отмена</button>
@@ -241,7 +427,7 @@ const changePassword = async () => {
           <div class="mb-4">
             <div class="flex justify-between items-center">
               <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Номер телефона</h3>
-              <button v-if="!editingFields.phone" variant="plain" class="!text-indigo-600 hover:!text-blue-800"
+              <button v-if="!editingFields.phone" variant="plain" class="!text-black hover:!text-blue-800"
                 @click="startEdit('phone')">Изменить</button>
               <div v-else class="flex">
                 <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('phone')">Отмена</button>
@@ -289,7 +475,7 @@ const changePassword = async () => {
           <div>
             <div class="flex justify-between items-center">
               <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Ваша локация</h3>
-              <button v-if="!editingFields.location" variant="plain" class="!text-indigo-600 hover:!text-blue-800"
+              <button v-if="!editingFields.location" variant="plain" class="!text-black hover:!text-blue-800"
                 @click="startEdit('location')">Изменить</button>
               <div v-else class="flex">
                 <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('location')">Отмена</button>
@@ -311,24 +497,7 @@ const changePassword = async () => {
               </div>
             </div>
           </div>
-
-        </v-card>
-      </v-col>
-
-
-      <v-col cols="12" sm="12" md="4" lg="4" class="order-3 md:order-none">
-        <v-card class="pa-4 mb-4 shadow-lg border border-gray-100">
-          <v-card-title class="text-indigo-600 text-h6 font-weight-bold">Размещенные заказы</v-card-title>
-          <v-list>
-            <v-list-item v-if="orderStore.my_orders_with_applications.length > 0" v-for="order in orderStore.my_orders_with_applications" :key="order._id" class="mb-2">
-              <v-list-item-title class="font-weight-medium">{{ order.title }}</v-list-item-title>
-              <v-list-item-subtitle>{{ order.description }}</v-list-item-subtitle>
-            </v-list-item>
-            <p v-else>
-            пусто, создайте еще заказы
-            </p>
-          </v-list>
-        </v-card>
+        </div>
       </v-col>
     </v-row>
 
