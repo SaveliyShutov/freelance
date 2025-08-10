@@ -83,7 +83,7 @@ const endTime = computed(() =>
           </v-col>
 
           <v-col cols="12" class="mb-4">
-            <p>{{ order.description }}</p>
+            <p v-html="order.description"></p>
           </v-col>
 
           <v-col cols="12">

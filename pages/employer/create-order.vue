@@ -201,10 +201,15 @@ const formattedTotalBudget = computed(() => {
               clearable solo />
 
             <label>Описание</label>
-            <v-textarea
+            <ClientOnly>
+              <TiptapEditor v-model="description.value.value" />
+            </ClientOnly>
+
+            {{ description.value.value }}
+            <!-- <v-textarea
               placeholder="Нужен специалист для выполнения работы на месте — аккуратно, ответственно и в срок. Оплата по договорённости."
               base-color="#9e9e9e" color="primary" type="title" variant="outlined"
-              :error-messages="description.errors.value" v-model="description.value.value" />
+              :error-messages="description.errors.value" v-model="description.value.value" /> -->
 
             <label class="block text-sm font-medium text-gray-700 mb-1">Адрес <span
                 class="text-red-500 ml-0.5">*</span></label>
