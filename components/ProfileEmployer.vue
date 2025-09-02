@@ -352,7 +352,7 @@ const changePassword = async () => {
       <v-col cols="12" sm="12" md="8" lg="8" class="order-3 md:order-none">
         <p class="text-4xl font-medium mb-6">{{ userStore.user.employer_name }}</p>
         <div class="pa-4 mb-4 border-2 border-indigo-600 rounded-xl">
-          <h3 class="text-indigo-700 font-bold text-3xl">Размещенные заказы</h3>
+          <h3 class="text-indigo-700 font-bold text-3xl">Размещенные подработки</h3>
           <v-list>
             <v-list-item v-if="orderStore.my_orders_with_applications.length > 0"
               v-for="order in orderStore.my_orders_with_applications" :key="order._id" class="mb-2">

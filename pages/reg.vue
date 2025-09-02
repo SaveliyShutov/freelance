@@ -25,10 +25,10 @@ const currentRole = ref("worker");
               </div>
             </ClientOnly>
             <p class="text-center mt-2 text-green-600">
-              + {{ currentRole == "worker" ? "может откликаться на заказы" : "может создавать заказы" }}
+              + {{ currentRole == "worker" ? "может откликаться на подработки" : "может создавать подработки" }}
             </p>
             <p class="text-center mb-2  text-red-600">
-              - {{ currentRole == "worker" ? "не может создавать заказы" : "не может откликаться на заказы" }}
+              - {{ currentRole == "worker" ? "не может создавать подработки" : "не может откликаться на подработки" }}
             </p>
             <div class="flex justify-center">
               <div class="bg-gray-200 rounded-lg p-1 inline-flex">

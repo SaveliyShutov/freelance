@@ -43,7 +43,7 @@ const currentOrders = computed(() => {
               ? 'bg-indigo-600 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
           ]" @click="activeTab = 'orders'">
-            Заказы
+            Подработка
           </button>
           <button :class="[
             'px-4 py-1 rounded-full text-sm font-semibold',

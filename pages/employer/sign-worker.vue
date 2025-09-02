@@ -9,7 +9,7 @@
             <div>
               <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center">Добавить аккаунт исполнителя
               </h2>
-              <p class="text-center">для выполнения заказов вам необходимо создать аккаунт исполнителя
+              <p class="text-center">для выполнения подработок, или отклика на вакансии вам необходимо создать аккаунт исполнителя
               </p>
             </div>
             <EmployerAddWorkerForm />

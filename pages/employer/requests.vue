@@ -28,7 +28,7 @@ async function declineApplication(application_id: string) {
   <v-container>
     <v-row>
       <v-col cols="12" class="flex flex-row align-center justify-between">
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 md:my-8 mb-4 md:mb-8">Мои заказы</h1>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 md:my-8 mb-4 md:mb-8">Мои подработки</h1>
       </v-col>
     </v-row>
     <v-row>
@@ -41,7 +41,7 @@ async function declineApplication(application_id: string) {
               <OrderCard :order="order" />
             </div>
             <div v-else class="flex flex-col justify-center items-center text-center">
-              <p>У вас нет активных заказов</p>
+              <p>У вас нет активных подработок</p>
               <button @click="router.push('/employer/create-order')"
                 class="mt-2 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
                 Разместить заказ

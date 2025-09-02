@@ -9,7 +9,7 @@
             <div>
               <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center">Добавить аккаунт заказчика
               </h2>
-              <p class="text-center">для создания заказов вам необходимо создать аккаунт заказчика
+              <p class="text-center">для создания подработок вам необходимо создать аккаунт заказчика
               </p>
             </div>
             <WorkerAddEmployerForm />

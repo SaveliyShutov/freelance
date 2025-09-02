@@ -41,7 +41,7 @@ const orders = ref([
                   : 'text-gray-600 hover:text-gray-900',
               ]"
             >
-              Мои Заказы (заказчик)
+              Мои Подработки (заказчик)
             </button>
             <button
               @click="currentRole = 'worker'"
