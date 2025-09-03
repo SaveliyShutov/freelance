@@ -205,7 +205,6 @@ const formattedTotalBudget = computed(() => {
               <TiptapEditor v-model="description.value.value" />
             </ClientOnly>
 
-            {{ description.value.value }}
             <!-- <v-textarea
               placeholder="Нужен специалист для выполнения работы на месте — аккуратно, ответственно и в срок. Оплата по договорённости."
               base-color="#9e9e9e" color="primary" type="title" variant="outlined"

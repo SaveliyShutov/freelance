@@ -2,6 +2,10 @@
 import { computed } from 'vue'
 import type { Order } from '~/types/order.interface'
 const props = defineProps<{ order: Order }>()
+import { toast } from "vue3-toastify"
+
+let router = useRouter()
+let route = useRoute()
 
 // Проверяем, указана ли дата
 const hasDate = computed(() => props.order.date !== null && props.order.date !== undefined)
@@ -55,11 +59,25 @@ const endTime = computed(() => {
 
 // Прочие данные
 const hasImages = computed(() => Array.isArray(props.order.images) && props.order.images.length > 0)
+
+function copyLink() {
+  const url = window.location.origin + `/order/${props.order._id}`
+
+  navigator.clipboard.writeText(url).then(() => {
+    toast.success("Ссылка скопирована!", {
+      autoClose: 2000,
+    })
+  }).catch(() => {
+    toast.error("Ошибка при копировании!", {
+      autoClose: 2000,
+    })
+  })
+}
 </script>
 
 <template>
   <v-row>
-    <v-col cols="12" md="8">
+    <v-col @click="router.push(`/order/${props.order._id}`)" cols="12" md="8">
       <!-- Заголовок -->
       <h3 class="text-xl font-bold text-gray-900 mb-2">{{ props.order.title }}</h3>
       <!-- Заказчик -->
@@ -140,11 +158,18 @@ const hasImages = computed(() => Array.isArray(props.order.images) && props.orde
           </p>
         </template>
       </div>
-
-      <!-- Кнопка отклика -->
-      <div class="text-right">
-        <button class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+      <div class="flex justify-end items-center gap-2">
+        <button @click="router.push(`/order/${props.order._id}`)"
+          class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold h-10">
           Откликнуться
+        </button>
+
+        <button @click.stop="copyLink"
+          class="w-10 h-10 flex items-center justify-center bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81c1.66 0 3-1.34 3-3s-1.34-3-3-3s-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65c0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92" />
+          </svg>
         </button>
       </div>
     </v-col>

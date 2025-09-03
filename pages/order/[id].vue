@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toast } from "vue3-toastify"
+
 const router = useRouter()
 const route = useRoute()
 const orderStore = useOrder()
@@ -52,6 +54,26 @@ const endDate = computed(() =>
 const endTime = computed(() =>
   getEndTime(order.value.startTime, order.value.hours)
 )
+
+function copyLink() {
+  const resolved = router.resolve({
+    name: route.name,
+    params: route.params,
+    query: route.query,
+  })
+
+  const url = window.location.origin + resolved.href
+
+  navigator.clipboard.writeText(url).then(() => {
+    toast.success("Ссылка скопирована!", {
+      autoClose: 2000,
+    })
+  }).catch(() => {
+    toast.error("Ошибка при копировании!", {
+      autoClose: 2000,
+    })
+  })
+}
 </script>
 
 <template>
@@ -83,7 +105,9 @@ const endTime = computed(() =>
           </v-col>
 
           <v-col cols="12" class="mb-4">
-            <p v-html="order.description"></p>
+            <ClientOnly>
+              <p v-html="order.description"></p>
+            </ClientOnly>
           </v-col>
 
           <v-col cols="12">
@@ -123,16 +147,34 @@ const endTime = computed(() =>
                 <p class="font-semibold">{{ order.address }}</p>
               </div>
 
-              <div v-if="userStore.currentRole === 'worker' || userStore.user?.worker_name">
-                <button @click="router.push(`/apply/${order._id}`)"
-                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+              <div v-if="userStore.currentRole === 'worker' || userStore.user?.worker_name"
+                class="flex items-center gap-2">
+                <button @click="!userStore.user ? router.push('/reg') : router.push(`/apply/${order._id}`)"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold h-10">
                   Откликнуться
                 </button>
+
+                <button @click="copyLink"
+                  class="w-10 h-10 flex items-center justify-center bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                      d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81c1.66 0 3-1.34 3-3s-1.34-3-3-3s-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65c0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92" />
+                  </svg>
+                </button>
               </div>
-              <div v-else>
-                <button @click="router.push(`/employer/sign-worker`)"
-                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+
+              <div v-else class="flex items-center gap-2">
+                <button @click="!userStore.user ? router.push('/reg') : router.push(`/employer/sign-worker`)"
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold h-10">
                   Откликнуться
+                </button>
+
+                <button @click="copyLink"
+                  class="w-10 h-10 flex items-center justify-center bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                      d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81c1.66 0 3-1.34 3-3s-1.34-3-3-3s-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65c0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92" />
+                  </svg>
                 </button>
               </div>
             </div>

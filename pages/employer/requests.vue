@@ -28,7 +28,7 @@ async function declineApplication(application_id: string) {
   <v-container>
     <v-row>
       <v-col cols="12" class="flex flex-row align-center justify-between">
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 md:my-8 mb-4 md:mb-8">Мои подработки</h1>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 md:my-8 mb-4 md:mb-8">Мои заказы</h1>
       </v-col>
     </v-row>
     <v-row>

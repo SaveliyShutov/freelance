@@ -46,7 +46,7 @@ function changeRole() {
               Разместить обявление
             </NuxtLink>
             <NuxtLink to="/employer/requests" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
-              Мои подработки
+              Мои заказы
             </NuxtLink>
             <div>
               <EmployerDropdownCard />
