@@ -22,14 +22,12 @@ const triedNext = ref(false);
 const stepSchemas = [
   yup.object({}), // шаг 1 — выбор типа
   yup.object({
-    // employer_name используется как для названия компании, так и для имени физлица
     employer_name: yup.string()
       .required("Введите имя")
       .min(2, "Слишком короткое")
       .max(100, "Слишком длинное"),
     employer_shortDescription: yup.string().max(100, "Максимум 100 символов").nullable(),
     employer_description: yup.string().max(500, "Максимум 500 символов").nullable(),
-    // фамилия — employer_surname
     employer_surname: yup.string()
       .when([], {
         is: () => selectedType.value !== "organization",
@@ -40,6 +38,7 @@ const stepSchemas = [
   yup.object({
     email: yup.string().required("Введите email").email("Неверный формат"),
     password: yup.string().required("Введите пароль").min(8, "Минимум 8 символов").max(30, "Слишком длинный пароль"),
+    agreePolicy: yup.boolean().oneOf([true], "Необходимо согласиться с условиями"),
   }),
 ];
 
@@ -54,6 +53,7 @@ const { handleSubmit, validate } = useForm({
     employer_surname: "",
     email: "",
     password: "",
+    agreePolicy: false,
   },
 });
 
@@ -93,6 +93,13 @@ const {
   errorMessage: password_error,
   meta: password_meta
 } = useField<string>("password");
+
+// useField для галочки согласия
+const {
+  value: agreePolicy,
+  errorMessage: agreePolicy_error,
+  meta: agreePolicy_meta
+} = useField<boolean>("agreePolicy");
 
 // выбор типа аккаунта
 const selectType = (type: 'organization' | 'self-employed' | 'individual') => {
@@ -232,6 +239,7 @@ const submit = handleSubmit(async (values) => {
     </v-form>
 
     <!-- Шаг 3: данные для входа -->
+    <!-- Шаг 3: данные для входа -->
     <v-form v-else-if="currentStep === 3" class="mt-6 w-100">
       <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">Данные для входа</h2>
       <p class="text-sm text-gray-500 mb-4 text-center">Укажите email и придумайте пароль</p>
@@ -244,6 +252,24 @@ const submit = handleSubmit(async (values) => {
         @click:append-inner="show_password = !show_password" :type="show_password ? 'text' : 'password'"
         :error-messages="(password_meta.touched || triedNext) && password_error ? [password_error] : []" label="Пароль"
         variant="outlined" density="compact" class="w-100 mb-3" />
+
+      <!-- Чекбокс согласия -->
+      <v-checkbox v-model="agreePolicy" color="primary"
+        :error-messages="(triedNext && !agreePolicy) ? ['Необходимо согласиться с условиями'] : []" hide-details="auto"
+        density="compact" class="mt-3 w-full">
+        <template #label>
+          <span class="text-xs sm:text-sm text-gray-700 leading-snug block">
+            Я ознакомлен(а) с
+            <a href="/docs/privacy-policy.docx" target="_blank" class="text-primary hover:underline break-words">
+              Политикой обработки персональных данных
+            </a>
+            и даю
+            <a href="/docs/agreement.docx" target="_blank" class="text-primary hover:underline break-words">
+              Согласие на обработку
+            </a>
+          </span>
+        </template>
+      </v-checkbox>
     </v-form>
 
     <!-- Навигация -->
