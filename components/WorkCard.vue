@@ -121,7 +121,12 @@ function copyLink() {
               {{ props.order.hours }} {{ getHourWord(props.order.hours) }}
             </span>
           </div>
-          <div v-else class="flex items-center gap-2">
+          <div v-if="props.order.paymentType === 'deal'" class="flex items-center gap-2">
+            <span class="font-semibold">
+              Сдельная оплата
+            </span>
+          </div>
+          <div v-if="props.order.paymentType === 'shift'" class="flex items-center gap-2">
             <i class="mdi mdi-clock-outline text-indigo-600"></i>
             <span class="font-semibold">
               Смена {{ props.order.hours }} {{ getHourWord(props.order.hours) }}
@@ -151,8 +156,14 @@ function copyLink() {
             {{ props.order.budget.toLocaleString('ru-RU') }}₽
           </p>
         </template>
-        <template v-else>
+        <template v-if="props.order.paymentType === 'shift'">
           <p class="text-sm text-gray-500">Оплата за смену:</p>
+          <p class="text-2xl font-bold">
+            {{ props.order.budget.toLocaleString('ru-RU') }}₽
+          </p>
+        </template>
+        <template v-if="props.order.paymentType === 'deal'">
+          <p class="text-sm text-gray-500">Сдельная оплата:</p>
           <p class="text-2xl font-bold">
             {{ props.order.budget.toLocaleString('ru-RU') }}₽
           </p>

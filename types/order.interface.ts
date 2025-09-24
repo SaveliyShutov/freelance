@@ -10,7 +10,7 @@ export interface Order {
   budget: number;
   address: string;
   description?: string;
-  paymentType: 'hourly' | 'shift';
+  paymentType: 'hourly' | 'shift' | 'deal';
   applications?: any[];
   images?: any[];
   createdAt?: Date;

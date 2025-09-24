@@ -23,7 +23,7 @@ const { meta, handleSubmit } = useForm<{
   description?: string,
   date?: string,
   dateType: 'date' | 'by agreement',
-  paymentType: 'hourly' | 'shift',
+  paymentType: 'hourly' | 'shift' | 'deal',
   hours: number,
   budget: number,
   startTime: string,
@@ -58,14 +58,14 @@ const { meta, handleSubmit } = useForm<{
       if (value <= 10 || value >= 1000000000) return 'введите реальную сумму'
       return true
     },
-    paymentType(value: 'hourly' | 'shift', ctx: { form: any }) {
+    paymentType(value: 'hourly' | 'shift' | 'deal', ctx: { form: any }) {
       if (!value) return 'выберите тип оплаты'
-
-      const hours = ctx.form.hours
-      if ((value === 'hourly' || value === 'shift') && !hours) {
+      if ((value === 'hourly' || value === 'shift') && !ctx.form.hours) {
         return 'укажите количество часов'
       }
-
+      if (value === 'deal' && ctx.form.hours && ctx.form.hours !== 0) {
+        return 'часы не задаются для сдельной оплаты'
+      }
       return true
     },
     dateType(value: string) {
@@ -82,13 +82,12 @@ const address = useField<string>('address')
 const date = useField<string>('date')
 const description = useField<string>('description')
 const hours = useField<number>('hours')
-const paymentType = useField<'hourly' | 'shift'>('paymentType')
+const paymentType = useField<'hourly' | 'shift' | 'deal'>('paymentType')
 const budget = useField<number>('budget')
 const dateType = useField<'date' | 'by agreement'>('dateType')
 
 let loading = ref(false)
 
-// Сохранение
 const submit = handleSubmit(async values => {
   loading.value = true
 
@@ -107,9 +106,20 @@ const submit = handleSubmit(async values => {
     } else {
       cleanedDate = null;
     }
-    const finalBudget = values.paymentType === 'shift'
-      ? values.budget
-      : values.budget * values.hours
+
+    // Если сдельная оплата, часы ставим 0
+    if (values.paymentType === 'deal') {
+      values.hours = 0;
+    }
+
+    let finalBudget: number;
+    if (values.paymentType === 'hourly') {
+      finalBudget = values.budget * values.hours;
+    } else if (values.paymentType === 'shift') {
+      finalBudget = values.budget;
+    } else {  // deal
+      finalBudget = values.budget;
+    }
 
     const toSend: Order = {
       startTime: finalStartTime,
@@ -131,7 +141,6 @@ const submit = handleSubmit(async values => {
 
     if (res.status.value === 'success') {
       await orderStore.getAll()
-      // orderStore.orders.unshift(res?.data?.value)
       toast('Объявление размещено', {
         type: 'success',
         autoClose: 2000,
@@ -147,7 +156,6 @@ const submit = handleSubmit(async values => {
   }
 })
 
-// Дата
 const todayStr = new Date().toISOString().split('T')[0]
 const maxDateStr = (() => {
   const maxDate = new Date()
@@ -155,7 +163,6 @@ const maxDateStr = (() => {
   return maxDate.toISOString().split('T')[0]
 })()
 
-// Категории
 const flatJobList = Array.from(
   new Set(
     jobTypes.flatMap(category =>
@@ -166,16 +173,23 @@ const flatJobList = Array.from(
     )
   )
 )
+
 const formattedTotalBudget = computed(() => {
   const pType = paymentType.value.value
-  if (pType !== 'hourly') return null
-
   const h = hours.value.value
   const rate = budget.value.value
-  const total = Number(h) * Number(rate)
 
-  if (!h || !rate || isNaN(total) || total <= 0) return null
-  return total.toLocaleString('ru-RU') + ' ₽'
+  if (pType === 'hourly') {
+    if (!h || !rate) return null
+    const total = Number(h) * Number(rate)
+    if (isNaN(total) || total <= 0) return null
+    return total.toLocaleString('ru-RU') + ' ₽'
+  } else if (pType === 'shift' || pType === 'deal') {
+    if (!rate) return null
+    return Number(rate).toLocaleString('ru-RU') + ' ₽'
+  } else {
+    return null
+  }
 })
 </script>
 
@@ -190,35 +204,35 @@ const formattedTotalBudget = computed(() => {
       <v-col cols="12">
         <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
           <v-form class="md:mt-6 w-100" @submit="submit">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Название<span class="text-red-500 ml-0.5">
-                *</span></label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Название<span class="text-red-500 ml-0.5">*</span>
+            </label>
             <v-text-field placeholder="Требуются разнорабочие на длительный срок" base-color="#9e9e9e" color="primary"
               type="title" variant="outlined" :error-messages="title.errors.value" v-model="title.value.value" />
-
-            <label class="block text-sm font-medium text-gray-700 mb-1">Тип работы</label>
-            <v-autocomplete base-color="#9e9e9e" color="primary" type="title" variant="outlined" :items="flatJobList"
-              item-title="text" item-value="value" :error-messages="type.errors.value" v-model="type.value.value"
-              clearable solo />
 
             <label>Описание</label>
             <ClientOnly>
               <TiptapEditor v-model="description.value.value" />
             </ClientOnly>
 
-            <!-- <v-textarea
-              placeholder="Нужен специалист для выполнения работы на месте — аккуратно, ответственно и в срок. Оплата по договорённости."
-              base-color="#9e9e9e" color="primary" type="title" variant="outlined"
-              :error-messages="description.errors.value" v-model="description.value.value" /> -->
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Тип работы
+            </label>
+            <v-autocomplete base-color="#9e9e9e" color="primary" type="title" variant="outlined" :items="flatJobList"
+              item-title="text" item-value="value" :error-messages="type.errors.value" v-model="type.value.value"
+              clearable solo />
 
-            <label class="block text-sm font-medium text-gray-700 mb-1">Адрес <span
-                class="text-red-500 ml-0.5">*</span></label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Адрес <span class="text-red-500 ml-0.5">*</span>
+            </label>
             <v-text-field placeholder="Пермь, ул. Ленина 45" base-color="#9e9e9e" color="primary" type="title"
               variant="outlined" :error-messages="address.errors.value" v-model="address.value.value" />
 
             <v-row>
               <v-col cols="12">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Дата начала работ <span
-                    class="text-red-500 ml-0.5">*</span></label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Дата начала работ <span class="text-red-500 ml-0.5">*</span>
+                </label>
                 <v-radio-group v-model="dateType.value.value" inline>
                   <v-radio label="Указать дату" value="date" />
                   <v-radio label="Не указывать (для вакансий)" value="by agreement" />
@@ -226,41 +240,45 @@ const formattedTotalBudget = computed(() => {
                 <div v-if="dateType.value.value === 'date'">
                   <div class="flex flex-row gap-4">
                     <div class="flex-1">
-                      <label class="block text-sm font-medium text-gray-700 mb-1">Дата старта <span
-                          class="text-red-500 ml-0.5">*</span></label>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Дата старта <span class="text-red-500 ml-0.5">*</span>
+                      </label>
                       <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="date" :min="todayStr"
                         :max="maxDateStr" :error-messages="date.errors.value" v-model="date.value.value" />
                     </div>
                     <div class="flex-1">
-                      <label class="block text-sm font-medium text-gray-700 mb-1">Время начала работы</label>
-                      <VueDatePicker placeholder="00:00" :ui="{
-                        input: 'h-14'
-                      }" v-model="time" time-picker locale="ru" cancelText="Отмена" selectText="Принять"
-                        hide-input-icon />
+                      <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Время начала работы
+                      </label>
+                      <VueDatePicker placeholder="00:00" :ui="{ input: 'h-14' }" v-model="time" time-picker locale="ru"
+                        cancelText="Отмена" selectText="Принять" hide-input-icon />
                     </div>
                   </div>
                 </div>
               </v-col>
             </v-row>
 
-            <label class="block text-sm font-medium text-gray-700 mt-4 mb-1">Тип оплаты </label>
+            <label class="block text-sm font-medium text-gray-700 mt-4 mb-1">
+              Тип оплаты
+            </label>
             <v-radio-group inline v-model="paymentType.value.value" :error-messages="paymentType.errors.value">
               <v-radio label="Почасовая" value="hourly" />
               <v-radio label="Сменная" value="shift" />
+              <v-radio label="Сдельная" value="deal" />
             </v-radio-group>
 
             <v-row v-if="paymentType.value.value === 'hourly'">
               <v-col cols="12" md="6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Количество часов<span
-                    class="text-red-500 ml-0.5">
-                    *</span></label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Количество часов <span class="text-red-500 ml-0.5">*</span>
+                </label>
                 <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="ч"
                   v-model="hours.value.value" :error-messages="hours.errors.value" />
               </v-col>
               <v-col cols="12" md="6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Оплата за час<span
-                    class="text-red-500 ml-0.5">
-                    *</span></label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Оплата за час <span class="text-red-500 ml-0.5">*</span>
+                </label>
                 <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="₽"
                   v-model="budget.value.value" :error-messages="budget.errors.value" />
               </v-col>
@@ -268,20 +286,28 @@ const formattedTotalBudget = computed(() => {
 
             <v-row v-if="paymentType.value.value === 'shift'">
               <v-col cols="12" md="6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Длительность смены (часы)<span
-                    class="text-red-500 ml-0.5">
-                    *</span></label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Длительность смены (часы) <span class="text-red-500 ml-0.5">*</span>
+                </label>
                 <v-select base-color="#9e9e9e" color="primary" variant="outlined" :items="[6, 8, 12]"
                   v-model="hours.value.value" :error-messages="hours.errors.value" suffix="ч" />
               </v-col>
               <v-col cols="12" md="6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Оплата за смену<span
-                    class="text-red-500 ml-0.5">
-                    *</span></label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Оплата за смену <span class="text-red-500 ml-0.5">*</span>
+                </label>
                 <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="₽"
                   v-model="budget.value.value" :error-messages="budget.errors.value" />
               </v-col>
             </v-row>
+
+            <div v-if="paymentType.value.value === 'deal'">
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Оплата сдельная (фиксированная сумма) <span class="text-red-500 ml-0.5">*</span>
+              </label>
+              <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="₽"
+                v-model="budget.value.value" :error-messages="budget.errors.value" />
+            </div>
 
             <div v-if="formattedTotalBudget"
               class="mt-1 mb-4 flex items-center gap-2 rounded-md bg-indigo-50 p-3 text-indigo-700 border border-indigo-200">
@@ -291,9 +317,10 @@ const formattedTotalBudget = computed(() => {
             <v-col cols="12" class="text-right">
               <v-btn type="submit" :disabled="!meta.valid" :loading="loading">Разместить</v-btn>
             </v-col>
-            <div class="text-sm text-gray-500 mt-4">
-              <span class="text-red-500">*</span> — обязательное поле
+            <div class="text-gray-500 mt-4">
+              <span class="text-red-500 text-xl">*</span> — обязательное поле
             </div>
+
           </v-form>
         </div>
       </v-col>
