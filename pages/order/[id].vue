@@ -97,6 +97,10 @@ function copyLink() {
                   order.hours) }} ₽/ч</p>
                 <p class="text-2xl md:text-3xl font-bold text-gray-900">{{ order.budget.toLocaleString('ru-RU') }} ₽</p>
               </template>
+              <template v-else-if="order.paymentType === 'deal'">
+                <p class="text-lg font-medium text-gray-700">Сдельная оплата</p>
+                <p class="text-2xl md:text-3xl font-bold text-gray-900">{{ order.budget.toLocaleString('ru-RU') }} ₽</p>
+              </template>
               <template v-else>
                 <p class="text-lg font-medium text-gray-700">Смена: {{ order.hours }} ч</p>
                 <p class="text-2xl md:text-3xl font-bold text-gray-900">{{ order.budget.toLocaleString('ru-RU') }} ₽</p>

@@ -112,6 +112,9 @@ const hasImages = computed(() => Array.isArray(application.order.images) && appl
                 <template v-if="application.order.paymentType === 'hourly'">
                   {{ application.order.hours }} {{ getHourWord(application.order.hours) }}
                 </template>
+                <template v-else-if="application.order.paymentType === 'deal'">
+                  Сдельная оплата
+                </template>
                 <template v-else>
                   Смена {{ application.order.hours }} {{ getHourWord(application.order.hours) }}
                 </template>
