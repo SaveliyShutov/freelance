@@ -4,7 +4,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 const currentRole = ref<'worker' | 'employer'>('worker')
 const showSwitcher = ref(false)
 
-if (process.client) {
+if (import.meta.client) {
   const onScroll = () => (showSwitcher.value = window.scrollY > 100)
   onMounted(() => window.addEventListener('scroll', onScroll))
   onUnmounted(() => window.removeEventListener('scroll', onScroll))

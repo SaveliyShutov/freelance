@@ -147,10 +147,11 @@ const changePassword = async () => {
       <v-col cols="12" sm="12" md="4" lg="4" class="order-1 md:order-none">
         <div class="pr-4 pl-4 pt-3">
           <div class="flex flex-col items-center">
-            <v-avatar size="120"
+            <v-avatar
+size="120"
               class="elevation-3 !text-indigo-600 !border-2 !border-indigo-600 text-6xl cursor-pointer"
               @click="triggerFileInput">
-              <v-img v-if="userStore.user.employer_avatar" :src="userStore.user.employer_avatar"></v-img>
+              <v-img v-if="userStore.user.employer_avatar" :src="userStore.user.employer_avatar" />
               <span v-else>{{ getInitial(userStore.user.employer_name) }}</span>
               <div class="edit-overlay">
                 <v-icon size="30" color="white">mdi-pencil</v-icon>
@@ -160,7 +161,7 @@ const changePassword = async () => {
 
             <div class="mt-2 text-center">
               <p class="text-lg font-bold">{{ userStore.user.employer_name }}</p>
-              <!-- <p class="text-gray-600">{{ userStore.user.employer_address }}</p> -->
+
               <p class="text-lg font-medium">Заказчик</p>
             </div>
 
@@ -174,7 +175,8 @@ const changePassword = async () => {
         <div class="pa-4 mb-1">
           <div class="flex justify-between items-center">
             <h3 class="text-indigo-700 font-bold text-lg">О заказчике</h3>
-            <button v-if="!editingAbout" variant="plain" class="!text-black hover:!text-blue-800"
+            <button
+v-if="!editingAbout" variant="plain" class="!text-black hover:!text-blue-800"
               @click="() => { editingAbout = true; editData.about = userStore.user.employer_description }">Изменить</button>
             <div v-else class="flex">
               <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('about')">Отмена</button>
@@ -182,12 +184,13 @@ const changePassword = async () => {
             </div>
           </div>
           <p v-if="!editingAbout" class="text-body-1">{{ userStore.user.employer_description }}</p>
-          <v-textarea v-else v-model="editData.about" @keyup.enter="saveEdit('about')" color="indigo" variant="outlined"
-            rows="3" no-resize @keydown.enter.prevent></v-textarea>
+          <v-textarea
+v-else v-model="editData.about" color="indigo" variant="outlined" rows="3" no-resize
+            @keyup.enter="saveEdit('about')" @keydown.enter.prevent />
         </div>
         <div class="pa-4 ">
 
-          <!-- Имя -->
+
           <div class="mb-2">
             <div class="flex flex-wrap items-center pt-2">
               <h3 class="text-subtitle-1 text-indigo-700 font-weight-bold break-words">
@@ -197,9 +200,10 @@ const changePassword = async () => {
 
             <div class="py-2 border-b-2 border-indigo-500 w-full flex">
               <div v-if="editingFields.name" class="w-full">
-                <v-text-field :model-value="editData.name" @update:model-value="val => editData.name = val"
-                  @keyup.enter="saveEdit('name')" color="indigo" variant="outlined" density="comfortable" class="w-full"
-                  hide-details auto-grow></v-text-field>
+                <v-text-field
+:model-value="editData.name" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details auto-grow @update:model-value="val => editData.name = val"
+                  @keyup.enter="saveEdit('name')" />
               </div>
 
               <div v-else class="flex justify-between flex-wrap items-start w-full">
@@ -218,7 +222,7 @@ const changePassword = async () => {
             </div>
           </div>
 
-          <!-- Email -->
+
           <div class="mb-2">
             <div class="flex flex-wrap items-center pt-2">
               <h3 class="text-subtitle-1 text-indigo-700 font-weight-bold break-words">Email</h3>
@@ -226,9 +230,10 @@ const changePassword = async () => {
 
             <div class="py-2 border-b-2 border-indigo-500 w-full flex">
               <div v-if="editingFields.email" class="w-full">
-                <v-text-field :model-value="editData.email" @update:model-value="val => editData.email = val"
-                  @keyup.enter="saveEdit('email')" color="indigo" variant="outlined" density="comfortable"
-                  class="w-full" hide-details></v-text-field>
+                <v-text-field
+:model-value="editData.email" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details @update:model-value="val => editData.email = val"
+                  @keyup.enter="saveEdit('email')" />
               </div>
 
               <div v-else class="flex justify-between flex-wrap items-start w-full">
@@ -251,7 +256,7 @@ const changePassword = async () => {
             </div>
           </div>
 
-          <!-- Телефон -->
+
           <div class="mb-2">
             <div class="flex flex-wrap items-center pt-2">
               <h3 class="text-subtitle-1 text-indigo-700 font-weight-bold break-words">Номер телефона</h3>
@@ -259,9 +264,10 @@ const changePassword = async () => {
 
             <div class="py-2 border-b-2 border-indigo-500 w-full flex">
               <div v-if="editingFields.phone" class="w-full">
-                <v-text-field :model-value="editData.phone" @update:model-value="val => editData.phone = val"
-                  @keyup.enter="saveEdit('phone')" color="indigo" variant="outlined" density="comfortable"
-                  class="w-full" hide-details></v-text-field>
+                <v-text-field
+:model-value="editData.phone" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details @update:model-value="val => editData.phone = val"
+                  @keyup.enter="saveEdit('phone')" />
               </div>
 
               <div v-else class="flex justify-between flex-wrap items-start w-full">
@@ -284,7 +290,7 @@ const changePassword = async () => {
             </div>
           </div>
 
-          <!-- Пароль -->
+
           <!-- <div class="mb-4">
                         <div class="flex justify-between items-center">
                             <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Пароль</h3>
@@ -310,7 +316,7 @@ const changePassword = async () => {
                         </div>
                     </div> -->
 
-          <!-- Локация -->
+
           <div class="mb-2">
             <div class="flex flex-wrap items-center pt-2">
               <h3 class="text-subtitle-1 text-indigo-700 font-weight-bold break-words">Локация</h3>
@@ -318,9 +324,10 @@ const changePassword = async () => {
 
             <div class="py-2 border-b-2 border-indigo-500 w-full flex">
               <div v-if="editingFields.location" class="w-full">
-                <v-text-field :model-value="editData.location" @update:model-value="val => editData.location = val"
-                  @keyup.enter="saveEdit('location')" color="indigo" variant="outlined" density="comfortable"
-                  class="w-full" hide-details></v-text-field>
+                <v-text-field
+:model-value="editData.location" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details @update:model-value="val => editData.location = val"
+                  @keyup.enter="saveEdit('location')" />
               </div>
 
               <div v-else class="flex justify-between flex-wrap items-start w-full">
@@ -354,8 +361,9 @@ const changePassword = async () => {
         <div class="pa-4 mb-4 border-2 border-indigo-600 rounded-xl">
           <h3 class="text-indigo-700 font-bold text-3xl">Размещенные подработки</h3>
           <v-list>
-            <v-list-item v-if="orderStore.my_orders_with_applications.length > 0"
-              v-for="order in orderStore.my_orders_with_applications" :key="order._id" class="mb-2">
+            <v-list-item
+v-for="order in orderStore.my_orders_with_applications"
+              v-if="orderStore.my_orders_with_applications.length > 0" :key="order._id" class="mb-2">
               <v-list-item-title class="font-weight-medium">{{ order.title }}</v-list-item-title>
               <v-list-item-subtitle>{{ order.description }}</v-list-item-subtitle>
             </v-list-item>
@@ -367,9 +375,10 @@ const changePassword = async () => {
         <div class="pa-4 mb-4 border-2 border-indigo-600 rounded-xl">
           <h3 class="text-indigo-700 font-bold text-3xl">Ваш рейтинг</h3>
           <div class="flex items-center my-2">
-            <v-avatar size="50"
+            <v-avatar
+size="50"
               class="elevation-3 !text-indigo-600 !border-2 !border-indigo-600 text-xl cursor-pointer mr-3">
-              <v-img v-if="userStore.user.employer_avatar" :src="userStore.user.employer_avatar"></v-img>
+              <v-img v-if="userStore.user.employer_avatar" :src="userStore.user.employer_avatar" />
               <span v-else>{{ getInitial(userStore.user.employer_name) }}</span>
             </v-avatar>
             <v-icon v-for="n in 5" :key="n" color="amber" size="small">
@@ -379,11 +388,12 @@ const changePassword = async () => {
         <div class="pa-4 border-2 border-indigo-600 rounded-xl">
           <h3 class="text-indigo-700 font-bold text-3xl mb-4">Контакты</h3>
 
-          <!-- Имя -->
+
           <div class="mb-4">
             <div class="flex justify-between items-center">
               <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Имя пользователя</h3>
-              <button v-if="!editingFields.name" variant="plain" class="!text-iblack hover:!text-blue-800"
+              <button
+v-if="!editingFields.name" variant="plain" class="!text-iblack hover:!text-blue-800"
                 @click="startEdit('name')">Изменить</button>
               <div v-else class="flex">
                 <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('name')">Отмена</button>
@@ -391,21 +401,22 @@ const changePassword = async () => {
               </div>
             </div>
             <div v-if="editingFields.name">
-              <v-text-field :model-value="editData.name" @update:model-value="val => editData.name = val"
-                @keyup.enter="saveEdit('name')" color="indigo" variant="outlined" density="comfortable" class="mt-1"
-                hide-details>
-              </v-text-field>
+              <v-text-field
+:model-value="editData.name" color="indigo" variant="outlined" density="comfortable"
+                class="mt-1" hide-details @update:model-value="val => editData.name = val"
+                @keyup.enter="saveEdit('name')" />
             </div>
             <div v-else class="py-2 mb-3">
               {{ userStore.user.employer_name }}
             </div>
           </div>
 
-          <!-- Email -->
+
           <div class="mb-4">
             <div class="flex justify-between items-center">
               <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Email</h3>
-              <button v-if="!editingFields.email" variant="plain" class="!text-black hover:!text-blue-800"
+              <button
+v-if="!editingFields.email" variant="plain" class="!text-black hover:!text-blue-800"
                 @click="startEdit('email')">Изменить</button>
               <div v-else class="flex">
                 <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('email')">Отмена</button>
@@ -413,21 +424,22 @@ const changePassword = async () => {
               </div>
             </div>
             <div v-if="editingFields.email">
-              <v-text-field :model-value="editData.email" @update:model-value="val => editData.email = val"
-                @keyup.enter="saveEdit('email')" color="indigo" variant="outlined" density="comfortable" class="mt-1"
-                hide-details>
-              </v-text-field>
+              <v-text-field
+:model-value="editData.email" color="indigo" variant="outlined" density="comfortable"
+                class="mt-1" hide-details @update:model-value="val => editData.email = val"
+                @keyup.enter="saveEdit('email')" />
             </div>
             <div v-else class="py-2 mb-3">
               {{ userStore.user.email }}
             </div>
           </div>
 
-          <!-- Телефон -->
+
           <div class="mb-4">
             <div class="flex justify-between items-center">
               <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Номер телефона</h3>
-              <button v-if="!editingFields.phone" variant="plain" class="!text-black hover:!text-blue-800"
+              <button
+v-if="!editingFields.phone" variant="plain" class="!text-black hover:!text-blue-800"
                 @click="startEdit('phone')">Изменить</button>
               <div v-else class="flex">
                 <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('phone')">Отмена</button>
@@ -435,17 +447,17 @@ const changePassword = async () => {
               </div>
             </div>
             <div v-if="editingFields.phone">
-              <v-text-field :model-value="editData.phone" @update:model-value="val => editData.phone = val"
-                @keyup.enter="saveEdit('phone')" color="indigo" variant="outlined" density="comfortable" class="mt-1"
-                hide-details>
-              </v-text-field>
+              <v-text-field
+:model-value="editData.phone" color="indigo" variant="outlined" density="comfortable"
+                class="mt-1" hide-details @update:model-value="val => editData.phone = val"
+                @keyup.enter="saveEdit('phone')" />
             </div>
             <div v-else class="py-2 mb-3">
               {{ userStore.user.employer_contacts }}
             </div>
           </div>
 
-          <!-- Пароль -->
+
           <!-- <div class="mb-4">
                         <div class="flex justify-between items-center">
                             <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Пароль</h3>
@@ -471,11 +483,12 @@ const changePassword = async () => {
                         </div>
                     </div> -->
 
-          <!-- Локация -->
+
           <div>
             <div class="flex justify-between items-center">
               <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Ваша локация</h3>
-              <button v-if="!editingFields.location" variant="plain" class="!text-black hover:!text-blue-800"
+              <button
+v-if="!editingFields.location" variant="plain" class="!text-black hover:!text-blue-800"
                 @click="startEdit('location')">Изменить</button>
               <div v-else class="flex">
                 <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('location')">Отмена</button>
@@ -483,10 +496,10 @@ const changePassword = async () => {
               </div>
             </div>
             <div v-if="editingFields.location">
-              <v-text-field :model-value="editData.location" @update:model-value="val => editData.location = val"
-                @keyup.enter="saveEdit('location')" color="indigo" variant="outlined" density="comfortable" class="mt-1"
-                hide-details>
-              </v-text-field>
+              <v-text-field
+:model-value="editData.location" color="indigo" variant="outlined" density="comfortable"
+                class="mt-1" hide-details @update:model-value="val => editData.location = val"
+                @keyup.enter="saveEdit('location')" />
             </div>
             <div v-else class="py-2 mb-3">
               <div v-if="userStore.user.employer_address">

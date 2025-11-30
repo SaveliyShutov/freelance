@@ -11,14 +11,14 @@ const orderStore = useOrder();
 await orderStore.getOrdersWithApplications();
 
 async function acceptApplication(application_id: string) {
-  let res = await orderStore.acceptApplication(application_id);
+  const res = await orderStore.acceptApplication(application_id);
   if (res.data.value) {
     await orderStore.getOrdersWithApplications()
   }
 }
 
 async function declineApplication(application_id: string) {
-  let res = await orderStore.declineApplication(application_id);
+  const res = await orderStore.declineApplication(application_id);
   if (res.data.value) {
     await orderStore.getOrdersWithApplications()
   }
@@ -35,18 +35,20 @@ async function declineApplication(application_id: string) {
       <v-col cols="12">
         <div class="space-y-8">
           <div class="space-y-6">
-            <div v-if="orderStore.my_orders_with_applications.length > 0"
-              v-for="order in orderStore.my_orders_with_applications" :key="order._id"
+            <div
+v-for="order in orderStore.my_orders_with_applications"
+              v-if="orderStore.my_orders_with_applications.length > 0" :key="order._id"
               class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
               <OrderCard :order="order" />
             </div>
             <div v-else class="flex flex-col justify-center items-center text-center">
               <p>У вас нет активных подработок</p>
-              <button @click="router.push('/employer/create-order')"
-                class="mt-2 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold">
+              <button
+class="mt-2 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold"
+                @click="router.push('/employer/create-order')">
                 Разместить заказ
               </button>
-              <img :src="sadPicture" class="mt-2 w-64 h-64" />
+              <img :src="sadPicture" class="mt-2 w-64 h-64" >
             </div>
           </div>
         </div>

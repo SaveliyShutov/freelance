@@ -5,7 +5,7 @@ import { toast } from "vue3-toastify";
 const router = useRouter();
 const auth = useAuth();
 
-let { currentRole } = storeToRefs(auth);
+const { currentRole } = storeToRefs(auth);
 
 const { meta, handleSubmit, handleReset } = useForm({
   validationSchema: {
@@ -22,14 +22,14 @@ const { meta, handleSubmit, handleReset } = useForm({
 
 const email = useField("email");
 const password = useField("password");
-let show_password = ref(false);
+const show_password = ref(false);
 
-let loading = ref(false);
+const loading = ref(false);
 
 const login = handleSubmit(async (values) => {
   loading.value = true;
 
-  let res = await auth.login(values.email, values.password);
+  const res = await auth.login(values.email, values.password);
 
   if (auth.user?.employer_name) {
     const roleCookie = useCookie('currentRole')
@@ -68,15 +68,17 @@ const login = handleSubmit(async (values) => {
             </p>
           </div>
           <v-form class="mt-6 w-100" @submit.prevent="login">
-            <v-text-field base-color="#9e9e9e" color="primary" type="email" placeholder="vasya@ya.ru"
-              v-model="email.value.value" :error-messages="email.errors.value" variant="outlined" density="compact"
+            <v-text-field
+v-model="email.value.value" base-color="#9e9e9e" color="primary" type="email"
+              placeholder="vasya@ya.ru" :error-messages="email.errors.value" variant="outlined" density="compact"
               class="w-100 mt-1" autocomplete="email" />
 
-            <v-text-field base-color="#9e9e9e" color="primary" label="Пароль" v-model="password.value.value"
+            <v-text-field
+v-model="password.value.value" base-color="#9e9e9e" color="primary" label="Пароль"
               :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-              @click:append-inner="show_password = !show_password" :type="show_password ? 'text' : 'password'"
-              :error-messages="password.errorMessage.value" variant="outlined" density="compact" class="w-100 mt-1"
-              autocomplete="current-password" />
+              :type="show_password ? 'text' : 'password'" :error-messages="password.errorMessage.value"
+              variant="outlined" density="compact" class="w-100 mt-1" autocomplete="current-password"
+              @click:append-inner="show_password = !show_password" />
 
             <div class="flex justify-center">
               <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading">

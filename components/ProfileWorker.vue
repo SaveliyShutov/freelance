@@ -142,10 +142,11 @@ const handleFileUpload = (event) => {
       <v-col cols="12" sm="12" md="4" lg="4" class="">
         <div class="pt-2">
           <div class="flex flex-col items-center">
-            <v-avatar size="120"
+            <v-avatar
+size="120"
               class="elevation-3 !text-indigo-600 !border-2 !border-indigo-600 text-6xl cursor-pointer"
               @click="triggerFileInput">
-              <v-img v-if="userStore.user.worker_avatar" :src="userStore.user.worker_avatar"></v-img>
+              <v-img v-if="userStore.user.worker_avatar" :src="userStore.user.worker_avatar" />
               <span v-else>{{ getInitial(userStore.user.worker_name) }}</span>
               <div class="edit-overlay">
                 <v-icon size="30" color="white">mdi-pencil</v-icon>
@@ -156,7 +157,7 @@ const handleFileUpload = (event) => {
             <div class="mt-3 text-center">
               <p class="text-3xl font-bold">{{ userStore.user.worker_name }}</p>
               <p class="text-xl font-medium">Исполнитель</p>
-              <!-- <p class="text-gray-600">{{ userStore.user.worker_address }}</p> -->
+
             </div>
 
             <div class="flex justify-center my-2">
@@ -172,7 +173,8 @@ const handleFileUpload = (event) => {
         <div class="pa-4 border-2 border-indigo-600 rounded-xl">
           <div class="flex justify-between items-center mb-3">
             <h3 class="text-indigo-700 font-bold text-3xl">Обо мне</h3>
-            <button v-if="!editingAbout" variant="plain" class="!text-black hover:!text-blue-800"
+            <button
+v-if="!editingAbout" variant="plain" class="!text-black hover:!text-blue-800"
               @click="() => { editingAbout = true; editData.about = userStore.user.worker_description }">Изменить</button>
             <div v-else class="flex">
               <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('about')">Отмена</button>
@@ -180,10 +182,9 @@ const handleFileUpload = (event) => {
             </div>
           </div>
           <div v-if="editingAbout">
-            <v-textarea v-model="editData.about" @update:model-value="val => editData.about = val"
-              @keyup.enter="saveEdit('about')" color="indigo" variant="outlined" density="comfortable" class="mt-1"
-              hide-details>
-            </v-textarea>
+            <v-textarea
+v-model="editData.about" color="indigo" variant="outlined" density="comfortable" class="mt-1"
+              hide-details @update:model-value="val => editData.about = val" @keyup.enter="saveEdit('about')" />
           </div>
           <p v-else class="break-words whitespace-pre-line">
             {{ userStore.user.worker_description }}
@@ -197,104 +198,107 @@ const handleFileUpload = (event) => {
 
 
           <h3 class="text-indigo-700 font-bold text-3xl border-indigo-600 pb-3">Контактная информация</h3>
-            <!-- Имя -->
-            <div class="mb-4">
-              <div class="flex flex-wrap gap-4 items-center pt-5">
-                <h3 class="text-subtitle-1 text-indigo-500 font-weight-bold break-words">
-                  Имя пользователя
-                </h3>
-              </div>
 
-              <div class="py-2 mb-3 border-b-2 border-indigo-500 w-full flex gap-5">
-                <div v-if="editingFields.name" class="w-full">
-                  <v-text-field :model-value="editData.name" @update:model-value="val => editData.name = val"
-                    @keyup.enter="saveEdit('name')" color="indigo" variant="outlined" density="comfortable" class="w-full"
-                    hide-details auto-grow></v-text-field>
-                </div>
-
-                <div v-else class="flex justify-between flex-wrap items-start w-full">
-                  <p class="break-words max-w-full">
-                    {{ userStore.user.worker_name }}
-                  </p>
-                  <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('name')">
-                    Изменить
-                  </button>
-                </div>
-
-                <div v-if="editingFields.name" class="flex mt-2">
-                  <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('name')">Отмена</button>
-                  <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('name')">Сохранить</button>
-                </div>
-              </div>
+          <div class="mb-4">
+            <div class="flex flex-wrap gap-4 items-center pt-5">
+              <h3 class="text-subtitle-1 text-indigo-500 font-weight-bold break-words">
+                Имя пользователя
+              </h3>
             </div>
 
-            <!-- Email -->
-            <div class="mb-4">
-              <div class="flex flex-wrap gap-4 items-center pt-5">
-                <h3 class="text-subtitle-1 text-indigo-500 font-weight-bold break-words">Email</h3>
+            <div class="py-2 mb-3 border-b-2 border-indigo-500 w-full flex gap-5">
+              <div v-if="editingFields.name" class="w-full">
+                <v-text-field
+:model-value="editData.name" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details auto-grow @update:model-value="val => editData.name = val"
+                  @keyup.enter="saveEdit('name')" />
               </div>
 
-              <div class="py-2 mb-3 border-b-2 border-indigo-500 w-full flex gap-5">
-                <div v-if="editingFields.email" class="w-full">
-                  <v-text-field :model-value="editData.email" @update:model-value="val => editData.email = val"
-                    @keyup.enter="saveEdit('email')" color="indigo" variant="outlined" density="comfortable"
-                    class="w-full" hide-details></v-text-field>
-                </div>
+              <div v-else class="flex justify-between flex-wrap items-start w-full">
+                <p class="break-words max-w-full">
+                  {{ userStore.user.worker_name }}
+                </p>
+                <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('name')">
+                  Изменить
+                </button>
+              </div>
 
-                <div v-else class="flex justify-between flex-wrap items-start w-full">
-                  <p class="break-words max-w-full">
-                    {{ userStore.user.email }}
-                  </p>
-                  <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('email')">
-                    Изменить
-                  </button>
-                </div>
-
-                <div v-if="editingFields.email" class="flex mt-2">
-                  <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('email')">
-                    Отмена
-                  </button>
-                  <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('email')">
-                    Сохранить
-                  </button>
-                </div>
+              <div v-if="editingFields.name" class="flex mt-2">
+                <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('name')">Отмена</button>
+                <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('name')">Сохранить</button>
               </div>
             </div>
+          </div>
 
-            <!-- Телефон -->
-            <div class="mb-4">
-              <div class="flex flex-wrap gap-4 items-center pt-5">
-                <h3 class="text-subtitle-1 text-indigo-500 font-weight-bold break-words">Номер телефона</h3>
-              </div>
 
-              <div class="py-2 mb-3 border-b-2 border-indigo-500 w-full flex gap-5">
-                <div v-if="editingFields.phone" class="w-full">
-                  <v-text-field :model-value="editData.phone" @update:model-value="val => editData.phone = val"
-                    @keyup.enter="saveEdit('phone')" color="indigo" variant="outlined" density="comfortable"
-                    class="w-full" hide-details></v-text-field>
-                </div>
-
-                <div v-else class="flex justify-between flex-wrap items-start w-full">
-                  <p class="break-words max-w-full">
-                    {{ userStore.user.worker_phone }}
-                  </p>
-                  <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('phone')">
-                    Изменить
-                  </button>
-                </div>
-
-                <div v-if="editingFields.phone" class="flex mt-2">
-                  <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('phone')">
-                    Отмена
-                  </button>
-                  <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('phone')">
-                    Сохранить
-                  </button>
-                </div>
-              </div>
+          <div class="mb-4">
+            <div class="flex flex-wrap gap-4 items-center pt-5">
+              <h3 class="text-subtitle-1 text-indigo-500 font-weight-bold break-words">Email</h3>
             </div>
 
-          <!-- Пароль -->
+            <div class="py-2 mb-3 border-b-2 border-indigo-500 w-full flex gap-5">
+              <div v-if="editingFields.email" class="w-full">
+                <v-text-field
+:model-value="editData.email" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details @update:model-value="val => editData.email = val"
+                  @keyup.enter="saveEdit('email')" />
+              </div>
+
+              <div v-else class="flex justify-between flex-wrap items-start w-full">
+                <p class="break-words max-w-full">
+                  {{ userStore.user.email }}
+                </p>
+                <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('email')">
+                  Изменить
+                </button>
+              </div>
+
+              <div v-if="editingFields.email" class="flex mt-2">
+                <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('email')">
+                  Отмена
+                </button>
+                <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('email')">
+                  Сохранить
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="mb-4">
+            <div class="flex flex-wrap gap-4 items-center pt-5">
+              <h3 class="text-subtitle-1 text-indigo-500 font-weight-bold break-words">Номер телефона</h3>
+            </div>
+
+            <div class="py-2 mb-3 border-b-2 border-indigo-500 w-full flex gap-5">
+              <div v-if="editingFields.phone" class="w-full">
+                <v-text-field
+:model-value="editData.phone" color="indigo" variant="outlined" density="comfortable"
+                  class="w-full" hide-details @update:model-value="val => editData.phone = val"
+                  @keyup.enter="saveEdit('phone')" />
+              </div>
+
+              <div v-else class="flex justify-between flex-wrap items-start w-full">
+                <p class="break-words max-w-full">
+                  {{ userStore.user.worker_phone }}
+                </p>
+                <button variant="plain" class="!text-black hover:!text-blue-800 ml-2" @click="startEdit('phone')">
+                  Изменить
+                </button>
+              </div>
+
+              <div v-if="editingFields.phone" class="flex mt-2">
+                <button class="!text-red-400 hover:!text-red-600 mr-2" @click="cancelEdit('phone')">
+                  Отмена
+                </button>
+                <button class="!text-blue-400 hover:!text-blue-600" @click="saveEdit('phone')">
+                  Сохранить
+                </button>
+              </div>
+            </div>
+          </div>
+
+
           <!-- <div class="mb-4">
                         <div class="flex justify-between items-center">
                             <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Пароль</h3>
@@ -320,7 +324,7 @@ const handleFileUpload = (event) => {
                         </div>
                     </div> -->
 
-          <!-- Локация -->
+
           <!-- <div>
             <div class="flex justify-between items-center">
               <h3 class="text-subtitle-1 text-indigo-600 font-weight-bold">Ваша локация</h3>
@@ -361,9 +365,10 @@ const handleFileUpload = (event) => {
         <div class="pa-4 border-2 border-indigo-600 rounded-xl">
           <h3 class="text-indigo-700 font-bold text-3xl">Ваш рейтинг</h3>
           <div class="flex items-center my-2">
-            <v-avatar size="50"
+            <v-avatar
+size="50"
               class="elevation-3 !text-indigo-600 !border-2 !border-indigo-600 text-xl cursor-pointer mr-3">
-              <v-img v-if="userStore.user.worker_avatar" :src="userStore.user.worker_avatar"></v-img>
+              <v-img v-if="userStore.user.worker_avatar" :src="userStore.user.worker_avatar" />
               <span v-else>{{ getInitial(userStore.user.worker_name) }}</span>
             </v-avatar>
             <v-icon v-for="n in 5" :key="n" color="amber" size="small">

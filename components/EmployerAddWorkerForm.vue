@@ -3,7 +3,7 @@ import { useField, useForm } from "vee-validate";
 import _ from "lodash";
 import { toast } from "vue3-toastify";
 const router = useRouter();
-let auth = useAuth();
+const auth = useAuth();
 
 const { meta, handleSubmit, handleReset, validate } = useForm<{
   worker_name: string;
@@ -44,18 +44,18 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   },
 });
 
-let worker_name = useField<string>("worker_name");
-let worker_phone = useField<string>("worker_phone");
-let worker_surname = useField<string>("worker_surname");
+const worker_name = useField<string>("worker_name");
+const worker_phone = useField<string>("worker_phone");
+const worker_surname = useField<string>("worker_surname");
 
-let loading = ref(false);
+const loading = ref(false);
 
 const submit = handleSubmit(async (values) => {
   loading.value = true;
 
-  let toSend = { ...values };
+  const toSend = { ...values };
   if (auth.user?._id) {
-    let res = await auth.updateUser(toSend, auth.user?._id);
+    const res = await auth.updateUser(toSend, auth.user?._id);
     if (res.status.value) {
       const roleCookie = useCookie('currentRole')
       roleCookie.value = 'worker'
@@ -80,15 +80,18 @@ const submit = handleSubmit(async (values) => {
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field required label="Имя" type="worker_name" placeholder="Иван" v-model="worker_name.value.value"
+    <v-text-field
+v-model="worker_name.value.value" required label="Имя" type="worker_name" placeholder="Иван"
       :error-messages="worker_name.errors.value" variant="outlined" density="compact" class="w-100" />
 
-    <v-text-field required label="Фамилия" type="worker_surname" placeholder="Иванов"
-      v-model="worker_surname.value.value" :error-messages="worker_surname.errors.value" variant="outlined"
+    <v-text-field
+v-model="worker_surname.value.value" required label="Фамилия" type="worker_surname"
+      placeholder="Иванов" :error-messages="worker_surname.errors.value" variant="outlined"
       density="compact" class="w-100" />
 
-    <v-text-field required label="Телефон" type="worker_phone" placeholder="89226252872"
-      v-model="worker_phone.value.value" :error-messages="worker_phone.errors.value" variant="outlined"
+    <v-text-field
+v-model="worker_phone.value.value" required label="Телефон" type="worker_phone"
+      placeholder="89226252872" :error-messages="worker_phone.errors.value" variant="outlined"
       density="compact" class="w-100" />
 
     <div class="flex flex-col justify-center">

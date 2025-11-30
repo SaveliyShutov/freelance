@@ -6,8 +6,8 @@ const route = useRoute()
 const orderStore = useOrder()
 const userStore = useAuth()
 
-let order = ref()
-let res = await orderStore.getById(route.params.id.toString())
+const order = ref()
+const res = await orderStore.getById(route.params.id.toString())
 
 if (res) {
   order.value = res.data.value
@@ -90,7 +90,7 @@ function copyLink() {
           <v-col cols="12" class="flex flex-col md:flex-row justify-between">
             <p class="text-2xl md:text-4xl font-bold text-gray-900">{{ order.title }}</p>
 
-            <!-- Оплата -->
+
             <div class="text-right">
               <template v-if="order.paymentType === 'hourly'">
                 <p class="text-xl font-medium text-gray-700">{{ order.hours }} ч × {{ Math.round(order.budget /
@@ -110,7 +110,7 @@ function copyLink() {
 
           <v-col cols="12" class="mb-4">
             <ClientOnly>
-              <p v-html="order.description"></p>
+              <p v-html="order.description" />
             </ClientOnly>
           </v-col>
 
@@ -118,7 +118,7 @@ function copyLink() {
             <div class="flex flex-col mb-3">
               <div class="flex flex-col gap-1">
                 <div class="flex items-center gap-2">
-                  <i class="mdi mdi-calendar-range text-indigo-600"></i>
+                  <i class="mdi mdi-calendar-range text-indigo-600" />
                   <span v-if="order.startTime !== '0'" class="font-semibold">
                     <template v-if="endDate !== startDate">
                       {{ startDate }} - {{ endDate }}
@@ -130,15 +130,15 @@ function copyLink() {
                   <span v-else class="font-semibold">{{ startDate }}</span>
                 </div>
                 <div v-if="order.startTime !== '0'" class="flex flex-row items-center gap-2">
-                  <i class="mdi mdi-clock-outline text-indigo-600"></i>
+                  <i class="mdi mdi-clock-outline text-indigo-600" />
                   <span class="font-semibold">
                     {{ order.startTime }} - {{ endTime }}
                   </span>
-                  <div class="flex items-center gap-2" v-if="order.paymentType === 'shift'">
+                  <div v-if="order.paymentType === 'shift'" class="flex items-center gap-2">
                     <span>(Смена: {{ order.hours }} {{ getHourWord(order.hours) }})</span>
                   </div>
 
-                  <div class="flex items-center gap-2" v-else>
+                  <div v-else class="flex items-center gap-2">
                     <span>({{ order.hours }} {{ getHourWord(order.hours) }})</span>
                   </div>
                 </div>
@@ -147,36 +147,43 @@ function copyLink() {
 
             <div class="flex flex-col md:flex-row justify-between">
               <div class="flex items-center gap-2 mb-8">
-                <i class="mdi mdi-map-marker text-indigo-600"></i>
+                <i class="mdi mdi-map-marker text-indigo-600" />
                 <p class="font-semibold">{{ order.address }}</p>
               </div>
 
-              <div v-if="userStore.currentRole === 'worker' || userStore.user?.worker_name"
+              <div
+v-if="userStore.currentRole === 'worker' || userStore.user?.worker_name"
                 class="flex items-center gap-2">
-                <button @click="!userStore.user ? router.push('/reg') : router.push(`/apply/${order._id}`)"
-                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold h-10">
+                <button
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold h-10"
+                  @click="!userStore.user ? router.push('/reg') : router.push(`/apply/${order._id}`)">
                   Откликнуться
                 </button>
 
-                <button @click="copyLink"
-                  class="w-10 h-10 flex items-center justify-center bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 transition-colors">
+                <button
+                  class="w-10 h-10 flex items-center justify-center bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 transition-colors"
+                  @click="copyLink">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor"
+                    <path
+fill="currentColor"
                       d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81c1.66 0 3-1.34 3-3s-1.34-3-3-3s-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65c0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92" />
                   </svg>
                 </button>
               </div>
 
               <div v-else class="flex items-center gap-2">
-                <button @click="!userStore.user ? router.push('/reg') : router.push(`/employer/sign-worker`)"
-                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold h-10">
+                <button
+                  class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold h-10"
+                  @click="!userStore.user ? router.push('/reg') : router.push(`/employer/sign-worker`)">
                   Откликнуться
                 </button>
 
-                <button @click="copyLink"
-                  class="w-10 h-10 flex items-center justify-center bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 transition-colors">
+                <button
+                  class="w-10 h-10 flex items-center justify-center bg-indigo-100 text-indigo-700 rounded-md hover:bg-indigo-200 transition-colors"
+                  @click="copyLink">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor"
+                    <path
+fill="currentColor"
                       d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81c1.66 0 3-1.34 3-3s-1.34-3-3-3s-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65c0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92" />
                   </svg>
                 </button>
@@ -184,7 +191,7 @@ function copyLink() {
             </div>
           </v-col>
 
-          <!-- Блок "О компании" -->
+
           <!-- <v-col cols="12">
             <div class="mt-6 border-t pt-6">
               <p class="text-xl font-bold mb-4 text-gray-900">О компании</p>

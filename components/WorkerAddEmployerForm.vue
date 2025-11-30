@@ -4,7 +4,7 @@ import _ from "lodash";
 import { toast } from "vue3-toastify";
 const router = useRouter();
 
-let auth = useAuth();
+const auth = useAuth();
 
 const { meta, handleSubmit, handleReset, validate } = useForm<{
   employer_name: string;
@@ -41,19 +41,19 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   },
 });
 
-let employer_name = useField<string>("employer_name");
-let employer_shortDescription = useField<string>("employer_shortDescription");
-let employer_description = useField<string>("employer_description");
+const employer_name = useField<string>("employer_name");
+const employer_shortDescription = useField<string>("employer_shortDescription");
+const employer_description = useField<string>("employer_description");
 
-let show_password = ref(false);
-let loading = ref(false);
+const show_password = ref(false);
+const loading = ref(false);
 
 const submit = handleSubmit(async (values) => {
   loading.value = true;
 
-  let toSend = { ...values };
+  const toSend = { ...values };
   if (auth.user?._id) {
-    let res = await auth.updateUser(toSend, auth.user?._id);
+    const res = await auth.updateUser(toSend, auth.user?._id);
     if (res.status.value) {
       const roleCookie = useCookie('currentRole')
       roleCookie.value = 'employer'
@@ -79,14 +79,17 @@ const submit = handleSubmit(async (values) => {
 </script>
 <template>
   <v-form class="mt-6 w-100" @submit="submit">
-    <v-text-field required label="Названии компании" type="name" placeholder="ООО ТУР"
-      v-model="employer_name.value.value" :error-messages="employer_name.errors.value" variant="outlined"
+    <v-text-field
+v-model="employer_name.value.value" required label="Названии компании" type="name"
+      placeholder="ООО ТУР" :error-messages="employer_name.errors.value" variant="outlined"
       density="compact" class="w-100" />
 
-    <v-text-field label="Короткое описание компании" v-model="employer_shortDescription.value.value"
+    <v-text-field
+v-model="employer_shortDescription.value.value" label="Короткое описание компании"
       type="shortDescription" variant="outlined" density="compact" class="w-100" />
 
-    <v-textarea label="О компании" v-model="employer_description.value.value" type="description"
+    <v-textarea
+v-model="employer_description.value.value" label="О компании" type="description"
       placeholder="" variant="outlined" density="compact" class="w-100" />
 
     <div class="flex flex-col justify-center">

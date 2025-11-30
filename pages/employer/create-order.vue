@@ -6,9 +6,9 @@ import { useField, useForm } from 'vee-validate'
 import type { Order } from '~/types/order.interface'
 import { jobTypes } from '~/utils/jobTypes.js'
 
-let orderStore = useOrder()
-let auth = useAuth()
-let router = useRouter()
+const orderStore = useOrder()
+const auth = useAuth()
+const router = useRouter()
 
 definePageMeta({
   middleware: ["employer"],
@@ -86,7 +86,7 @@ const paymentType = useField<'hourly' | 'shift' | 'deal'>('paymentType')
 const budget = useField<number>('budget')
 const dateType = useField<'date' | 'by agreement'>('dateType')
 
-let loading = ref(false)
+const loading = ref(false)
 
 const submit = handleSubmit(async values => {
   loading.value = true
@@ -207,8 +207,9 @@ const formattedTotalBudget = computed(() => {
             <label class="block text-sm font-medium text-gray-700 mb-1">
               Название<span class="text-red-500 ml-0.5">*</span>
             </label>
-            <v-text-field placeholder="Требуются разнорабочие на длительный срок" base-color="#9e9e9e" color="primary"
-              type="title" variant="outlined" :error-messages="title.errors.value" v-model="title.value.value" />
+            <v-text-field
+v-model="title.value.value" placeholder="Требуются разнорабочие на длительный срок" base-color="#9e9e9e"
+              color="primary" type="title" variant="outlined" :error-messages="title.errors.value" />
 
             <label>Описание</label>
             <ClientOnly>
@@ -218,15 +219,17 @@ const formattedTotalBudget = computed(() => {
             <label class="block text-sm font-medium text-gray-700 mb-1">
               Тип работы
             </label>
-            <v-autocomplete base-color="#9e9e9e" color="primary" type="title" variant="outlined" :items="flatJobList"
-              item-title="text" item-value="value" :error-messages="type.errors.value" v-model="type.value.value"
+            <v-autocomplete
+v-model="type.value.value" base-color="#9e9e9e" color="primary" type="title" variant="outlined"
+              :items="flatJobList" item-title="text" item-value="value" :error-messages="type.errors.value"
               clearable solo />
 
             <label class="block text-sm font-medium text-gray-700 mb-1">
               Адрес <span class="text-red-500 ml-0.5">*</span>
             </label>
-            <v-text-field placeholder="Пермь, ул. Ленина 45" base-color="#9e9e9e" color="primary" type="title"
-              variant="outlined" :error-messages="address.errors.value" v-model="address.value.value" />
+            <v-text-field
+v-model="address.value.value" placeholder="Пермь, ул. Ленина 45" base-color="#9e9e9e" color="primary"
+              type="title" variant="outlined" :error-messages="address.errors.value" />
 
             <v-row>
               <v-col cols="12">
@@ -243,15 +246,17 @@ const formattedTotalBudget = computed(() => {
                       <label class="block text-sm font-medium text-gray-700 mb-1">
                         Дата старта <span class="text-red-500 ml-0.5">*</span>
                       </label>
-                      <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="date" :min="todayStr"
-                        :max="maxDateStr" :error-messages="date.errors.value" v-model="date.value.value" />
+                      <v-text-field
+v-model="date.value.value" base-color="#9e9e9e" color="primary" variant="outlined" type="date"
+                        :min="todayStr" :max="maxDateStr" :error-messages="date.errors.value" />
                     </div>
                     <div class="flex-1">
                       <label class="block text-sm font-medium text-gray-700 mb-1">
                         Время начала работы
                       </label>
-                      <VueDatePicker placeholder="00:00" :ui="{ input: 'h-14' }" v-model="time" time-picker locale="ru"
-                        cancelText="Отмена" selectText="Принять" hide-input-icon />
+                      <VueDatePicker
+v-model="time" placeholder="00:00" :ui="{ input: 'h-14' }" time-picker locale="ru"
+                        cancel-text="Отмена" select-text="Принять" hide-input-icon />
                     </div>
                   </div>
                 </div>
@@ -261,7 +266,7 @@ const formattedTotalBudget = computed(() => {
             <label class="block text-sm font-medium text-gray-700 mt-4 mb-1">
               Тип оплаты
             </label>
-            <v-radio-group inline v-model="paymentType.value.value" :error-messages="paymentType.errors.value">
+            <v-radio-group v-model="paymentType.value.value" inline :error-messages="paymentType.errors.value">
               <v-radio label="Почасовая" value="hourly" />
               <v-radio label="Сменная" value="shift" />
               <v-radio label="Сдельная" value="deal" />
@@ -272,15 +277,17 @@ const formattedTotalBudget = computed(() => {
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Количество часов <span class="text-red-500 ml-0.5">*</span>
                 </label>
-                <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="ч"
-                  v-model="hours.value.value" :error-messages="hours.errors.value" />
+                <v-text-field
+v-model="hours.value.value" base-color="#9e9e9e" color="primary" variant="outlined" type="number"
+                  suffix="ч" :error-messages="hours.errors.value" />
               </v-col>
               <v-col cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Оплата за час <span class="text-red-500 ml-0.5">*</span>
                 </label>
-                <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="₽"
-                  v-model="budget.value.value" :error-messages="budget.errors.value" />
+                <v-text-field
+v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outlined" type="number"
+                  suffix="₽" :error-messages="budget.errors.value" />
               </v-col>
             </v-row>
 
@@ -289,15 +296,17 @@ const formattedTotalBudget = computed(() => {
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Длительность смены (часы) <span class="text-red-500 ml-0.5">*</span>
                 </label>
-                <v-select base-color="#9e9e9e" color="primary" variant="outlined" :items="[6, 8, 12]"
-                  v-model="hours.value.value" :error-messages="hours.errors.value" suffix="ч" />
+                <v-select
+v-model="hours.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
+                  :items="[6, 8, 12]" :error-messages="hours.errors.value" suffix="ч" />
               </v-col>
               <v-col cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Оплата за смену <span class="text-red-500 ml-0.5">*</span>
                 </label>
-                <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="₽"
-                  v-model="budget.value.value" :error-messages="budget.errors.value" />
+                <v-text-field
+v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outlined" type="number"
+                  suffix="₽" :error-messages="budget.errors.value" />
               </v-col>
             </v-row>
 
@@ -305,11 +314,13 @@ const formattedTotalBudget = computed(() => {
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Оплата сдельная (фиксированная сумма) <span class="text-red-500 ml-0.5">*</span>
               </label>
-              <v-text-field base-color="#9e9e9e" color="primary" variant="outlined" type="number" suffix="₽"
-                v-model="budget.value.value" :error-messages="budget.errors.value" />
+              <v-text-field
+v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outlined" type="number"
+                suffix="₽" :error-messages="budget.errors.value" />
             </div>
 
-            <div v-if="formattedTotalBudget"
+            <div
+v-if="formattedTotalBudget"
               class="mt-1 mb-4 flex items-center gap-2 rounded-md bg-indigo-50 p-3 text-indigo-700 border border-indigo-200">
               <span class="text-base font-medium">Итоговая оплата: {{ formattedTotalBudget }}</span>
             </div>

@@ -2,9 +2,9 @@
 import { useField, useForm } from 'vee-validate'
 import type { Order } from '~/types/order.interface'
 
-let orderStore = useOrder()
-let auth = useAuth()
-let router = useRouter()
+const orderStore = useOrder()
+const auth = useAuth()
+const router = useRouter()
 
 definePageMeta({
   middleware: ["employer"],
@@ -75,16 +75,16 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   },
 })
 
-let title = useField<string>('title')
-let type = useField<string>('type')
-let address = useField<string>('address')
-let budget = useField<number>('budget')
-let date = useField<string>('date')
-let hours = useField<number>('hours')
-let description = useField<string>('description')
+const title = useField<string>('title')
+const type = useField<string>('type')
+const address = useField<string>('address')
+const budget = useField<number>('budget')
+const date = useField<string>('date')
+const hours = useField<number>('hours')
+const description = useField<string>('description')
 
-let loading = ref(false)
-let show_password = ref(false)
+const loading = ref(false)
+const show_password = ref(false)
 </script>
 <template>
   <v-container>
@@ -98,41 +98,48 @@ let show_password = ref(false)
         <div class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
           <v-form class="mt-6 w-100">
             <label class="block text-sm font-medium text-gray-700 mb-1">Введите название работы</label>
-            <v-text-field base-color="#9e9e9e" color="primary" :error-messages="title.errors.value" type="title"
-              variant="outlined" v-model="title.value.value"></v-text-field>
+            <v-text-field
+v-model="title.value.value" base-color="#9e9e9e" color="primary" :error-messages="title.errors.value"
+              type="title" variant="outlined"/>
 
             <label class="block text-sm font-medium text-gray-700 mb-1">Вид деятельности</label>
-            <v-combobox base-color="#9e9e9e" color="primary" :error-messages="type.errors.value" type="type"
-              variant="outlined" :items="jobTypes" v-model="type.value.value"></v-combobox>
+            <v-combobox
+v-model="type.value.value" base-color="#9e9e9e" color="primary" :error-messages="type.errors.value"
+              type="type" variant="outlined" :items="jobTypes"/>
 
             <label class="block text-sm font-medium text-gray-700 mb-1">Введите описание работы</label>
-            <v-textarea base-color="#9e9e9e" color="primary" :error-messages="description.errors.value"
-              type="description" variant="outlined" v-model="description.value.value"></v-textarea>
+            <v-textarea
+v-model="description.value.value" base-color="#9e9e9e" color="primary"
+              :error-messages="description.errors.value" type="description" variant="outlined"/>
 
             <div class="w-100 flex justify-between">
               <div class="w-50 mr-2">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Введите место работы, адрес</label>
-                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="address.errors.value" class="w-100"
-                  placeholder="Пермь, ул. Ленина 45" v-model="address.value.value" type="address" variant="outlined"
+                <v-text-field
+v-model="address.value.value" base-color="#9e9e9e" color="primary" :error-messages="address.errors.value"
+                  class="w-100" placeholder="Пермь, ул. Ленина 45" type="address" variant="outlined"
                   density="compact" />
               </div>
               <div class="w-50 ml-2">
                 <label class="block t ext-sm font-medium text-gray-700 mb-1">Сколько заплатите?</label>
-                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="budget.errors.value" class="w-100"
-                  label="Бюджет" v-model="budget.value.value" type="budget" variant="outlined" density="compact" />
+                <v-text-field
+v-model="budget.value.value" base-color="#9e9e9e" color="primary" :error-messages="budget.errors.value"
+                  class="w-100" label="Бюджет" type="budget" variant="outlined" density="compact" />
               </div>
             </div>
             <div class="w-100 flex justify-between">
               <div class="w-50 mr-2">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Дата начала работ</label>
-                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="date.errors.value" class="w-100"
-                  v-model="date.value.value" type="date" variant="outlined" density="compact" />
+                <v-text-field
+v-model="date.value.value" base-color="#9e9e9e" color="primary" :error-messages="date.errors.value"
+                  class="w-100" type="date" variant="outlined" density="compact" />
               </div>
 
               <div class="w-50 ml-2">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Время выполнения (в часах)</label>
-                <v-text-field base-color="#9e9e9e" color="primary" :error-messages="hours.errors.value" class="w-100"
-                  v-model="hours.value.value" type="hours" variant="outlined" density="compact" />
+                <v-text-field
+v-model="hours.value.value" base-color="#9e9e9e" color="primary" :error-messages="hours.errors.value"
+                  class="w-100" type="hours" variant="outlined" density="compact" />
               </div>
             </div>
 
