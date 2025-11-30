@@ -33,25 +33,21 @@ const orders = ref([
         <div class="flex items-center gap-4">
           <div class="bg-gray-200 rounded-lg p-1 inline-flex">
             <button
-              @click="currentRole = 'employer'"
-              :class="[
-                'px-4 py-2 rounded-md text-xl font-medium transition-all duration-200',
-                currentRole === 'employer'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900',
-              ]"
-            >
+:class="[
+              'px-4 py-2 rounded-md text-xl font-medium transition-all duration-200',
+              currentRole === 'employer'
+                ? 'bg-white text-indigo-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900',
+            ]" @click="currentRole = 'employer'">
               Мои Подработки (заказчик)
             </button>
             <button
-              @click="currentRole = 'worker'"
-              :class="[
-                'px-4 py-2 rounded-md text-xl font-medium transition-all duration-200',
-                currentRole === 'worker'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900',
-              ]"
-            >
+:class="[
+              'px-4 py-2 rounded-md text-xl font-medium transition-all duration-200',
+              currentRole === 'worker'
+                ? 'bg-white text-indigo-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900',
+            ]" @click="currentRole = 'worker'">
               Мои Заявки (исполнитель)
             </button>
           </div>
@@ -70,10 +66,8 @@ const orders = ref([
             <div class="space-y-8">
               <div class="space-y-6">
                 <div
-                  v-for="order in orders"
-                  :key="order.id"
-                  class="bg-white p-10 rounded-xl shadow-lg border border-gray-100"
-                >
+v-for="order in orders" :key="order.id"
+                  class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
                   <OrderCard :order="order" />
                 </div>
               </div>
@@ -95,12 +89,8 @@ const orders = ref([
             <div class="space-y-8">
               <div class="space-y-6">
                 <div
-                  v-for="job in jobs"
-                  :key="job.id"
-                  class="bg-white p-10 rounded-xl shadow-lg border border-gray-100"
-                >
-                  <!-- <ApplicationCard :job="job" /> -->
-                </div>
+v-for="job in jobs" :key="job.id"
+                  class="bg-white p-10 rounded-xl shadow-lg border border-gray-100"/>
               </div>
             </div>
           </v-col>

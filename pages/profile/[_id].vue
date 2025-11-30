@@ -9,20 +9,22 @@ const currentRole = ref(userStore.currentRole)
     <v-row>
       <v-col cols="12">
         <div class="bg-gray-200 rounded-lg p-1 inline-flex w-110">
-          <button @click="currentRole = 'worker'" :class="[
+          <button
+:class="[
             'px-3 pr-4 py-2 rounded-md text-lg font-medium transition-all duration-200',
             currentRole === 'worker'
               ? 'bg-white text-indigo-600 shadow-sm'
               : 'text-gray-600 hover:text-gray-900',
-          ]">
+          ]" @click="currentRole = 'worker'">
             Исполнитель
           </button>
-          <button @click="currentRole = 'employer'" :class="[
+          <button
+:class="[
             'px-5 py-2 rounded-md text-lg font-medium transition-all duration-200',
             currentRole === 'employer'
               ? 'bg-white text-indigo-600 shadow-sm'
               : 'text-gray-600 hover:text-gray-900',
-          ]">
+          ]" @click="currentRole = 'employer'">
             Заказчик
           </button>
         </div>

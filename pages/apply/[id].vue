@@ -37,12 +37,12 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   },
 })
 
-let phone = useField<string>('phone')
-let initials = useField<string>('initials')
-let letter = useField<string>('letter')
+const phone = useField<string>('phone')
+const initials = useField<string>('initials')
+const letter = useField<string>('letter')
 
-let loading = ref(false)
-let show_password = ref(false)
+const loading = ref(false)
+const show_password = ref(false)
 
 onMounted(() => {
   if (userStore.user?.worker_phone && userStore.user?.worker_name && userStore.user.worker_surname) {
@@ -63,7 +63,7 @@ const submit = handleSubmit(async values => {
     if (route.params.id) {
       if (userStore.user?._id) {
         toSend = { ...values, worker: userStore.user?._id, order: route.params.id.toString() }
-        let res = await orderStore.createApplication(toSend)
+        const res = await orderStore.createApplication(toSend)
         if (res?.status?.value == "success") {
           await orderStore.getWorkerApplicationsWithOrders()
           toast("Отклик успешно отправлен, результат будет виден в моих заявках", {
@@ -106,20 +106,23 @@ const submit = handleSubmit(async values => {
             <v-row>
               <v-col cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
-                <v-text-field base-color="#9e9e9e" color="primary" required type="phone" placeholder="89226252872"
-                  v-model="phone.value.value" :error-messages="phone.errors.value" variant="outlined" density="compact"
+                <v-text-field
+v-model="phone.value.value" base-color="#9e9e9e" color="primary" required type="phone"
+                  placeholder="89226252872" :error-messages="phone.errors.value" variant="outlined" density="compact"
                   class="w-100" />
               </v-col>
 
               <v-col class="-mt-6 md:-mt-0" cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">ФИО</label>
-                <v-text-field base-color="#9e9e9e" color="primary" required type="phone"
-                  placeholder="Иванов Иван Иванович" v-model="initials.value.value"
+                <v-text-field
+v-model="initials.value.value" base-color="#9e9e9e" color="primary" required
+                  type="phone" placeholder="Иванов Иван Иванович"
                   :error-messages="initials.errors.value" variant="outlined" density="compact" class="w-100" />
               </v-col>
               <v-col class="-mt-6 md:-mt-0" cols="12">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Отклик на заказ</label>
-                <v-textarea color="primary" base-color="#9e9e9e" v-model="letter.value.value"
+                <v-textarea
+v-model="letter.value.value" color="primary" base-color="#9e9e9e"
                   :error-messages="letter.errors.value" type="letter"
                   placeholder="Здравствуйте, с радостью готов выполнить ваш заказ." variant="outlined" density="compact"
                   class="w-100" />

@@ -4,8 +4,8 @@ import AuthAPI from "../api/AuthApi"
 import type { User } from "../types/user.interface"
 
 export const useAuth = defineStore('auth', () => {
-  let user = ref<User | null>()
-  let currentRole = ref()
+  const user = ref<User | null>()
+  const currentRole = ref()
 
   // user.value = {
   //   _id: '1',
@@ -56,7 +56,7 @@ export const useAuth = defineStore('auth', () => {
 
   async function updateUser(newUser: any, userId: string) {
     try {
-      let res = await AuthAPI.updateUser(newUser, userId);
+      const res = await AuthAPI.updateUser(newUser, userId);
 
       if (res?.status?.value == 'success') {
         user.value = res.data.value;
@@ -87,7 +87,7 @@ export const useAuth = defineStore('auth', () => {
 
   async function logout(): Promise<any> {
     try {
-      let res = await AuthAPI.logout()
+      const res = await AuthAPI.logout()
 
       currentRole.value = null
       user.value = null

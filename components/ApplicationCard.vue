@@ -70,23 +70,23 @@ const hasImages = computed(() => Array.isArray(application.order.images) && appl
     <v-col v-if="application?.order" cols="12">
       <v-row class="flex flex-col md:flex-row">
         <v-col cols="12" md="8">
-          <!-- Заголовок -->
+
           <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ application.order.title }}</h3>
-          <!-- Заказчик -->
+
           <p class="text-lg text-indigo-600 mb-2">{{ application.order.employer_name }}</p>
 
-          <!-- Адрес -->
+
           <div v-if="application.order.address" class="flex items-center gap-2 mb-2">
-            <i class="mdi mdi-map-marker text-indigo-600"></i>
+            <i class="mdi mdi-map-marker text-indigo-600" />
             <span>{{ application.order.address }}</span>
           </div>
 
-          <!-- Дата, время и продолжительность -->
+
           <div class="flex flex-col mb-3">
             <div v-if="hasDate" class="flex flex-col gap-1">
-              <!-- Диапазон или одиночная дата -->
+
               <div class="flex items-center gap-2">
-                <i class="mdi mdi-calendar-range text-indigo-600"></i>
+                <i class="mdi mdi-calendar-range text-indigo-600" />
                 <span class="font-semibold">
                   <template v-if="endDate !== startDate">
                     {{ startDate }} - {{ endDate }}
@@ -96,18 +96,18 @@ const hasImages = computed(() => Array.isArray(application.order.images) && appl
                   </template>
                 </span>
               </div>
-              <!-- Время с расчётом окончания и часов -->
+
               <div v-if="hasStartTime" class="flex items-center gap-2">
-                <i class="mdi mdi-clock-outline text-indigo-600"></i>
+                <i class="mdi mdi-clock-outline text-indigo-600" />
                 <span class="font-semibold">
                   {{ application.order.startTime }} - {{ endTime }}
                 </span>
                 <span>( {{ application.order.hours }} {{ getHourWord(application.order.hours) }} )</span>
               </div>
             </div>
-            <!-- Если даты нет, показываем только часы/смену -->
+
             <div v-else class="flex items-center gap-2">
-              <i class="mdi mdi-clock-outline text-indigo-600"></i>
+              <i class="mdi mdi-clock-outline text-indigo-600" />
               <span class="font-semibold">
                 <template v-if="application.order.paymentType === 'hourly'">
                   {{ application.order.hours }} {{ getHourWord(application.order.hours) }}

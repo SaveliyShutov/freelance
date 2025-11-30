@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  let authStore = useAuth()
-  let isAuth = authStore?.user
+  const authStore = useAuth()
+  const isAuth = authStore?.user
 
   if (isAuth) {
     if (authStore?.user?.employer_name) {

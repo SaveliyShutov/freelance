@@ -24,6 +24,14 @@ export default {
     }
   },
 
+  watch: {
+    modelValue(newValue) {
+      if (this.editor && newValue !== this.editor.getHTML()) {
+        this.editor.commands.setContent(newValue || '')
+      }
+    }
+  },
+
   mounted() {
     this.editor = new Editor({
       extensions: [
@@ -40,14 +48,6 @@ export default {
     })
   },
 
-  watch: {
-    modelValue(newValue) {
-      if (this.editor && newValue !== this.editor.getHTML()) {
-        this.editor.commands.setContent(newValue || '')
-      }
-    }
-  },
-
   beforeUnmount() {
     this.editor.destroy()
   },
@@ -58,47 +58,57 @@ export default {
   <div v-if="editor" class="container">
     <div class="control-group">
       <div class="button-group">
-        <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
+        <button
+:class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()">
           H1
         </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
+        <button
+:class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()">
           H2
         </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
+        <button
+:class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
+          @click="editor.chain().focus().toggleHeading({ level: 3 }).run()">
           H3
         </button>
-        <button @click="editor.chain().focus().setParagraph().run()"
-          :class="{ 'is-active': editor.isActive('paragraph') }">
+        <button
+:class="{ 'is-active': editor.isActive('paragraph') }"
+          @click="editor.chain().focus().setParagraph().run()">
           Обычный
         </button>
-        <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+        <button :class="{ 'is-active': editor.isActive('bold') }" @click="editor.chain().focus().toggleBold().run()">
           Bold
         </button>
-        <button @click="editor.chain().focus().toggleItalic().run()"
-          :class="{ 'is-active': editor.isActive('italic') }">
+        <button
+:class="{ 'is-active': editor.isActive('italic') }"
+          @click="editor.chain().focus().toggleItalic().run()">
           Italic
         </button>
-        <button @click="editor.chain().focus().toggleStrike().run()"
-          :class="{ 'is-active': editor.isActive('strike') }">
+        <button
+:class="{ 'is-active': editor.isActive('strike') }"
+          @click="editor.chain().focus().toggleStrike().run()">
           Strike
         </button>
-        <button @click="editor.chain().focus().toggleHighlight().run()"
-          :class="{ 'is-active': editor.isActive('highlight') }">
+        <button
+:class="{ 'is-active': editor.isActive('highlight') }"
+          @click="editor.chain().focus().toggleHighlight().run()">
           Highlight
         </button>
-        <button @click="editor.chain().focus().setTextAlign('left').run()"
-          :class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }">
+        <button
+:class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }"
+          @click="editor.chain().focus().setTextAlign('left').run()">
           Left
         </button>
-        <button @click="editor.chain().focus().setTextAlign('center').run()"
-          :class="{ 'is-active': editor.isActive({ textAlign: 'center' }) }">
+        <button
+:class="{ 'is-active': editor.isActive({ textAlign: 'center' }) }"
+          @click="editor.chain().focus().setTextAlign('center').run()">
           Center
         </button>
-        <button @click="editor.chain().focus().setTextAlign('right').run()"
-          :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }">
+        <button
+:class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }"
+          @click="editor.chain().focus().setTextAlign('right').run()">
           Right
         </button>
       </div>

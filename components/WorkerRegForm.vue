@@ -120,17 +120,18 @@ const submit = handleSubmit(async (values) => {
 
 <template>
   <div class="max-w-xl mx-auto p-6 md:p-10 rounded-2xl space-y-8">
-    <!-- Stepper / progress -->
+
     <div class="relative mb-8 w-full">
       <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="w-full h-1 bg-gray-300"></div>
+        <div class="w-full h-1 bg-gray-300" />
       </div>
       <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="h-1 bg-[var(--primary-500)]" :style="{ width: progressPercent }"></div>
+        <div class="h-1 bg-[var(--primary-500)]" :style="{ width: progressPercent }" />
       </div>
       <div class="relative flex justify-between w-full">
         <div v-for="index in totalSteps" :key="index" class="flex flex-col items-center" style="width: 2.5rem">
-          <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white z-10"
+          <div
+class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white z-10"
             :class="index <= currentStep ? 'bg-[var(--primary-500)]' : 'bg-gray-300'">
             {{ index }}
           </div>
@@ -138,42 +139,48 @@ const submit = handleSubmit(async (values) => {
       </div>
     </div>
 
-    <!-- Шаг 1: ФИО + телефон -->
+
     <div v-if="currentStep === 1">
       <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">Представьтесь</h2>
       <p class="text-sm text-gray-500 mb-4 text-center">Расскажите, как к вам обращаться</p>
 
-      <v-text-field base-color="#9e9e9e" color="primary" label="Имя" placeholder="Иван" v-model="worker_name"
+      <v-text-field
+v-model="worker_name" base-color="#9e9e9e" color="primary" label="Имя" placeholder="Иван"
         :error-messages="(worker_name_meta.touched || triedNext) && worker_name_error ? [worker_name_error] : []"
         variant="outlined" density="compact" class="w-100 mb-3" autocomplete="name" />
 
-      <v-text-field base-color="#9e9e9e" color="primary" label="Фамилия" placeholder="Иванов" v-model="worker_surname"
+      <v-text-field
+v-model="worker_surname" base-color="#9e9e9e" color="primary" label="Фамилия" placeholder="Иванов"
         :error-messages="(worker_surname_meta.touched || triedNext) && worker_surname_error ? [worker_surname_error] : []"
         variant="outlined" density="compact" class="w-100 mb-3" autocomplete="family-name" />
 
-      <v-text-field base-color="#9e9e9e" color="primary" label="Телефон" placeholder="89226252872"
-        v-model="worker_phone"
+      <v-text-field
+v-model="worker_phone" base-color="#9e9e9e" color="primary" label="Телефон"
+        placeholder="89226252872"
         :error-messages="(worker_phone_meta.touched || triedNext) && worker_phone_error ? [worker_phone_error] : []"
         variant="outlined" density="compact" class="w-100 mb-3" autocomplete="tel" />
     </div>
 
-    <!-- Шаг 2: Email + пароль -->
+
     <div v-else-if="currentStep === 2">
       <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">Данные для входа</h2>
       <p class="text-sm text-gray-500 mb-4 text-center">Укажите email и придумайте пароль</p>
 
-      <v-text-field base-color="#9e9e9e" color="primary" label="Email" placeholder="vasya@ya.ru" v-model="email"
+      <v-text-field
+v-model="email" base-color="#9e9e9e" color="primary" label="Email" placeholder="vasya@ya.ru"
         :error-messages="(email_meta.touched || triedNext) && email_error ? [email_error] : []" variant="outlined"
         density="compact" class="w-100 mb-3" autocomplete="email" />
 
-      <v-text-field base-color="#9e9e9e" color="primary" label="Пароль" v-model="password"
-        :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-        @click:append-inner="show_password = !show_password" :type="show_password ? 'text' : 'password'"
+      <v-text-field
+v-model="password" base-color="#9e9e9e" color="primary" label="Пароль"
+        :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'" :type="show_password ? 'text' : 'password'"
         :error-messages="(password_meta.touched || triedNext) && password_error ? [password_error] : []"
-        variant="outlined" density="compact" class="w-100 mb-3" autocomplete="new-password" />
+        variant="outlined" density="compact" class="w-100 mb-3" autocomplete="new-password"
+        @click:append-inner="show_password = !show_password" />
 
-      <!-- Чекбокс согласия -->
-      <v-checkbox v-model="agreePolicy" color="primary"
+
+      <v-checkbox
+v-model="agreePolicy" color="primary"
         :error-messages="(triedNext && !agreePolicy) ? ['Необходимо согласиться с условиями'] : []" hide-details="auto"
         density="compact" class="mt-3 w-full">
         <template #label>
@@ -191,15 +198,16 @@ const submit = handleSubmit(async (values) => {
       </v-checkbox>
     </div>
 
-    <!-- Навигация -->
+
     <div class="flex justify-between mt-6">
-      <button @click="goBack"
-        class="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-100">
+      <button
+class="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-100"
+        @click="goBack">
         Назад
       </button>
-      <button @click="goNext"
-        class="px-6 py-2 rounded-lg bg-[var(--primary-500)] text-white font-medium hover:bg-[var(--primary-600)]"
-        :disabled="loading">
+      <button
+class="px-6 py-2 rounded-lg bg-[var(--primary-500)] text-white font-medium hover:bg-[var(--primary-600)]"
+        :disabled="loading" @click="goNext">
         {{ currentStep < totalSteps ? 'Далее' : 'Завершить' }} </button>
     </div>
   </div>

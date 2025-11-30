@@ -53,24 +53,24 @@ function getHourWord(n: number) {
       </div>
 
       <div class="flex items-center gap-2 mb-2">
-        <i class="mdi mdi-map-marker text-indigo-600"></i>
+        <i class="mdi mdi-map-marker text-indigo-600"/>
         <span>{{ order.address }}</span>
       </div>
 
       <div class="flex flex-wrap gap-x-6 gap-y-2 mb-3">
         <div class="flex items-center gap-2">
-          <i class="mdi mdi-clock-time-three text-indigo-600"></i>
+          <i class="mdi mdi-clock-time-three text-indigo-600"/>
           <span>{{ order.hours }} {{ getHourWord(order.hours) }}</span>
         </div>
         <div class="flex items-center gap-2">
-          <i class="mdi mdi-calendar-range text-indigo-600"></i>
+          <i class="mdi mdi-calendar-range text-indigo-600"/>
           <span> {{ new Date(order.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' })
           }}</span>
         </div>
       </div>
     </v-col>
 
-    <v-col @click="router.push(`/order/${order._id}`)" cols="12" md="4" class="flex flex-col justify-between">
+    <v-col cols="12" md="4" class="flex flex-col justify-between" @click="router.push(`/order/${order._id}`)">
       <div class="text-right mb-4">
         <p class="text-2xl font-bold">{{ order.budget }} ₽</p>
       </div>
@@ -102,7 +102,8 @@ function getHourWord(n: number) {
                 Отказать
               </button>
             </v-col> -->
-            <v-col cols="12" md="6"
+            <v-col
+cols="12" md="6"
               class="flex items-center font-bold justify-end gap-2">
               <p>
                 {{ application.phone }}
@@ -120,8 +121,9 @@ function getHourWord(n: number) {
         </div>
         <v-row v-if="totalPages > 1">
           <v-col cols="12" class="flex justify-center mt-4">
-            <v-pagination v-model="currentPage" :length="totalPages" :total-visible="5" rounded="lg"
-              density="compact"></v-pagination>
+            <v-pagination
+v-model="currentPage" :length="totalPages" :total-visible="5" rounded="lg"
+              density="compact"/>
           </v-col>
         </v-row>
       </div>
