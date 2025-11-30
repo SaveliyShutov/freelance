@@ -82,7 +82,6 @@ const saveEdit = async (field) => {
     }
   } catch (error) {
     console.error('Ошибка при сохранении:', error);
-    // Можно добавить уведомление пользователю об ошибке
   }
 };
 

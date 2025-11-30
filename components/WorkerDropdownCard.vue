@@ -36,7 +36,7 @@ density="compact" class="mx-2" icon="mdi mdi-account" color="#4a5565" variant="t
             </div>
             <ul class="py-2 text-sm text-gray-700">
               <NuxtLink
-v-if="!userStore.user?.employer_name" to="/worker/sign-employer"
+v-if="!userStore.user?.employer_name" to="/reg"
                 class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none">
                 Войти как заказчик
               </NuxtLink>
