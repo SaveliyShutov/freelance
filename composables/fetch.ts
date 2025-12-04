@@ -1,16 +1,20 @@
-import type { UseFetchOptions } from 'nuxt/app';
+import type { UseFetchOptions } from 'nuxt/app'
 
-export function useApiFetch<T>(
+export function useApiFetch<T = any>(
   url: string | (() => string),
-  options: UseFetchOptions<T> = {}
+  options: UseFetchOptions<T> = {},
 ) {
+  const nuxtApp = useNuxtApp()
   const headers = useRequestHeaders(['cookie'])
-  
-  options = Object.assign(options, { headers })
 
-  return useFetch(url, {
-    ...options,
-    credentials: 'include', 
-    $fetch: useNuxtApp().$apiFetch,
-  })
+  const mergedOptions = {
+    ...(options || {}),
+    headers: {
+      ...(options.headers || {}),
+      ...headers,
+    },
+    $fetch: nuxtApp.$apiFetch,
+  }
+
+  return useFetch(url, mergedOptions)
 }
