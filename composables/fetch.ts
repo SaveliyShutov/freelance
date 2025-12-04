@@ -10,6 +10,7 @@ export function useApiFetch<T>(
 
   return useFetch(url, {
     ...options,
+    credentials: 'include', 
     $fetch: useNuxtApp().$apiFetch,
   })
 }
