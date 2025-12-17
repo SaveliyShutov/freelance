@@ -95,7 +95,7 @@ class="w-32 text-white font-semibold py-2 rounded-xl
             </p>
 
             <WorkerRegForm v-if="currentRole === 'worker'" @reset-role="currentRole = null" />
-            <EmployerRegTg v-else-if="currentRole === 'employer'" @reset-role="currentRole = null" />
+            <EmployerRegForm v-else-if="currentRole === 'employer'" @reset-role="currentRole = null" />
           </div>
 
         </div>
