@@ -23,11 +23,11 @@ const router = useRouter()
             <NuxtLink to="/" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
             </NuxtLink>
-            <NuxtLink to="/reg" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
-              Зарегистрироваться
+           <NuxtLink to="/pricing" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
+              Тарифы
             </NuxtLink>
             <NuxtLink to="/sign" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
-              Войти
+              Войти в аккаунт
             </NuxtLink>
           </v-col>
 
@@ -44,11 +44,11 @@ const router = useRouter()
           <v-list-item to="/" class="text-gray-600">
             Работа
           </v-list-item>
-          <v-list-item to="/reg" class="text-gray-600">
-            Зарегистрироваться
+          <v-list-item to="/pricing" class="text-gray-600">
+            Тарифы
           </v-list-item>
           <v-list-item to="/sign" class="text-gray-600">
-            Войти
+            Войти в аккаунт
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
