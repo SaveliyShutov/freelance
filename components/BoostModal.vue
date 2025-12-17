@@ -62,7 +62,8 @@ function onSkip() {
               Выделите объявление и получите отклики быстрее
             </div>
           </div>
-          <div v-if="!isMobile"
+          <div
+v-if="!isMobile"
             class="ml-4 inline-flex items-center rounded-full px-3 py-1 bg-purple-50 text-purple-700 text-sm font-medium">
             1 буст = 1 продвижение
           </div>
@@ -77,21 +78,21 @@ function onSkip() {
 
       <div class="px-6 pb-6 pt-0 flex flex-col sm:flex-row sm:justify-end gap-3">
         <button
-          @click="onSkip"
           class="h-11 px-5 rounded-lg font-medium text-sm w-full sm:w-auto
                  border border-gray-200 text-gray-700
                  hover:bg-gray-50 hover:text-gray-900
                  transition"
+          @click="onSkip"
         >
           Разместить без Boost
         </button>
 
         <button
-          @click="onBuy"
           class="h-11 px-6 rounded-lg font-semibold text-sm w-full sm:w-auto
                  bg-gradient-to-r from-indigo-600 to-purple-600 text-white
                  shadow-md hover:shadow-lg
                  transition-transform active:scale-95"
+          @click="onBuy"
         >
           Купить Boost
         </button>

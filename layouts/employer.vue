@@ -37,7 +37,8 @@ function changeRole() {
           </v-col>
 
 
-          <v-col class="hidden md:flex gap-1 lg:gap-2 xl:gap-3 justify-end items-center text-xs lg:text-sm xl:text-base"
+          <v-col
+class="hidden md:flex gap-1 lg:gap-2 xl:gap-3 justify-end items-center text-xs lg:text-sm xl:text-base"
             cols="7">
             <NuxtLink to="/employer" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
@@ -68,7 +69,8 @@ function changeRole() {
     <div v-if="drawer" class="md:hidden flex">
       <v-navigation-drawer v-model="drawer" location="right" temporary class="md:hidden flex">
         <v-list class="text-gray-600">
-          <v-list-item v-if="userStore.user" class="border-b pl-5 pb-4"
+          <v-list-item
+v-if="userStore.user" class="border-b pl-5 pb-4"
             @click="router.push(`/profile/${userStore.user._id}`)">
             <div class="text-xl font-medium">{{ userStore.user?.employer_name }}</div>
             <div class="text-sm">заказчик</div>

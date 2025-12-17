@@ -43,8 +43,9 @@ const discountPercent = computed(() => Math.round(discount.value * 100));
 
           <div class="w-full md:w-2/3 mt-3 md:mt-0">
             <div class="py-1">
-              <input aria-label="Количество объявлений" class="slider w-full" type="range" :min="1" :max="10" :step="1"
-                :value="props.quantity" @input="onRangeChange" />
+              <input
+aria-label="Количество объявлений" class="slider w-full" type="range" :min="1" :max="10" :step="1"
+                :value="props.quantity" @input="onRangeChange" >
             </div>
             <div class="flex justify-between text-xs text-gray-400 mt-1">
               <span>1</span>
@@ -77,8 +78,9 @@ const discountPercent = computed(() => Math.round(discount.value * 100));
         </div>
       </div>
 
-      <button @click="$emit('purchase')"
-        class="w-full h-12 md:h-14 text-sm md:text-base font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-lg shadow transition-colors">
+      <button
+class="w-full h-12 md:h-14 text-sm md:text-base font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-lg shadow transition-colors"
+        @click="$emit('purchase')">
         Найти работников!
       </button>
 

@@ -35,7 +35,8 @@ function changeRole() {
           </v-col>
 
 
-          <v-col class="hidden md:flex gap-1 lg:gap-2 xl:gap-3 justify-end items-center text-xs lg:text-sm xl:text-base"
+          <v-col
+class="hidden md:flex gap-1 lg:gap-2 xl:gap-3 justify-end items-center text-xs lg:text-sm xl:text-base"
             cols="7">
             <NuxtLink to="/worker" class="text-gray-600 hover:text-indigo-600 text-decoration-none">
               Работа
@@ -72,11 +73,13 @@ function changeRole() {
           <v-list-item to="/worker/requests" class="">
             Мои заявки
           </v-list-item>
-          <v-list-item v-if="!userStore.user?.employer_name" to="/worker/sign-employer"
+          <v-list-item
+v-if="!userStore.user?.employer_name" to="/worker/sign-employer"
             class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none">
             Войти как заказчик
           </v-list-item>
-          <v-list-item v-else class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none"
+          <v-list-item
+v-else class="block px-4 py-2 text-gray-600 hover:text-indigo-600 text-decoration-none"
             @click="changeRole()">
             Войти как заказчик
           </v-list-item>

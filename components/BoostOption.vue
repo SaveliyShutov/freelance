@@ -2,7 +2,8 @@
 </script>
 
 <template>
-  <div class="rounded-3xl p-4 md:p-6 border-2 cursor-pointer select-none transition-all duration-300
+  <div
+class="rounded-3xl p-4 md:p-6 border-2 cursor-pointer select-none transition-all duration-300
            bg-gradient-to-r from-purple-50 to-pink-50 border-purple-300 shadow-lg hover:shadow-xl" role="button"
     aria-label="Открыть подробности Boost">
     <div class="flex items-start gap-3 md:gap-4">
@@ -51,8 +52,7 @@
             </li>
           </ul>
         </div>
-        <div class="mt-3 md:mt-4 flex items-center justify-between gap-3">
-        </div>
+        <div class="mt-3 md:mt-4 flex items-center justify-between gap-3"/>
       </div>
     </div>
   </div>

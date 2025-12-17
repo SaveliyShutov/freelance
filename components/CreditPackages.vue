@@ -80,12 +80,12 @@ function onBuy(pkg) {
 
           <div class="flex-shrink-0 w-full sm:w-auto">
             <button
-              @click="onBuy(pkg)"
               :class="[
                 'h-11 px-5 rounded-lg font-medium text-sm w-full sm:w-auto mt-2 sm:mt-0',
                 pkg.popular ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg' : 'border border-gray-200 hover:bg-gray-50 text-gray-900'
               ]"
               aria-label="Купить пакет"
+              @click="onBuy(pkg)"
             >
               Купить
             </button>
