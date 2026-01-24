@@ -40,11 +40,9 @@ href="https://t.me/nirbywork" target="_blank" rel="noopener noreferrer"
 .footer-compact {
   width: 100%;
   min-height: 50px;
-  max-height: 150px;
-  /* ограничение по высоте */
+  max-height: 50px;
   padding: 0.5rem 0;
   margin-top: auto;
   overflow: hidden;
-  /* чтобы содержимое не вылазило */
 }
 </style>

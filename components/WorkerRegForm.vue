@@ -13,12 +13,9 @@ const currentStep = ref(1);
 const loading = ref(false);
 const show_password = ref(false);
 
-// показывать ошибки только после попытки перейти на следующий шаг
 const triedNext = ref(false);
 
-// схемы валидации по шагам (как просил)
 const stepSchemas = [
-  // Шаг 1: ФИО + телефон
   yup.object({
     worker_name: yup.string().required("Введите имя").min(2, "Слишком короткое имя").max(22, "Слишком длинное имя"),
     worker_surname: yup.string().required("Введите фамилию").min(2, "Слишком короткая фамилия").max(22, "Слишком длинная фамилия"),
@@ -26,7 +23,6 @@ const stepSchemas = [
       .required("Введите номер")
       .matches(/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/, "Неправильно введено"),
   }),
-  // Шаг 2: email + пароль + согласие
   yup.object({
     email: yup.string().required("Введите почту").email("Неправильно введено"),
     password: yup.string().required("Введите пароль").min(8, "Минимум 8 символов").max(30, "Слишком длинный пароль"),
@@ -36,7 +32,6 @@ const stepSchemas = [
 
 const validationSchema = computed(() => stepSchemas[currentStep.value - 1]);
 
-// useForm с реактивной схемой
 const { handleSubmit, validate } = useForm({
   validationSchema,
   initialValues: {
@@ -49,28 +44,22 @@ const { handleSubmit, validate } = useForm({
   },
 });
 
-// useField — деструктурируем value/error/meta чтобы TS не выжигал глаза
 const { value: worker_name, errorMessage: worker_name_error, meta: worker_name_meta } = useField<string>("worker_name");
 const { value: worker_surname, errorMessage: worker_surname_error, meta: worker_surname_meta } = useField<string>("worker_surname");
 const { value: worker_phone, errorMessage: worker_phone_error, meta: worker_phone_meta } = useField<string>("worker_phone");
 const { value: email, errorMessage: email_error, meta: email_meta } = useField<string>("email");
 const { value: password, errorMessage: password_error, meta: password_meta } = useField<string>("password");
 
-// новая галочка согласия
 const { value: agreePolicy, errorMessage: agreePolicy_error, meta: agreePolicy_meta } = useField<boolean>("agreePolicy");
 
-// прогресс (строка для style width)
 const progressPercent = computed(() => ((currentStep.value - 1) / (totalSteps - 1)) * 100 + "%");
 
-// навигация
 const goNext = async () => {
   triedNext.value = true;
 
-  // валидируем по текущей схеме (reactive validationSchema используется внутри useForm)
   const result = await validate();
   if (!result.valid) return;
 
-  // если валидно — сбрасываем флаг (чтобы на следующем шаге ошибки не светились сразу)
   triedNext.value = false;
 
   if (currentStep.value < totalSteps) {
@@ -85,13 +74,11 @@ const emit = defineEmits<{
 }>();
 
 const goBack = () => {
-  // сброс триггера ошибок при возврате
   triedNext.value = false;
   if (currentStep.value > 1) currentStep.value--;
   else emit('reset-role');
 };
 
-// submit
 const submit = handleSubmit(async (values) => {
   loading.value = true;
   try {
@@ -105,7 +92,6 @@ const submit = handleSubmit(async (values) => {
         router.push('/worker');
       }
     } else {
-      // мок если нет useAuth
       console.info('auth.registration not available — mocked success', values);
       alert('Регистрация (мок) успешна');
     }
