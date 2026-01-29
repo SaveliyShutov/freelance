@@ -2,6 +2,25 @@
 import workerImage from "~/assets/workerImage.png";
 import employerImage from "~/assets/employerImage.png";
 
+useSeoMeta({
+  title: 'Регистрация ',
+  description: 'Выберите роль на платформе Nirby: исполнитель, заказчик или продолжите как гость, чтобы начать работу или публиковать задания.',
+  ogTitle: 'Регистрация ',
+  ogDescription: 'Выберите роль на платформе Nirby: исполнитель, заказчик или продолжите как гость, чтобы начать работу или публиковать задания.',
+  // ogUrl: `https://nirby.ru${route.path}`,
+  // ogImage: 'https://nirby.ru/og-home.jpg',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  /*
+  link: [
+    { rel: 'canonical', href: `https://nirby.ru${route.path}` }
+  ],
+  htmlAttrs: { lang: 'ru' }
+  */
+})
+
 const router = useRouter();
 const currentRole = ref<string | null>(null);
 
@@ -27,11 +46,10 @@ const selectRole = (roleId: string) => {
           Выберите роль для регистрации
         </UITitle>
         <div class="role-select__grid">
-          <article
-v-for="role in roles" :key="role.id" class="role-card"
+          <article v-for="role in roles" :key="role.id" class="role-card"
             :class="{ 'role-card--active': currentRole === role.id }">
             <button type="button" class="role-card__body" @click="selectRole(role.id)">
-              <img :src="role.image" :alt="role.name" class="role-card__image" >
+              <img :src="role.image" :alt="role.name" class="role-card__image">
               <h3 class="role-card__name">{{ role.name }}</h3>
 
               <div class="role-card__lists">

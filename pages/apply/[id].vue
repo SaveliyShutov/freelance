@@ -8,6 +8,25 @@ const orderStore = useOrder()
 const route = useRoute()
 const router = useRouter()
 
+useSeoMeta({
+  title: 'Оставьте заявку ',
+  description: 'Заполните форму отклика на заказ на Nirby. Укажите телефон, ФИО и сопроводительное письмо.',
+  ogTitle: 'Оставьте заявку ',
+  ogDescription: 'Заполните форму отклика на заказ на Nirby. Укажите телефон, ФИО и сопроводительное письмо.',
+  // ogUrl: `https://nirby.ru${route.path}`,
+  // ogImage: 'https://nirby.ru/og-application.jpg',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  /*
+  link: [
+    { rel: 'canonical', href: `https://nirby.ru${route.path}` }
+  ],
+  htmlAttrs: { lang: 'ru' }
+  */
+})
+
 const { meta, handleSubmit, handleReset, validate } = useForm<{
   phone: string,
   initials: string,
@@ -54,7 +73,7 @@ onMounted(() => {
 const submit = handleSubmit(async values => {
   loading.value = true
   let toSend: Application;
-  
+
   phone.value.value = phone.value.value.trim()
   initials.value.value = initials.value.value.trim()
   letter.value.value = letter.value.value.trim()
@@ -106,23 +125,20 @@ const submit = handleSubmit(async values => {
             <v-row>
               <v-col cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
-                <v-text-field
-v-model="phone.value.value" base-color="#9e9e9e" color="primary" required type="phone"
+                <v-text-field v-model="phone.value.value" base-color="#9e9e9e" color="primary" required type="phone"
                   placeholder="89226252872" :error-messages="phone.errors.value" variant="outlined" density="compact"
                   class="w-100" />
               </v-col>
 
               <v-col class="-mt-6 md:-mt-0" cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">ФИО</label>
-                <v-text-field
-v-model="initials.value.value" base-color="#9e9e9e" color="primary" required
-                  type="phone" placeholder="Иванов Иван Иванович"
-                  :error-messages="initials.errors.value" variant="outlined" density="compact" class="w-100" />
+                <v-text-field v-model="initials.value.value" base-color="#9e9e9e" color="primary" required type="phone"
+                  placeholder="Иванов Иван Иванович" :error-messages="initials.errors.value" variant="outlined"
+                  density="compact" class="w-100" />
               </v-col>
               <v-col class="-mt-6 md:-mt-0" cols="12">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Отклик на заказ</label>
-                <v-textarea
-v-model="letter.value.value" color="primary" base-color="#9e9e9e"
+                <v-textarea v-model="letter.value.value" color="primary" base-color="#9e9e9e"
                   :error-messages="letter.errors.value" type="letter"
                   placeholder="Здравствуйте, с радостью готов выполнить ваш заказ." variant="outlined" density="compact"
                   class="w-100" />

@@ -1,7 +1,24 @@
 <script setup lang="ts">
 import { useField, useForm } from "vee-validate";
-import { toast } from "vue3-toastify";
 
+useSeoMeta({
+  title: 'Вход ',
+  description: 'Войдите в свой аккаунт Nirby, чтобы управлять заказами или заявками, или создайте новый аккаунт для начала работы.',
+  ogTitle: 'Вход ',
+  ogDescription: 'Войдите в свой аккаунт Nirby, чтобы управлять заказами или заявками, или создайте новый аккаунт для начала работы.',
+  // ogUrl: `https://nirby.ru${route.path}`,
+  // ogImage: 'https://nirby.ru/og-home.jpg',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  /*
+  link: [
+    { rel: 'canonical', href: `https://nirby.ru${route.path}` }
+  ],
+  htmlAttrs: { lang: 'ru' }
+  */
+})
 const router = useRouter();
 const auth = useAuth();
 
@@ -68,17 +85,14 @@ const login = handleSubmit(async (values) => {
             </p>
           </div>
           <v-form class="mt-6 w-100" @submit.prevent="login">
-            <v-text-field
-v-model="email.value.value" base-color="#9e9e9e" color="primary" type="email"
+            <v-text-field v-model="email.value.value" base-color="#9e9e9e" color="primary" type="email"
               placeholder="vasya@ya.ru" :error-messages="email.errors.value" variant="outlined" density="compact"
               class="w-100 mt-1" autocomplete="email" />
 
-            <v-text-field
-v-model="password.value.value" base-color="#9e9e9e" color="primary" label="Пароль"
-              :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show_password ? 'text' : 'password'" :error-messages="password.errorMessage.value"
-              variant="outlined" density="compact" class="w-100 mt-1" autocomplete="current-password"
-              @click:append-inner="show_password = !show_password" />
+            <v-text-field v-model="password.value.value" base-color="#9e9e9e" color="primary" label="Пароль"
+              :append-inner-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'" :type="show_password ? 'text' : 'password'"
+              :error-messages="password.errorMessage.value" variant="outlined" density="compact" class="w-100 mt-1"
+              autocomplete="current-password" @click:append-inner="show_password = !show_password" />
 
             <div class="flex justify-center">
               <v-btn color="#4f46e5" type="submit" :disabled="!meta.valid" :loading="loading">

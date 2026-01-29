@@ -10,6 +10,26 @@ const orderStore = useOrder()
 const auth = useAuth()
 const router = useRouter()
 
+
+useSeoMeta({
+  title: 'Создать объявление ',
+  description: 'Создайте новое объявление о подработке или вакансии на Nirby. Укажите детали работы, оплату и дату начала.',
+  ogTitle: 'Создать объявление ',
+  ogDescription: 'Создайте новое объявление о подработке или вакансии на Nirby. Укажите детали работы, оплату и дату начала.',
+  // ogUrl: `https://nirby.ru${route.path}`,
+  // ogImage: 'https://nirby.ru/og-create-order.jpg',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  /*
+  link: [
+    { rel: 'canonical', href: `https://nirby.ru${route.path}` }
+  ],
+  htmlAttrs: { lang: 'ru' }
+  */
+})
+
 definePageMeta({
   middleware: ["employer"],
 })
@@ -229,8 +249,7 @@ const formattedTotalBudget = computed(() => {
             <label class="block text-sm font-medium text-gray-700 mb-1">
               Название<span class="text-red-500 ml-0.5">*</span>
             </label>
-            <v-text-field
-v-model="title.value.value" placeholder="Требуются разнорабочие на длительный срок"
+            <v-text-field v-model="title.value.value" placeholder="Требуются разнорабочие на длительный срок"
               base-color="#9e9e9e" color="primary" type="title" variant="outlined"
               :error-messages="title.errors.value" />
 
@@ -242,16 +261,14 @@ v-model="title.value.value" placeholder="Требуются разнорабоч
             <label class="block text-sm font-medium text-gray-700 mb-1">
               Тип работы
             </label>
-            <v-autocomplete
-v-model="type.value.value" base-color="#9e9e9e" color="primary" type="title"
+            <v-autocomplete v-model="type.value.value" base-color="#9e9e9e" color="primary" type="title"
               variant="outlined" :items="flatJobList" item-title="text" item-value="value"
               :error-messages="type.errors.value" clearable solo />
 
             <label class="block text-sm font-medium text-gray-700 mb-1">
               Адрес <span class="text-red-500 ml-0.5">*</span>
             </label>
-            <v-text-field
-v-model="address.value.value" placeholder="Пермь, ул. Ленина 45" base-color="#9e9e9e"
+            <v-text-field v-model="address.value.value" placeholder="Пермь, ул. Ленина 45" base-color="#9e9e9e"
               color="primary" type="title" variant="outlined" :error-messages="address.errors.value" />
             <v-row>
               <v-col cols="12">
@@ -268,16 +285,14 @@ v-model="address.value.value" placeholder="Пермь, ул. Ленина 45" ba
                       <label class="block text-sm font-medium text-gray-700 mb-1">
                         Дата старта <span class="text-red-500 ml-0.5">*</span>
                       </label>
-                      <v-text-field
-v-model="date.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
+                      <v-text-field v-model="date.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
                         type="date" :min="todayStr" :max="maxDateStr" :error-messages="date.errors.value" />
                     </div>
                     <div class="flex-1">
                       <label class="block text-sm font-medium text-gray-700 mb-1">
                         Время начала работы
                       </label>
-                      <VueDatePicker
-v-model="time" placeholder="00:00" :ui="{ input: 'h-14' }" time-picker locale="ru"
+                      <VueDatePicker v-model="time" placeholder="00:00" :ui="{ input: 'h-14' }" time-picker locale="ru"
                         cancel-text="Отмена" select-text="Принять" hide-input-icon />
                     </div>
                   </div>
@@ -299,16 +314,14 @@ v-model="time" placeholder="00:00" :ui="{ input: 'h-14' }" time-picker locale="r
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Количество часов <span class="text-red-500 ml-0.5">*</span>
                 </label>
-                <v-text-field
-v-model="hours.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
+                <v-text-field v-model="hours.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
                   type="number" suffix="ч" :error-messages="hours.errors.value" />
               </v-col>
               <v-col cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Оплата за час <span class="text-red-500 ml-0.5">*</span>
                 </label>
-                <v-text-field
-v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
+                <v-text-field v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
                   type="number" suffix="₽" :error-messages="budget.errors.value" />
               </v-col>
             </v-row>
@@ -318,16 +331,14 @@ v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outli
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Длительность смены (часы) <span class="text-red-500 ml-0.5">*</span>
                 </label>
-                <v-select
-v-model="hours.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
+                <v-select v-model="hours.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
                   :items="[6, 8, 12]" :error-messages="hours.errors.value" suffix="ч" />
               </v-col>
               <v-col cols="12" md="6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Оплата за смену <span class="text-red-500 ml-0.5">*</span>
                 </label>
-                <v-text-field
-v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
+                <v-text-field v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
                   type="number" suffix="₽" :error-messages="budget.errors.value" />
               </v-col>
             </v-row>
@@ -336,13 +347,11 @@ v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outli
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Оплата сдельная (фиксированная сумма) <span class="text-red-500 ml-0.5">*</span>
               </label>
-              <v-text-field
-v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
+              <v-text-field v-model="budget.value.value" base-color="#9e9e9e" color="primary" variant="outlined"
                 type="number" suffix="₽" :error-messages="budget.errors.value" />
             </div>
 
-            <div
-v-if="formattedTotalBudget"
+            <div v-if="formattedTotalBudget"
               class="mt-1 mb-4 flex items-center gap-2 rounded-md bg-indigo-50 p-3 text-indigo-700 border border-indigo-200">
               <span class="text-base font-medium">Итоговая оплата: {{ formattedTotalBudget }}</span>
             </div>

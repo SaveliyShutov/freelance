@@ -1,6 +1,26 @@
 <script setup>
 import sadPicture from "~/assets/mansad.png";
 
+
+useSeoMeta({
+  title: 'Мои заявки ',
+  description: 'Просматривайте все ваши отклики на заказы и управляйте подработками. Следите за статусом заявок и переходите к новым возможностям.',
+  ogTitle: 'Мои заявки ',
+  ogDescription: 'Просматривайте все ваши отклики на заказы и управляйте подработками. Следите за статусом заявок и переходите к новым возможностям.',
+  // ogUrl: `https://nirby.ru${route.path}`,
+  // ogImage: 'https://nirby.ru/og-my-applications.jpg',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  /*
+  link: [
+    { rel: 'canonical', href: `https://nirby.ru${route.path}` }
+  ],
+  htmlAttrs: { lang: 'ru' }
+  */
+})
+
 definePageMeta({
   middleware: ["worker"],
 });
@@ -23,19 +43,18 @@ await orderStore.getWorkerApplicationsWithOrders();
       <v-col cols="12">
         <div class="space-y-8">
           <div class="space-y-6">
-            <div
-v-for="application in orderStore.my_applications" v-if="orderStore.my_applications.length > 0"
+            <div v-for="application in orderStore.my_applications" v-if="orderStore.my_applications.length > 0"
               :key="application._id" class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
               <ApplicationCard :application="application" @click="router.push(`/order/${application.order._id}`)" />
             </div>
             <div v-else class="flex flex-col justify-center items-center text-center">
               <p>У вас нет заявок</p>
               <button
-class="mt-2 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold"
+                class="mt-2 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold"
                 @click="router.push('/worker')">
                 Найти работу!
               </button>
-              <img :src="sadPicture" class="mt-2 w-64 h-64" >
+              <img :src="sadPicture" class="mt-2 w-64 h-64">
             </div>
           </div>
         </div>

@@ -5,26 +5,26 @@ definePageMeta({
 const currentRole = ref("employer");
 
 const orders = ref([
-  {
-    title: "Уборка снега",
-    description: "цувцуацацуа",
-    applications: [
-      {
-        phone: "89226949791",
-        letter: "Здравствуйте, когда можно выйти на работу",
-        initials: "Шутов Савелий",
-        worker: "67f351f3261ca26a80d7ae03",
-        order: "67f5108d3044831bd18c914c",
-      },
-    ],
-    employer_id: "67f351f3261ca26a80d7ae03",
-    employer_name: "asdasd",
-    date: "2025-04-27",
-    address: "Пермь ул пушкина д21",
-    budget: "5000",
-    hours: "8",
-  },
 ]);
+
+useSeoMeta({
+  title: 'Личный кабинет ',
+  description: 'Просматривайте и управляйте своими заказами как заказчик или заявками как исполнитель на платформе Nirby.',
+  ogTitle: 'Личный кабинет ',
+  ogDescription: 'Просматривайте и управляйте своими заказами как заказчик или заявками как исполнитель на платформе Nirby.',
+  // ogUrl: `https://nirby.ru${route.path}`,
+  // ogImage: 'https://nirby.ru/og-home.jpg',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  /*
+  link: [
+    { rel: 'canonical', href: `https://nirby.ru${route.path}` }
+  ],
+  htmlAttrs: { lang: 'ru' }
+  */
+})
 </script>
 <template>
   <v-container class="py-12">
@@ -32,8 +32,7 @@ const orders = ref([
       <v-col cols="12" class="mb-8">
         <div class="flex items-center gap-4">
           <div class="bg-gray-200 rounded-lg p-1 inline-flex">
-            <button
-:class="[
+            <button :class="[
               'px-4 py-2 rounded-md text-xl font-medium transition-all duration-200',
               currentRole === 'employer'
                 ? 'bg-white text-indigo-600 shadow-sm'
@@ -41,8 +40,7 @@ const orders = ref([
             ]" @click="currentRole = 'employer'">
               Мои Подработки (заказчик)
             </button>
-            <button
-:class="[
+            <button :class="[
               'px-4 py-2 rounded-md text-xl font-medium transition-all duration-200',
               currentRole === 'worker'
                 ? 'bg-white text-indigo-600 shadow-sm'
@@ -65,8 +63,7 @@ const orders = ref([
           <v-col cols="12">
             <div class="space-y-8">
               <div class="space-y-6">
-                <div
-v-for="order in orders" :key="order.id"
+                <div v-for="order in orders" :key="order.id"
                   class="bg-white p-10 rounded-xl shadow-lg border border-gray-100">
                   <OrderCard :order="order" />
                 </div>
@@ -88,9 +85,8 @@ v-for="order in orders" :key="order.id"
           <v-col cols="12">
             <div class="space-y-8">
               <div class="space-y-6">
-                <div
-v-for="job in jobs" :key="job.id"
-                  class="bg-white p-10 rounded-xl shadow-lg border border-gray-100"/>
+                <div v-for="job in jobs" :key="job.id"
+                  class="bg-white p-10 rounded-xl shadow-lg border border-gray-100" />
               </div>
             </div>
           </v-col>

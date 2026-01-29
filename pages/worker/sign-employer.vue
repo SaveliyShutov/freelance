@@ -1,4 +1,22 @@
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Добавить аккаунт заказчика ',
+  description: 'Создайте аккаунт заказчика, чтобы размещать подработки и управлять заказами на платформе Nirby.',
+  ogTitle: 'Добавить аккаунт заказчика ',
+  ogDescription: 'Создайте аккаунт заказчика, чтобы размещать подработки и управлять заказами на платформе Nirby.',
+  // ogUrl: `https://nirby.ru${route.path}`,
+  // ogImage: 'https://nirby.ru/og-add-employer.jpg',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  /*
+  link: [
+    { rel: 'canonical', href: `https://nirby.ru${route.path}` }
+  ],
+  htmlAttrs: { lang: 'ru' }
+  */
+})
 </script>
 <template>
   <v-container class="min-h-screen flex justify-center py-12">

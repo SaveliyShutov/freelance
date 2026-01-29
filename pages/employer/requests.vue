@@ -3,6 +3,25 @@ import sadPicture from "~/assets/mansad.png";
 
 const router = useRouter()
 
+useSeoMeta({
+  title: 'Мои заказы ',
+  description: 'Просматривайте ваши активные заказы и подработки на Nirby. Размещайте новые заказы и управляйте откликами исполнителей.', // Краткое описание страницы
+  ogTitle: 'Мои заказы ',
+  ogDescription: 'Просматривайте ваши активные заказы и подработки на Nirby. Размещайте новые заказы и управляйте откликами исполнителей.', // Описание для соцсетей
+  // ogUrl: `https://nirby.ru${route.path}`,
+  // ogImage: 'https://nirby.ru/og-my-orders.jpg',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  /*
+  link: [
+    { rel: 'canonical', href: `https://nirby.ru${route.path}` }
+  ],
+  htmlAttrs: { lang: 'ru' }
+  */
+})
+
 definePageMeta({
   middleware: ["employer"],
 });
@@ -35,8 +54,7 @@ async function declineApplication(application_id: string) {
       <v-col cols="12">
         <div class="space-y-8">
           <div class="space-y-6">
-            <div
-v-for="order in orderStore.my_orders_with_applications"
+            <div v-for="order in orderStore.my_orders_with_applications"
               v-if="orderStore.my_orders_with_applications.length > 0" :key="order._id"
               class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
               <OrderCard :order="order" />
@@ -44,11 +62,11 @@ v-for="order in orderStore.my_orders_with_applications"
             <div v-else class="flex flex-col justify-center items-center text-center">
               <p>У вас нет активных подработок</p>
               <button
-class="mt-2 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold"
+                class="mt-2 bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors font-bold"
                 @click="router.push('/employer/create-order')">
                 Разместить заказ
               </button>
-              <img :src="sadPicture" class="mt-2 w-64 h-64" >
+              <img :src="sadPicture" class="mt-2 w-64 h-64">
             </div>
           </div>
         </div>

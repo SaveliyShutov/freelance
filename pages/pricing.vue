@@ -2,6 +2,25 @@
 const activeTab = ref('quick');
 const quantity = ref(1);
 const boostEnabled = ref(true);
+
+useSeoMeta({
+  title: 'Покупка бустов ',
+  description: 'Приобретайте бусты для продвижения ваших объявлений на платформе Nirby: быстрая покупка или выгодные пакеты кредитов.',
+  ogTitle: 'Покупка бустов ',
+  ogDescription: 'Приобретайте бусты для продвижения ваших объявлений на платформе Nirby: быстрая покупка или выгодные пакеты кредитов.',
+  // ogUrl: `https://nirby.ru${route.path}`,
+  // ogImage: 'https://nirby.ru/og-home.jpg',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  /*
+  link: [
+    { rel: 'canonical', href: `https://nirby.ru${route.path}` }
+  ],
+  htmlAttrs: { lang: 'ru' }
+  */
+})
 </script>
 
 <template>
