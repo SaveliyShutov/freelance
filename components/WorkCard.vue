@@ -102,14 +102,17 @@ function copyLink() {
                 {{ startDate }}
               </template>
             </span>
-            <span v-else class="font-semibold">{{ startDate }}</span>
+            <span v-else class="font-semibold">refefrwer{{ startDate }}</span>
           </div>
           <div v-if="hasStartTime" class="flex items-center gap-2">
             <i class="mdi mdi-clock-outline text-indigo-600" />
-            <span class="font-semibold">
+            <span v-if="props.order.startTime != '00:67'" class="font-semibold">
               {{ props.order.startTime }} - {{ endTime }}
             </span>
-            <span>(
+            <span v-else class="font-semibold">
+              Время работы договорное
+            </span>
+            <span v-if="props.order.startTime != '00:67'">(
               {{ props.order.hours }} {{ getHourWord(props.order.hours) }}
               )</span>
           </div>
@@ -145,7 +148,7 @@ function copyLink() {
       </div> -->
 
 
-      <div class="text-right mb-4 space-y-1">
+      <div v-if="props.order.budget != -1" class="text-right mb-4 space-y-1">
         <template v-if="props.order.paymentType === 'hourly'">
           <p class="text-sm text-gray-500">Оплата за час:</p>
           <p class="text-lg font-semibold text-indigo-700">
@@ -160,6 +163,30 @@ function copyLink() {
           <p class="text-sm text-gray-500">Оплата за смену:</p>
           <p class="text-2xl font-bold">
             {{ props.order.budget.toLocaleString('ru-RU') }}₽
+          </p>
+        </template>
+        <template v-if="props.order.paymentType === 'deal'">
+          <p class="text-sm text-gray-500">Сдельная оплата:</p>
+          <p class="text-2xl font-bold">
+            {{ props.order.budget.toLocaleString('ru-RU') }}₽
+          </p>
+        </template>
+      </div>
+      <div v-else class="text-right mb-4 space-y-1">
+        <template v-if="props.order.paymentType === 'hourly'">
+          <p class="text-sm text-gray-500">Оплата за час:</p>
+          <p class="text-lg font-semibold text-indigo-700">
+            Цена договорная
+          </p>
+          <p class="text-sm text-gray-500">Итоговая сумма:</p>
+          <p class="text-2xl font-bold">
+            Цена договорная
+          </p>
+        </template>
+        <template v-if="props.order.paymentType === 'shift'">
+          <p class="text-sm text-gray-500">Оплата за смену:</p>
+          <p class="text-2xl font-bold">
+            Цена договорная
           </p>
         </template>
         <template v-if="props.order.paymentType === 'deal'">
