@@ -110,7 +110,7 @@ function copyLink() {
             <p class="text-2xl md:text-4xl font-bold text-gray-900">{{ order.title }}</p>
 
 
-            <div class="text-right">
+            <div v-if="order.budget!=-1" class="text-right">
               <template v-if="order.paymentType === 'hourly'">
                 <p class="text-xl font-medium text-gray-700">{{ order.hours }} ч × {{ Math.round(order.budget /
                   order.hours) }} ₽/ч</p>
@@ -123,6 +123,20 @@ function copyLink() {
               <template v-else>
                 <p class="text-lg font-medium text-gray-700">Смена: {{ order.hours }} ч</p>
                 <p class="text-2xl md:text-3xl font-bold text-gray-900">{{ order.budget.toLocaleString('ru-RU') }} ₽</p>
+              </template>
+            </div>
+            <div v-else class="text-right">
+              <template v-if="order.paymentType === 'hourly'">
+                <p class="text-xl font-medium text-gray-700">Цена договорная</p>
+                <p class="text-2xl md:text-3xl font-bold text-gray-900">{{ order.budget.toLocaleString('ru-RU') }} ₽</p>
+              </template>
+              <template v-else-if="order.paymentType === 'deal'">
+                <p class="text-lg font-medium text-gray-700">Сдельная оплата</p>
+                <p class="text-2xl md:text-3xl font-bold text-gray-900">Цена договорная</p>
+              </template>
+              <template v-else>
+                <p class="text-lg font-medium text-gray-700">Смена: {{ order.hours }} ч</p>
+                <p class="text-2xl md:text-3xl font-bold text-gray-900">Цена договорная</p>
               </template>
             </div>
           </v-col>
@@ -138,7 +152,7 @@ function copyLink() {
               <div class="flex flex-col gap-1">
                 <div class="flex items-center gap-2">
                   <i class="mdi mdi-calendar-range text-indigo-600" />
-                  <span v-if="order.startTime !== '0'" class="font-semibold">
+                  <span v-if="order.startTime !== '00:67'" class="font-semibold">
                     <template v-if="endDate !== startDate">
                       {{ startDate }} - {{ endDate }}
                     </template>
@@ -148,7 +162,7 @@ function copyLink() {
                   </span>
                   <span v-else class="font-semibold">{{ startDate }}</span>
                 </div>
-                <div v-if="order.startTime !== '0'" class="flex flex-row items-center gap-2">
+                <div v-if="order.startTime !== '00:67'" class="flex flex-row items-center gap-2">
                   <i class="mdi mdi-clock-outline text-indigo-600" />
                   <span class="font-semibold">
                     {{ order.startTime }} - {{ endTime }}
@@ -160,6 +174,12 @@ function copyLink() {
                   <div v-else class="flex items-center gap-2">
                     <span>({{ order.hours }} {{ getHourWord(order.hours) }})</span>
                   </div>
+                </div>
+                <div v-else class="flex flex-row items-center gap-2">
+                  <i class="mdi mdi-clock-outline text-indigo-600" />
+                  <span class="font-semibold">
+                    Время работы договорное
+                  </span>
                 </div>
               </div>
             </div>

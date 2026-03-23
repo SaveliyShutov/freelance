@@ -72,7 +72,8 @@ function getHourWord(n: number) {
 
     <v-col cols="12" md="4" class="flex flex-col justify-between" @click="router.push(`/order/${order._id}`)">
       <div class="text-right mb-4">
-        <p class="text-2xl font-bold">{{ order.budget }} ₽</p>
+        <p v-if="order.budget!=-1" class="text-2xl font-bold">{{ order.budget }} ₽</p>
+        <p v-else class="text-2xl font-bold">Цена договорная</p>
       </div>
     </v-col>
     <v-col>
